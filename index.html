@@ -18,11 +18,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-s
 body.light{--bg:#edf4f7;--panel:rgba(255,255,255,.96);--panel2:#f1f7fa;--text:#10232f;--muted:#627a88;--line:#cadde6;--shadow:0 12px 32px rgba(30,75,95,.16)}
 button,input,select{font:inherit}
 button{cursor:pointer;color:var(--text)}
-.app{height:100%;display:flex;flex-direction:column}
+.app{height:100%;display:block}
 header{
- height:70px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+ position:fixed;top:0;left:0;right:0;
+ height:70px;min-height:70px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:10px;
  padding:8px 13px;background:var(--panel);backdrop-filter:blur(16px);
- border-bottom:1px solid var(--line);z-index:2000
+ border-bottom:1px solid var(--line);z-index:5000
 }
 .brand{font-weight:900;letter-spacing:.2px;white-space:nowrap}
 .brand small{display:block;color:var(--muted);font-size:10px;font-weight:500;margin-top:2px}
@@ -37,7 +38,7 @@ header{
  border:1px solid var(--line);background:var(--panel2);border-radius:12px;min-width:42px;height:42px;
  display:flex;align-items:center;justify-content:center
 }
-.workspace{position:relative;flex:1;min-height:0}
+.workspace{position:fixed;left:0;right:0;top:70px;bottom:0;min-height:0}
 #map{z-index:1;position:absolute;inset:0;background:#17242e}
 .sidebar{
  position:absolute;top:14px;right:14px;width:295px;max-height:calc(100% - 115px);overflow:auto;
@@ -103,7 +104,8 @@ body.light .official{background:rgba(255,255,255,.96);color:#17313f}
 .suggest div:hover{background:var(--panel2)}
 .leaflet-control-zoom a{background:var(--panel)!important;color:var(--text)!important;border-color:var(--line)!important}
 @media(max-width:820px){
- header{height:82px;padding:7px 8px;align-items:center;position:relative;z-index:5000;background:#07131c}
+ header{height:82px;min-height:82px;box-sizing:border-box;padding:7px 8px;align-items:center;position:fixed;top:0;left:0;right:0;z-index:5000;background:#07131c}
+ .workspace{top:82px}
  .brand{font-size:14px;line-height:1.25;white-space:normal;min-width:145px;position:relative;z-index:5001}
  .brand small{font-size:11px;margin-top:4px}
  .search{max-width:none}.search input{padding:9px 35px 9px 8px;font-size:12px}
@@ -180,6 +182,7 @@ body.light .official{background:rgba(255,255,255,.96);color:#17313f}
    <button id="cloudBtn" class="layerbtn">☁️ صور سحب</button>
    <button id="tempBtn" class="layerbtn">🌡️ حرارة</button>
    <button id="windBtn" class="layerbtn">💨 رياح</button>
+   <a id="dustBtn" class="layerbtn" href="https://www.ventusky.com/air-quality-map/dust" target="_blank" rel="noopener" style="text-decoration:none">🌫️ الغبار</a>
   </div>
 
   <div id="nowCard" class="card">
@@ -210,7 +213,8 @@ body.light .official{background:rgba(255,255,255,.96);color:#17313f}
  <div class="bottomDock">
   <button class="dockbtn" id="twoHourBtn">⏱ ساعتان ماضية + ساعتان قادمة</button>
   <button class="dockbtn" id="forecastBtn">🕒 72 ساعة</button>
-  <a class="dockbtn" id="lightningLink" href="https://www.lightningmaps.org/" target="_blank" rel="noopener" style="text-decoration:none">⚡ رابط البرق</a>
+  <a class="dockbtn" id="lightningLink" href="https://maps.blitzortung.org/" target="_blank" rel="noopener" style="text-decoration:none">⚡ البرق مباشر</a>
+  <a class="dockbtn" id="dustLink" href="https://www.ventusky.com/air-quality-map/dust" target="_blank" rel="noopener" style="text-decoration:none">🌫️ الغبار</a>
   <button class="dockbtn" id="togglePanelBtn">☰ الطبقات</button>
   <button class="dockbtn" id="resetBtn">🌍 العالم</button>
  </div>
