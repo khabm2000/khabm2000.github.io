@@ -133,12 +133,14 @@ body.light .official{background:rgba(255,255,255,.96);color:#17313f}
  .sourcebar a{font-size:9px;padding:6px 7px}
 }
 
+
+.trial-label{font-size:14px!important;font-weight:700;}
 </style>
 </head>
 <body>
 <div class="app">
 <header>
- <div class="brand">KHABM 2000 ABOASRAR<small>GLOBAL WEATHER • موقع تجريبي غير رسمي</small></div>
+ <div class="brand">KHABM 2000 ABOASRAR راصد الطقس<small class="trial-label">نسخة تجريبية</small></div>
  <div class="search">
   <span>🔎</span>
   <input id="searchBox" placeholder="ابحث عن مدينة، قرية أو موقع في العالم">
@@ -204,13 +206,15 @@ body.light .official{background:rgba(255,255,255,.96);color:#17313f}
  </div>
 
  <div class="bottomDock">
+  <button class="dockbtn" id="twoHourBtn">⏱ ساعتان ماضية + ساعتان قادمة</button>
   <button class="dockbtn" id="forecastBtn">🕒 72 ساعة</button>
+  <a class="dockbtn" id="lightningLink" href="https://www.lightningmaps.org/" target="_blank" rel="noopener" style="text-decoration:none">⚡ رابط البرق</a>
   <button class="dockbtn" id="togglePanelBtn">☰ الطبقات</button>
   <button class="dockbtn" id="resetBtn">🌍 العالم</button>
  </div>
 
  <section class="sheet" id="forecastSheet">
-  <div class="nowrow"><b>توقعات 72 ساعة</b><button id="closeForecast" class="iconbtn" style="width:32px;height:32px;min-width:32px">×</button></div>
+  <div class="nowrow"><b id="forecastTitle">توقعات 72 ساعة</b><button id="closeForecast" class="iconbtn" style="width:32px;height:32px;min-width:32px">×</button></div>
   <div id="hourlyWrap" class="hourly" style="margin-top:8px"><div class="muted">اختر موقعًا على الخريطة أولاً.</div></div>
  </section>
 </div>
@@ -250,6 +254,7 @@ document.getElementById('themeBtn').onclick=()=>{
 let marker=L.marker([24.7,46.7]).addTo(map);
 let selected={lat:24.7,lon:46.7,name:'الرياض'};
 let hourlyData=null;
+let currentWeatherTime=null;
 
 const wc={0:'صحو',1:'غالبًا صحو',2:'غائم جزئيًا',3:'غائم',45:'ضباب',48:'ضباب',51:'رذاذ',53:'رذاذ',55:'رذاذ كثيف',61:'مطر خفيف',63:'مطر',65:'مطر غزير',80:'زخات',81:'زخات',82:'زخات قوية',95:'عاصفة رعدية',96:'عاصفة وبرد',99:'عاصفة قوية وبرد'};
 const nf=v=>(v===undefined||v===null||Number.isNaN(Number(v)))?'—':Math.round(Number(v));
@@ -262,7 +267,7 @@ async function loadWeather(lat,lon,name='الموقع المحدد'){
  const card=document.getElementById('nowCard'); card.innerHTML='<div class="muted">جاري تحميل البيانات…</div>';
  try{
   const d=await fetch(url).then(r=>{if(!r.ok)throw Error();return r.json()});
-  const c=d.current||{}; hourlyData=d.hourly||null;
+  const c=d.current||{}; hourlyData=d.hourly||null; currentWeatherTime=c.time||null;
   card.innerHTML=`
    <div class="nowrow"><div><b>${name}</b><div class="muted">${wc[c.weather_code]||'حالة جوية'}</div></div><div class="bigtemp">${nf(c.temperature_2m)}°</div></div>
    <div class="metricrow">
@@ -280,16 +285,46 @@ document.getElementById('modelSelect').onchange=()=>loadWeather(selected.lat,sel
 
 map.on('click',e=>loadWeather(e.latlng.lat,e.latlng.lng,'الموقع المحدد'));
 
-function render72(){
+function firstFutureHourlyIndex(){
+ if(!hourlyData||!hourlyData.time)return 0;
+ if(currentWeatherTime){
+  const i=hourlyData.time.findIndex(t=>t>currentWeatherTime);
+  if(i>=0)return i;
+ }
+ const now=Date.now();
+ const i=hourlyData.time.findIndex(t=>new Date(t).getTime()>now);
+ return i>=0?i:0;
+}
+
+function renderHours(count){
  const wrap=document.getElementById('hourlyWrap');
  if(!hourlyData||!hourlyData.time){wrap.innerHTML='<div class="muted">لا توجد بيانات.</div>';return}
- wrap.innerHTML=hourlyData.time.slice(0,72).map((t,i)=>{
+ const start=firstFutureHourlyIndex();
+ const end=Math.min(start+count,hourlyData.time.length);
+ wrap.innerHTML=hourlyData.time.slice(start,end).map((t,k)=>{
+  const i=start+k;
   const dt=new Date(t), label=dt.toLocaleString('ar',{weekday:'short',hour:'numeric'});
   return `<div class="hour"><div>${label}</div><strong>${nf(hourlyData.temperature_2m[i])}°</strong><div>${wc[hourlyData.weather_code[i]]||''}</div><div class="muted">مطر ${nf(hourlyData.precipitation_probability[i])}%</div><div class="muted">سحب ${nf(hourlyData.cloud_cover[i])}%</div></div>`
  }).join('');
 }
 
-document.getElementById('forecastBtn').onclick=()=>document.getElementById('forecastSheet').classList.add('open');
+function render2(){
+ const wrap=document.getElementById('hourlyWrap');
+ if(!hourlyData||!hourlyData.time){wrap.innerHTML='<div class="muted">لا توجد بيانات.</div>';return}
+ const future=firstFutureHourlyIndex();
+ const start=Math.max(0,future-2);
+ const end=Math.min(hourlyData.time.length,future+2);
+ wrap.innerHTML=hourlyData.time.slice(start,end).map((t,k)=>{
+  const i=start+k;
+  const dt=new Date(t), label=dt.toLocaleString('ar',{weekday:'short',hour:'numeric'});
+  const tag=i<future?'ماضية':'قادمة';
+  return `<div class="hour"><div>${label}</div><strong>${nf(hourlyData.temperature_2m[i])}°</strong><div>${wc[hourlyData.weather_code[i]]||''}</div><div class="muted">${tag}</div><div class="muted">مطر ${nf(hourlyData.precipitation_probability[i])}%</div><div class="muted">سحب ${nf(hourlyData.cloud_cover[i])}%</div></div>`
+ }).join('');
+}
+function render72(){renderHours(72)}
+
+document.getElementById('twoHourBtn').onclick=()=>{document.getElementById('forecastTitle').textContent='ساعتان ماضيتان + ساعتان قادمتان';render2();document.getElementById('forecastSheet').classList.add('open')};
+document.getElementById('forecastBtn').onclick=()=>{document.getElementById('forecastTitle').textContent='توقعات 72 ساعة';render72();document.getElementById('forecastSheet').classList.add('open')};
 document.getElementById('closeForecast').onclick=()=>document.getElementById('forecastSheet').classList.remove('open');
 document.getElementById('togglePanelBtn').onclick=()=>document.getElementById('sidebar').classList.toggle('compact');
 document.getElementById('resetBtn').onclick=()=>map.setView([20,15],2);
