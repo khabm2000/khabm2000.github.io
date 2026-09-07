@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- KHABM_BUILD: RAINVIEWER_TILES_ON_SAME_MAP_V7_20260907 -->
 <!-- KHABM_BUILD: SAME_MAP_ONLY_RADAR_V6_20260907 -->
 <!-- KHABM_BUILD: SAME_MAP_RAINVIEWER_2H_V5_20260907 -->
 <!-- KHABM_BUILD: RADAR_2H_AND_TEMP_POPUP_V4_20260907 -->
@@ -450,7 +451,7 @@ html,body{
  </div>
 
  <div class="bottomDock">
-  <button class="dockbtn" id="twoHourBtn" type="button">🌧️ أمطار −2س إلى +2س</button>
+  <button class="dockbtn" id="twoHourBtn" type="button">🌧️ الأمطار على خريطتي −2س إلى +2س</button>
   <button class="dockbtn" id="forecastBtn">🕒 72 ساعة</button>
   <button class="dockbtn" id="lightningLink">⚡ البرق مباشر</button>
   <a class="dockbtn" id="dustLink" href="https://www.ventusky.com/air-quality-map/dust" target="_blank" rel="noopener" style="text-decoration:none">🌫️ الغبار</a>
@@ -482,7 +483,7 @@ html,body{
   <div class="wcSection">
    <div class="sectionTitle">الرصد المباشر</div>
    <div class="wcGrid">
-    <a href="https://www.rainviewer.com/weather-radar-map-live.html" target="_blank" rel="noopener noreferrer">🌧️ RainViewer</a>
+    
     <a href="https://maps.blitzortung.org/" target="_blank" rel="noopener noreferrer">⚡ البرق Blitzortung</a>
     <a href="https://www.lightningmaps.org/" target="_blank" rel="noopener noreferrer">⚡ LightningMaps</a>
     <a href="https://www.ventusky.com/air-quality-map/dust" target="_blank" rel="noopener noreferrer">🌫️ الغبار</a>
@@ -788,30 +789,31 @@ document.getElementById('weatherCenterBtn').onclick=()=>document.getElementById(
 document.getElementById('closeWeatherCenter').onclick=()=>document.getElementById('weatherCenterSheet').classList.remove('open');
 document.getElementById('lightningLink').onclick=()=>{closeAllProSheets();document.getElementById('lightningSheet').classList.add('open')};
 document.getElementById('twoHourBtn').onclick=async()=>{
-  // لا نافذة، لا iframe، لا صفحة أخرى: طبقة RainViewer فوق نفس خريطة KHABM.
   if(!rvMeta) rvMeta=await loadRainViewer();
-  if(!rvMeta || !radarFrames || !radarFrames.length){
-    alert('تعذر تحميل رادار RainViewer الآن');
-    return;
-  }
+  if(!rvMeta){ alert('تعذر تحميل بيانات الرادار الآن'); return; }
 
-  // أبقِ آخر ساعتين من الرصد + إطارات nowcast القادمة التي يوفرها RainViewer.
   const now=Math.floor(Date.now()/1000);
-  const allFrames=[...(rvMeta.radar?.past||[]), ...(rvMeta.radar?.nowcast||[])];
-  radarFrames=allFrames.filter(f => {
+  const frames=[
+    ...(rvMeta.radar?.past||[]),
+    ...(rvMeta.radar?.nowcast||[])
+  ].filter(f=>{
     const t=Number(f.time||0);
-    return t >= now-7200;
+    return t>=now-7200;
   });
 
-  // تأكد أن الخريطة نفسها ظاهرة بكامل المساحة.
-  document.getElementById('forecastSheet')?.classList.remove('open');
-  document.getElementById('weatherCenterSheet')?.classList.remove('open');
-  document.getElementById('modelCompareSheet')?.classList.remove('open');
-  document.getElementById('rainSummarySheet')?.classList.remove('open');
-  document.getElementById('lightningSheet')?.classList.remove('open');
+  if(!frames.length){ alert('لا توجد إطارات رادار متاحة الآن'); return; }
 
+  radarFrames=frames;
+
+  // لا نفتح أي صفحة أو نافذة أو خريطة أخرى.
+  // نرسم طبقة RainViewer كـ tiles فوق نفس Leaflet map الموجودة في KHABM.
+  document.querySelectorAll('.sheet.open').forEach(el=>el.classList.remove('open'));
+
+  currentLayerKind='radar';
   setupTimeline('radar');
-  setTimeout(()=>{ try{ map.invalidateSize(); }catch(e){} },50);
+
+  // إبقاء مركز الخريطة وزوم المستخدم كما هما.
+  setTimeout(()=>{ try{ map.invalidateSize(false); }catch(e){} },60);
 };
 document.getElementById('forecastBtn').onclick=()=>{document.getElementById('forecastTitle').textContent='توقعات 72 ساعة';render72();document.getElementById('forecastSheet').classList.add('open')};
 document.getElementById('closeForecast').onclick=()=>document.getElementById('forecastSheet').classList.remove('open');
@@ -843,37 +845,25 @@ function setupTimeline(kind){
  if(!tl||!range)return;
 
  currentLayerKind=kind;
- let frames=[];
- if(kind==='radar'){
-   frames=radarFrames||[];
- }else{
-   frames=satFrames||[];
- }
- if(!frames.length){
-   tl.classList.remove('show');
-   return;
- }
+ const frames=(kind==='radar')?(radarFrames||[]): (satFrames||[]);
+ if(!frames.length){ tl.classList.remove('show'); return; }
 
  range.min=0;
  range.max=frames.length-1;
  range.step=1;
 
- // ابدأ من أقرب إطار للوقت الحالي.
- let nowIndex=frames.length-1;
- if(kind==='radar'){
-   const now=Math.floor(Date.now()/1000);
-   let best=Infinity;
-   frames.forEach((f,i)=>{
-     const d=Math.abs((f.time||0)-now);
-     if(d<best){best=d;nowIndex=i;}
-   });
- }
- range.value=nowIndex;
+ const now=Math.floor(Date.now()/1000);
+ let startIndex=frames.length-1;
+ let best=Infinity;
+ frames.forEach((f,i)=>{
+   const d=Math.abs(Number(f.time||0)-now);
+   if(d<best){best=d;startIndex=i;}
+ });
+ range.value=startIndex;
  tl.classList.add('show');
 
  const paint=(idx)=>{
-   idx=Number(idx);
-   const f=frames[idx];
+   const f=frames[Number(idx)];
    if(!f)return;
 
    if(radarLayer){
@@ -884,21 +874,26 @@ function setupTimeline(kind){
    if(kind==='radar'){
      radarLayer=L.tileLayer(
        `https://tilecache.rainviewer.com/v2/radar/${f.path}/256/{z}/{x}/{y}/2/1_1.png`,
-       {opacity:.78,zIndex:650,maxZoom:20}
-     ).addTo(map);
+       {
+         opacity:.78,
+         zIndex:650,
+         maxZoom:20,
+         attribution:'RainViewer'
+       }
+     );
+     radarLayer.addTo(map);
    }
 
-   const dt=new Date((f.time||0)*1000);
-   const now=Date.now();
-   const diffMin=Math.round((dt.getTime()-now)/60000);
+   const dt=new Date(Number(f.time||0)*1000);
+   const diff=Math.round((dt.getTime()-Date.now())/60000);
    let tag='الآن';
-   if(diffMin<-5) tag=`منذ ${Math.abs(diffMin)} دقيقة`;
-   if(diffMin>5) tag=`بعد ${diffMin} دقيقة`;
-   if(timeLabel) timeLabel.textContent=`${tag} — ${dt.toLocaleTimeString('ar',{hour:'numeric',minute:'2-digit'})}`;
+   if(diff<-5)tag=`منذ ${Math.abs(diff)} دقيقة`;
+   if(diff>5)tag=`بعد ${diff} دقيقة`;
+   if(timeLabel)timeLabel.textContent=`${tag} — ${dt.toLocaleTimeString('ar',{hour:'numeric',minute:'2-digit'})}`;
  };
 
  range.oninput=()=>paint(range.value);
- paint(nowIndex);
+ paint(startIndex);
 }
 function frameUrl(frame,kind){
  if(!rvMeta||!frame)return null;
