@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- KHABM_BUILD: PROFESSIONAL_CENTER_V3_20260907 -->
 <!-- KHABM_BUILD: PROFESSIONAL_CHROME_SAFE_V2_20260907 -->
 <!-- KHABM_BUILD: PROFESSIONAL_WEATHER_CENTER_V1_20260907 -->
 <!-- KHABM_BUILD: SAFE_CHROME_SAFARI_V2_20260907 -->
@@ -324,6 +325,38 @@ html,body{
 }
 /* ===== END CHROME HOTFIX ===== */
 
+
+/* ===== KHABM PROFESSIONAL MODULES ===== */
+.wcAction{
+ display:flex;align-items:center;justify-content:center;text-align:center;
+ min-height:42px;padding:8px;border:1px solid var(--line);border-radius:11px;
+ background:var(--panel2);color:var(--text);font-size:11px;cursor:pointer;
+}
+.proSheet,.lightningSheet{
+ width:min(760px,calc(100% - 28px))!important;
+ left:50%!important;
+ transform:translateX(-50%)!important;
+ bottom:64px!important;
+ max-height:76%!important;
+}
+.compareGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.compareCard{
+ border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:10px;
+}
+.compareCard .modelName{font-weight:800;margin-bottom:7px}
+.compareMetrics{display:grid;grid-template-columns:1fr 1fr;gap:5px;font-size:11px}
+.compareMetrics span{background:rgba(255,255,255,.04);border-radius:8px;padding:6px}
+.summaryGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.summaryCard{border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:10px;text-align:center}
+.summaryCard .sumValue{font-size:20px;font-weight:900;margin:5px 0}
+@media(max-width:820px){
+ .proSheet,.lightningSheet{bottom:82px!important;max-height:70%!important}
+ .compareGrid{grid-template-columns:1fr}
+ .summaryGrid{grid-template-columns:1fr 1fr}
+ .lightningSheet iframe{height:45vh!important}
+}
+/* ===== END PROFESSIONAL MODULES ===== */
+
 </style>
 </head>
 <body>
@@ -376,7 +409,7 @@ html,body{
 
   <div class="card">
    <div class="sectionTitle">مركز الطقس المتقدم</div>
-   <button id="weatherCenterBtn" class="layerbtn" style="width:100%">🌐 جميع النماذج والروابط</button>
+   <button id="weatherCenterBtn" class="layerbtn" style="width:100%">🌐 مركز KHABM الاحترافي</button>
   </div>
 
   <div class="card">
@@ -412,7 +445,7 @@ html,body{
  <div class="bottomDock">
   <button class="dockbtn" id="twoHourBtn">⏱ ساعتان ماضية + ساعتان قادمة</button>
   <button class="dockbtn" id="forecastBtn">🕒 72 ساعة</button>
-  <a class="dockbtn" id="lightningLink" href="https://maps.blitzortung.org/" target="_blank" rel="noopener noreferrer" style="text-decoration:none">⚡ البرق مباشر</a>
+  <button class="dockbtn" id="lightningLink">⚡ البرق مباشر</button>
   <a class="dockbtn" id="dustLink" href="https://www.ventusky.com/air-quality-map/dust" target="_blank" rel="noopener" style="text-decoration:none">🌫️ الغبار</a>
   <button class="dockbtn" id="togglePanelBtn">☰ الطبقات</button>
   <button class="dockbtn" id="resetBtn">🌍 العالم</button>
@@ -427,6 +460,16 @@ html,body{
   <div class="nowrow">
    <b>🌐 مركز KHABM للطقس والنماذج</b>
    <button id="closeWeatherCenter" class="iconbtn" style="width:32px;height:32px;min-width:32px">×</button>
+  </div>
+
+  <div class="wcSection">
+   <div class="sectionTitle">أدوات KHABM داخل الموقع</div>
+   <div class="wcGrid">
+    <button class="wcAction" id="compareModelsBtn">📊 مقارنة النماذج</button>
+    <button class="wcAction" id="rainSummaryBtn">🌧️ ملخص المطر 72 ساعة</button>
+    <button class="wcAction" id="lightningInsideBtn">⚡ البرق داخل الموقع</button>
+    <button class="wcAction" id="radarInsideBtn">📡 الرادار داخل الموقع</button>
+   </div>
   </div>
 
   <div class="wcSection">
@@ -477,6 +520,34 @@ html,body{
   <div class="muted" style="margin-top:10px">
    الروابط تفتح المصادر الأصلية مباشرة. لا يتم نسخ أو إعادة نشر محتوى المواقع الأخرى داخل KHABM.
   </div>
+ </section>
+
+ <section class="sheet proSheet" id="modelCompareSheet">
+  <div class="nowrow">
+   <b>📊 مقارنة النماذج للموقع المحدد</b>
+   <button id="closeModelCompare" class="iconbtn" style="width:32px;height:32px;min-width:32px">×</button>
+  </div>
+  <div class="muted" style="margin-top:5px">مقارنة تلقائية لنفس الإحداثيات خلال الساعات الـ24 القادمة.</div>
+  <div id="modelCompareWrap" class="compareGrid" style="margin-top:10px"></div>
+ </section>
+
+ <section class="sheet proSheet" id="rainSummarySheet">
+  <div class="nowrow">
+   <b>🌧️ ملخص المطر حتى 72 ساعة</b>
+   <button id="closeRainSummary" class="iconbtn" style="width:32px;height:32px;min-width:32px">×</button>
+  </div>
+  <div id="rainSummaryWrap" class="summaryGrid" style="margin-top:10px"></div>
+ </section>
+
+ <section class="sheet lightningSheet" id="lightningSheet">
+  <div class="nowrow">
+   <b>⚡ البرق المباشر</b>
+   <button id="closeLightning" class="iconbtn" style="width:32px;height:32px;min-width:32px">×</button>
+  </div>
+  <div class="muted" style="margin:5px 0 8px">خريطة Blitzortung المباشرة — تفتح داخل KHABM.</div>
+  <iframe id="lightningFrame" title="Blitzortung Live Lightning" loading="lazy"
+    referrerpolicy="no-referrer"
+    src="https://map.blitzortung.org/" style="width:100%;height:52vh;border:0;border-radius:12px;background:#000"></iframe>
  </section>
 
 </div>
@@ -600,9 +671,98 @@ async function render2(){
 }
 function render72(){renderHours(72)}
 
+
+const modelCatalog=[
+ {id:'ecmwf_ifs',name:'ECMWF IFS'},
+ {id:'ncep_gfs_seamless',name:'NOAA GFS'},
+ {id:'icon_seamless',name:'DWD ICON'},
+ {id:'cmc_gem_seamless',name:'GEM'},
+ {id:'ukmo_global_deterministic_10km',name:'UKMO'},
+ {id:'jma_gsm',name:'JMA'}
+];
+
+function closeAllProSheets(){
+ ['modelCompareSheet','rainSummarySheet','lightningSheet'].forEach(id=>{
+  const el=document.getElementById(id); if(el)el.classList.remove('open');
+ });
+}
+
+async function compareModels(){
+ const wrap=document.getElementById('modelCompareWrap');
+ wrap.innerHTML='<div class="muted">جاري مقارنة النماذج العالمية…</div>';
+ const jobs=modelCatalog.map(async m=>{
+  const u=`https://api.open-meteo.com/v1/forecast?latitude=${selected.lat}&longitude=${selected.lon}&models=${encodeURIComponent(m.id)}&hourly=temperature_2m,precipitation_probability,precipitation,wind_speed_10m&forecast_hours=24&timezone=auto`;
+  try{
+   const d=await fetch(u).then(r=>{if(!r.ok)throw Error();return r.json()});
+   const h=d.hourly||{};
+   const rain=(h.precipitation||[]).reduce((a,v)=>a+(Number(v)||0),0);
+   const prob=Math.max(0,...(h.precipitation_probability||[]).map(v=>Number(v)||0));
+   const temps=(h.temperature_2m||[]).filter(v=>Number.isFinite(Number(v))).map(Number);
+   const winds=(h.wind_speed_10m||[]).filter(v=>Number.isFinite(Number(v))).map(Number);
+   return {name:m.name,ok:true,rain,prob,
+    tmin:temps.length?Math.min(...temps):null,
+    tmax:temps.length?Math.max(...temps):null,
+    wind:winds.length?Math.max(...winds):null};
+  }catch(e){return {name:m.name,ok:false}}
+ });
+ const rows=await Promise.all(jobs);
+ wrap.innerHTML=rows.map(x=>x.ok?`<div class="compareCard">
+   <div class="modelName">${x.name}</div>
+   <div class="compareMetrics">
+    <span>🌧️ مجموع المطر<br><b>${x.rain.toFixed(1)} مم</b></span>
+    <span>☔ أعلى احتمال<br><b>${Math.round(x.prob)}%</b></span>
+    <span>🌡️ الحرارة<br><b>${x.tmin==null?'—':Math.round(x.tmin)}° / ${x.tmax==null?'—':Math.round(x.tmax)}°</b></span>
+    <span>💨 أقصى رياح<br><b>${x.wind==null?'—':Math.round(x.wind)} كم/س</b></span>
+   </div>
+  </div>`:`<div class="compareCard"><div class="modelName">${x.name}</div><div class="muted">غير متاح لهذا الموقع/الوقت.</div></div>`).join('');
+}
+
+function rainSummary72(){
+ const wrap=document.getElementById('rainSummaryWrap');
+ if(!hourlyData||!hourlyData.time){
+  wrap.innerHTML='<div class="muted">اختر موقعًا على الخريطة أولًا.</div>';return;
+ }
+ const start=firstFutureHourlyIndex();
+ const blocks=[{label:'0–24 ساعة',a:0,b:24},{label:'24–48 ساعة',a:24,b:48},{label:'48–72 ساعة',a:48,b:72}];
+ wrap.innerHTML=blocks.map(bl=>{
+  const a=start+bl.a,b=Math.min(start+bl.b,hourlyData.time.length);
+  const rain=(hourlyData.precipitation||[]).slice(a,b).reduce((x,v)=>x+(Number(v)||0),0);
+  const probs=(hourlyData.precipitation_probability||[]).slice(a,b).map(v=>Number(v)||0);
+  const maxp=probs.length?Math.max(...probs):0;
+  return `<div class="summaryCard"><b>${bl.label}</b><div class="sumValue">${rain.toFixed(1)} مم</div><div class="muted">أعلى احتمال ${Math.round(maxp)}%</div></div>`;
+ }).join('');
+}
+
+
+document.getElementById('compareModelsBtn').onclick=()=>{
+ closeAllProSheets(); document.getElementById('weatherCenterSheet').classList.remove('open');
+ document.getElementById('modelCompareSheet').classList.add('open'); compareModels();
+};
+document.getElementById('closeModelCompare').onclick=()=>document.getElementById('modelCompareSheet').classList.remove('open');
+
+document.getElementById('rainSummaryBtn').onclick=()=>{
+ closeAllProSheets(); document.getElementById('weatherCenterSheet').classList.remove('open');
+ rainSummary72(); document.getElementById('rainSummarySheet').classList.add('open');
+};
+document.getElementById('closeRainSummary').onclick=()=>document.getElementById('rainSummarySheet').classList.remove('open');
+
+document.getElementById('lightningInsideBtn').onclick=()=>{
+ closeAllProSheets(); document.getElementById('weatherCenterSheet').classList.remove('open');
+ document.getElementById('lightningSheet').classList.add('open');
+};
+document.getElementById('closeLightning').onclick=()=>document.getElementById('lightningSheet').classList.remove('open');
+
+document.getElementById('radarInsideBtn').onclick=async()=>{
+ document.getElementById('weatherCenterSheet').classList.remove('open');
+ if(!rvMeta)rvMeta=await loadRainViewer();
+ if(!rvMeta){alert('تعذر تحميل الرادار الآن');return}
+ document.getElementById('radarBtn').classList.add('active'); setupTimeline('radar');
+};
+
 document.getElementById('weatherCenterBtn').onclick=()=>document.getElementById('weatherCenterSheet').classList.add('open');
 document.getElementById('closeWeatherCenter').onclick=()=>document.getElementById('weatherCenterSheet').classList.remove('open');
-document.getElementById('twoHourBtn').onclick=()=>{document.getElementById('forecastTitle').textContent='ساعتان ماضيتان + ساعتان قادمتان';render2();document.getElementById('forecastSheet').classList.add('open')};
+document.getElementById('lightningLink').onclick=()=>{closeAllProSheets();document.getElementById('lightningSheet').classList.add('open')};
+document.getElementById('twoHourBtn').onclick=()=>{document.getElementById('forecastTitle').textContent='المطر: ساعتان ماضيتان + ساعتان قادمتان (كل 15 دقيقة)';render2();document.getElementById('forecastSheet').classList.add('open')};
 document.getElementById('forecastBtn').onclick=()=>{document.getElementById('forecastTitle').textContent='توقعات 72 ساعة';render72();document.getElementById('forecastSheet').classList.add('open')};
 document.getElementById('closeForecast').onclick=()=>document.getElementById('forecastSheet').classList.remove('open');
 document.getElementById('togglePanelBtn').onclick=()=>document.getElementById('sidebar').classList.toggle('compact');
