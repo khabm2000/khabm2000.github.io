@@ -1,4 +1,9 @@
 <!doctype html>
+<!-- KHABM_BUILD: NIGHT_MAP_REMOVED_V12_20260908 -->
+<!-- KHABM_BUILD: V11_NO_NIGHT_MODE_20260908 -->
+<!-- KHABM_BUILD: LIGHTNING_WEATHERBIT_READY_V10_20260908 -->
+<!-- KHABM_BUILD: PRO_SHORT_RANGE_ADVANCED_V9_20260907 -->
+<!-- KHABM_BUILD: NO_THEME_VISIBLE_LIGHTNING_V8_20260907 -->
 <!-- KHABM_BUILD: RAINVIEWER_TILES_ON_SAME_MAP_V7_20260907 -->
 <!-- KHABM_BUILD: SAME_MAP_ONLY_RADAR_V6_20260907 -->
 <!-- KHABM_BUILD: SAME_MAP_RAINVIEWER_2H_V5_20260907 -->
@@ -365,8 +370,20 @@ html,body{
 .tempPopup .tpTemp{font-size:25px;font-weight:900;line-height:1.1}
 .tempPopup .tpMeta{font-size:11px;opacity:.78;margin-top:4px}
 
+
+.lightningMainBtn{font-weight:900!important;white-space:nowrap!important}
 </style>
 </head>
+<!--
+ LIGHTNING BACKEND REQUIRED:
+ Create /api/lightning on a private backend/serverless function.
+ Store WEATHERBIT_API_KEY as a secret environment variable.
+ Proxy to:
+ https://api.weatherbit.io/v2.0/current/lightning
+ with lat, lon, search_distance_km<=75, search_mins<=45, output_type=geojson.
+ NEVER place the Weatherbit API key in this public index.html.
+-->
+
 <body>
 <div class="app">
 <div id="mainTopbar" class="mainTopbar">
@@ -378,7 +395,6 @@ html,body{
  </div>
  <div class="actions">
   <button class="iconbtn" id="locateBtn" title="موقعي">◎</button>
-  <button class="iconbtn" id="themeBtn" title="ليلي/نهاري">🌙</button>
  </div>
 </div>
 
@@ -399,7 +415,7 @@ html,body{
    <button class="layerbtn active" data-base="street">🗺️ أسماء</button>
    <button class="layerbtn" data-base="sat">🛰️ أقمار</button>
    <button class="layerbtn" data-base="terrain">⛰️ تضاريس</button>
-   <button class="layerbtn" data-base="dark">🌙 ليلي</button>
+   
   </div>
 
   <div class="sectionTitle" style="margin-top:12px">الرصد والطبقات</div>
@@ -453,7 +469,7 @@ html,body{
  <div class="bottomDock">
   <button class="dockbtn" id="twoHourBtn" type="button">🌧️ الأمطار على خريطتي −2س إلى +2س</button>
   <button class="dockbtn" id="forecastBtn">🕒 72 ساعة</button>
-  <button class="dockbtn" id="lightningLink">⚡ البرق مباشر</button>
+  <button class="dockbtn lightningMainBtn" id="lightningLink" type="button">⚡ البرق مباشر</button>
   <a class="dockbtn" id="dustLink" href="https://www.ventusky.com/air-quality-map/dust" target="_blank" rel="noopener" style="text-decoration:none">🌫️ الغبار</a>
   <button class="dockbtn" id="togglePanelBtn">☰ الطبقات</button>
   <button class="dockbtn" id="resetBtn">🌍 العالم</button>
@@ -475,7 +491,7 @@ html,body{
    <div class="wcGrid">
     <button class="wcAction" id="compareModelsBtn">📊 مقارنة النماذج</button>
     <button class="wcAction" id="rainSummaryBtn">🌧️ ملخص المطر 72 ساعة</button>
-    <button class="wcAction" id="lightningInsideBtn">⚡ البرق داخل الموقع</button>
+    <button class="wcAction" id="lightningInsideBtn">⚡ البرق على خريطتي</button>
     <button class="wcAction" id="radarInsideBtn">📡 الرادار داخل الموقع</button>
    </div>
   </div>
@@ -512,6 +528,29 @@ html,body{
    </div>
   </div>
 
+  
+  <div class="wcSection">
+   <div class="sectionTitle">التوقعات قصيرة المدى</div>
+   <div class="wcGrid">
+    <button class="wcAction" id="short6Btn">🌧️ المطر 6 ساعات داخل KHABM</button>
+    <button class="wcAction" id="advancedNowBtn">⛈️ مؤشرات عدم الاستقرار</button>
+    <a href="https://www.yanbuweather.com/pages/nowcast/" target="_blank" rel="noopener noreferrer">⏱️ Nowcast ينبع ويذر</a>
+    <a href="https://www.yanbuweather.com/pages/next6hrRain/" target="_blank" rel="noopener noreferrer">🌧️ أمطار 6 ساعات</a>
+    <a href="https://www.yanbuweather.com/pages/radar_one_minute/" target="_blank" rel="noopener noreferrer">📡 رادار دقيقة</a>
+    <a href="https://www.yanbuweather.com/pages/RainAmounts/index.php" target="_blank" rel="noopener noreferrer">💧 كميات الأمطار</a>
+   </div>
+  </div>
+
+  <div class="wcSection">
+   <div class="sectionTitle">طبقات وتحليلات متقدمة</div>
+   <div class="wcGrid">
+    <button class="wcAction" id="upperAirBtn">🌀 طبقات 850/700/500/300 hPa</button>
+    <button class="wcAction" id="cloudSameMapBtn">🛰️ السحب على نفس الخريطة</button>
+    <a href="https://zoom.earth/maps/satellite/" target="_blank" rel="noopener noreferrer">🛰️ أقمار صناعية عالمية</a>
+    <a href="https://view.eumetsat.int/productviewer" target="_blank" rel="noopener noreferrer">🛰️ EUMETSAT</a>
+   </div>
+  </div>
+
   <div class="wcSection">
    <div class="sectionTitle">روابط مرجعية مثل أقسام ينبع ويذر</div>
    <div class="wcGrid">
@@ -528,6 +567,31 @@ html,body{
   <div class="muted" style="margin-top:10px">
    الروابط تفتح المصادر الأصلية مباشرة. لا يتم نسخ أو إعادة نشر محتوى المواقع الأخرى داخل KHABM.
   </div>
+ </section>
+
+ <section class="sheet proSheet" id="short6Sheet">
+  <div class="nowrow">
+   <b>🌧️ توقع المطر القصير — 6 ساعات</b>
+   <button id="closeShort6" class="iconbtn" style="width:32px;height:32px;min-width:32px">×</button>
+  </div>
+  <div id="short6Wrap" class="summaryGrid" style="margin-top:10px"></div>
+ </section>
+
+ <section class="sheet proSheet" id="advancedNowSheet">
+  <div class="nowrow">
+   <b>⛈️ مؤشرات عدم الاستقرار للموقع المحدد</b>
+   <button id="closeAdvancedNow" class="iconbtn" style="width:32px;height:32px;min-width:32px">×</button>
+  </div>
+  <div id="advancedNowWrap" class="compareGrid" style="margin-top:10px"></div>
+ </section>
+
+ <section class="sheet proSheet" id="upperAirSheet">
+  <div class="nowrow">
+   <b>🌀 طبقات الجو العليا للموقع المحدد</b>
+   <button id="closeUpperAir" class="iconbtn" style="width:32px;height:32px;min-width:32px">×</button>
+  </div>
+  <div class="muted" style="margin-top:5px">ملخص النقطة المحددة لأقرب ساعة متاحة من النموذج المختار.</div>
+  <div id="upperAirWrap" class="compareGrid" style="margin-top:10px"></div>
  </section>
 
  <section class="sheet proSheet" id="modelCompareSheet">
@@ -552,10 +616,10 @@ html,body{
    <b>⚡ البرق المباشر</b>
    <button id="closeLightning" class="iconbtn" style="width:32px;height:32px;min-width:32px">×</button>
   </div>
-  <div class="muted" style="margin:5px 0 8px">خريطة Blitzortung المباشرة — تفتح داخل KHABM.</div>
-  <iframe id="lightningFrame" title="Blitzortung Live Lightning" loading="lazy"
-    referrerpolicy="no-referrer"
-    src="https://map.blitzortung.org/" style="width:100%;height:52vh;border:0;border-radius:12px;background:#000"></iframe>
+  <div class="muted" style="margin:8px 0">
+   لن نفتح خريطة خارجية. هذه الوظيفة مخصصة لطبقة برق تُرسم فوق خريطة KHABM نفسها عند ربط مصدر Lightning API مرخّص.
+  </div>
+  <div class="compareCard"><div class="modelName">⚡ طبقة البرق المباشر</div><div class="muted">جاهز لعرض ضربات البرق فوق خريطة KHABM نفسها عبر Weatherbit بعد تفعيل المفتاح في الخادم.</div></div>
  </section>
 
  
@@ -573,9 +637,7 @@ const map=L.map('map',{zoomControl:true,worldCopyJump:true}).setView([25,45],4);
 const bases={
  street:L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}),
  sat:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Tiles © Esri'}),
- terrain:L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenStreetMap, SRTM | OpenTopoMap'}),
- dark:L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:20,attribution:'© OpenStreetMap © CARTO'})
-};
+ terrain:L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenStreetMap, SRTM | OpenTopoMap'}),};
 const satLabels=L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png',{maxZoom:20,opacity:.96,attribution:'© OpenStreetMap © CARTO'});
 let baseName='street'; bases.street.addTo(map);
 
@@ -586,15 +648,12 @@ function setBase(name){
  document.querySelectorAll('[data-base]').forEach(b=>b.classList.toggle('active',b.dataset.base===name));
 }
 document.querySelectorAll('[data-base]').forEach(b=>b.onclick=()=>setBase(b.dataset.base));
-
-document.getElementById('themeBtn').onclick=()=>{
- const light=document.body.classList.toggle('light');
- document.getElementById('themeBtn').textContent=light?'☀️':'🌙';
- if(light && baseName==='dark')setBase('street');
- if(!light && baseName==='street')setBase('dark');
 };
 
 let marker=L.marker([24.7,46.7]).addTo(map);
+let lightningLayer=L.layerGroup().addTo(map);
+let lightningRefreshTimer=null;
+const LIGHTNING_PROXY_URL='/api/lightning';
 let selected={lat:24.7,lon:46.7,name:'الرياض'};
 let hourlyData=null;
 let currentWeatherTime=null;
@@ -743,6 +802,178 @@ async function compareModels(){
   </div>`:`<div class="compareCard"><div class="modelName">${x.name}</div><div class="muted">غير متاح لهذا الموقع/الوقت.</div></div>`).join('');
 }
 
+
+
+function lightningMarkerStyle(minutesAgo){
+ const age=Math.max(0,Math.min(45,Number(minutesAgo||0)));
+ const opacity=Math.max(.35,1-(age/60));
+ return {
+   radius: age<=10?6:4.5,
+   weight:1,
+   opacity,
+   fillOpacity:opacity
+ };
+}
+
+async function loadLightningOnMap(){
+ const btn=document.getElementById('lightningLink');
+ if(btn)btn.classList.add('active');
+
+ // اضغط مرة ثانية لإخفاء البرق
+ if(lightningLayer && lightningLayer.getLayers().length){
+   lightningLayer.clearLayers();
+   if(lightningRefreshTimer){clearInterval(lightningRefreshTimer);lightningRefreshTimer=null;}
+   if(btn)btn.classList.remove('active');
+   return;
+ }
+
+ const draw=async()=>{
+   try{
+     const lat=Number(selected.lat), lon=Number(selected.lon);
+     const u=`${LIGHTNING_PROXY_URL}?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}&distance=75&minutes=45`;
+     const r=await fetch(u,{cache:'no-store'});
+     if(!r.ok)throw new Error(`HTTP ${r.status}`);
+     const j=await r.json();
+
+     lightningLayer.clearLayers();
+
+     const feats = Array.isArray(j.features) ? j.features :
+       Array.isArray(j.lightning) ? j.lightning.map(x=>({
+         type:'Feature',
+         geometry:{type:'Point',coordinates:[Number(x.lon??x.longitude),Number(x.lat??x.latitude)]},
+         properties:x
+       })) : [];
+
+     feats.forEach(f=>{
+       const c=f?.geometry?.coordinates;
+       if(!Array.isArray(c)||c.length<2)return;
+       const lon=Number(c[0]), lat=Number(c[1]);
+       if(!Number.isFinite(lat)||!Number.isFinite(lon))return;
+
+       const p=f.properties||{};
+       let minutesAgo=0;
+       const t=p.timestamp||p.ob_time||p.datetime||p.time;
+       if(t){
+         const d=new Date(t);
+         if(!isNaN(d))minutesAgo=Math.max(0,Math.round((Date.now()-d.getTime())/60000));
+       }
+
+       const m=L.circleMarker([lat,lon],lightningMarkerStyle(minutesAgo));
+       m.bindTooltip(`⚡ برق${t?` · ${minutesAgo} دقيقة`:''}`,{direction:'top'});
+       m.addTo(lightningLayer);
+     });
+
+     if(!feats.length){
+       const notice=L.popup({closeButton:true})
+        .setLatLng([selected.lat,selected.lon])
+        .setContent('لا توجد ضربات برق مرصودة ضمن النطاق والزمن المحددين الآن.')
+        .openOn(map);
+     }
+   }catch(e){
+     alert('طبقة البرق جاهزة، لكنها تحتاج تفعيل خدمة /api/lightning وربط مفتاح Weatherbit في الخادم.');
+   }
+ };
+
+ await draw();
+ if(!lightningRefreshTimer){
+   lightningRefreshTimer=setInterval(draw,5*60*1000);
+ }
+}
+
+function shortRain6(){
+ const wrap=document.getElementById('short6Wrap');
+ if(!hourlyData||!hourlyData.time){
+   wrap.innerHTML='<div class="muted">اختر موقعًا على الخريطة أولًا.</div>';return;
+ }
+ const st=firstFutureHourlyIndex();
+ const out=[];
+ for(let k=0;k<6;k++){
+   const j=st+k;
+   if(j>=hourlyData.time.length)break;
+   const dt=new Date(hourlyData.time[j]);
+   const rain=Number((hourlyData.precipitation||[])[j]||0);
+   const prob=Number((hourlyData.precipitation_probability||[])[j]||0);
+   const cloud=Number((hourlyData.cloud_cover||[])[j]||0);
+   out.push(`<div class="summaryCard">
+     <b>${dt.toLocaleTimeString('ar',{hour:'numeric',minute:'2-digit'})}</b>
+     <div class="sumValue">${rain.toFixed(1)} مم</div>
+     <div class="muted">احتمال ${Math.round(prob)}% · سحب ${Math.round(cloud)}%</div>
+   </div>`);
+ }
+ wrap.innerHTML=out.join('')||'<div class="muted">لا توجد بيانات متاحة.</div>';
+}
+
+async function fetchAdvancedPoint(){
+ const model=document.getElementById('modelSelect').value;
+ const modelQ=model?`&models=${encodeURIComponent(model)}`:'';
+ const vars=[
+  'cape','cloud_cover','precipitation_probability','precipitation',
+  'wind_gusts_10m','visibility','freezing_level_height',
+  'temperature_850hPa','wind_speed_850hPa',
+  'temperature_700hPa','wind_speed_700hPa',
+  'temperature_500hPa','wind_speed_500hPa','geopotential_height_500hPa',
+  'temperature_300hPa','wind_speed_300hPa'
+ ].join(',');
+ const u=`https://api.open-meteo.com/v1/forecast?latitude=${selected.lat}&longitude=${selected.lon}&hourly=${vars}&forecast_hours=12&timezone=auto${modelQ}`;
+ const r=await fetch(u);
+ if(!r.ok)throw new Error('advanced fetch failed');
+ return await r.json();
+}
+
+function firstValid(arr){
+ if(!Array.isArray(arr))return null;
+ for(const v of arr){if(v!==null&&v!==undefined&&Number.isFinite(Number(v)))return Number(v)}
+ return null;
+}
+
+async function renderAdvancedNow(){
+ const wrap=document.getElementById('advancedNowWrap');
+ wrap.innerHTML='<div class="muted">جاري تحميل المؤشرات…</div>';
+ try{
+   const j=await fetchAdvancedPoint();
+   const h=j.hourly||{};
+   const cape=firstValid(h.cape), gust=firstValid(h.wind_gusts_10m);
+   const vis=firstValid(h.visibility), freeze=firstValid(h.freezing_level_height);
+   const cloud=firstValid(h.cloud_cover), rainp=firstValid(h.precipitation_probability);
+   const vals=[
+    ['CAPE',cape==null?'—':`${Math.round(cape)} J/kg`,'طاقة الحمل الحراري'],
+    ['هبات الرياح',gust==null?'—':`${Math.round(gust)} كم/س`,'قرب السطح'],
+    ['مدى الرؤية',vis==null?'—':`${(vis/1000).toFixed(1)} كم`,'تقريبي من النموذج'],
+    ['مستوى التجمد',freeze==null?'—':`${Math.round(freeze)} م`,'ارتفاع تقريبي'],
+    ['السحب',cloud==null?'—':`${Math.round(cloud)}%`,'لأقرب ساعة'],
+    ['احتمال المطر',rainp==null?'—':`${Math.round(rainp)}%`,'لأقرب ساعة']
+   ];
+   wrap.innerHTML=vals.map(v=>`<div class="compareCard"><div class="modelName">${v[0]}</div><div style="font-size:20px;font-weight:900;margin:5px 0">${v[1]}</div><div class="muted">${v[2]}</div></div>`).join('');
+ }catch(e){
+   wrap.innerHTML='<div class="muted">بعض المتغيرات المتقدمة غير متاحة من النموذج المختار. جرّب «أفضل تطابق».</div>';
+ }
+}
+
+async function renderUpperAir(){
+ const wrap=document.getElementById('upperAirWrap');
+ wrap.innerHTML='<div class="muted">جاري تحميل طبقات الجو العليا…</div>';
+ try{
+   const j=await fetchAdvancedPoint();
+   const h=j.hourly||{};
+   const levels=[
+    ['850 hPa',firstValid(h.temperature_850hPa),firstValid(h.wind_speed_850hPa),null],
+    ['700 hPa',firstValid(h.temperature_700hPa),firstValid(h.wind_speed_700hPa),null],
+    ['500 hPa',firstValid(h.temperature_500hPa),firstValid(h.wind_speed_500hPa),firstValid(h.geopotential_height_500hPa)],
+    ['300 hPa',firstValid(h.temperature_300hPa),firstValid(h.wind_speed_300hPa),null]
+   ];
+   wrap.innerHTML=levels.map(v=>`<div class="compareCard">
+      <div class="modelName">${v[0]}</div>
+      <div class="compareMetrics">
+       <span>🌡️ الحرارة<br><b>${v[1]==null?'—':v[1].toFixed(1)+'°'}</b></span>
+       <span>💨 الرياح<br><b>${v[2]==null?'—':Math.round(v[2])+' كم/س'}</b></span>
+       ${v[3]==null?'':`<span>📏 الارتفاع الجهدي<br><b>${Math.round(v[3])} م</b></span>`}
+      </div>
+   </div>`).join('');
+ }catch(e){
+   wrap.innerHTML='<div class="muted">بيانات الطبقات غير متاحة من النموذج المختار حاليًا. جرّب «أفضل تطابق».</div>';
+ }
+}
+
 function rainSummary72(){
  const wrap=document.getElementById('rainSummaryWrap');
  if(!hourlyData||!hourlyData.time){
@@ -759,6 +990,32 @@ function rainSummary72(){
  }).join('');
 }
 
+
+
+document.getElementById('short6Btn').onclick=()=>{
+ document.getElementById('weatherCenterSheet').classList.remove('open');
+ shortRain6(); document.getElementById('short6Sheet').classList.add('open');
+};
+document.getElementById('closeShort6').onclick=()=>document.getElementById('short6Sheet').classList.remove('open');
+
+document.getElementById('advancedNowBtn').onclick=()=>{
+ document.getElementById('weatherCenterSheet').classList.remove('open');
+ document.getElementById('advancedNowSheet').classList.add('open');
+ renderAdvancedNow();
+};
+document.getElementById('closeAdvancedNow').onclick=()=>document.getElementById('advancedNowSheet').classList.remove('open');
+
+document.getElementById('upperAirBtn').onclick=()=>{
+ document.getElementById('weatherCenterSheet').classList.remove('open');
+ document.getElementById('upperAirSheet').classList.add('open');
+ renderUpperAir();
+};
+document.getElementById('closeUpperAir').onclick=()=>document.getElementById('upperAirSheet').classList.remove('open');
+
+document.getElementById('cloudSameMapBtn').onclick=()=>{
+ document.getElementById('weatherCenterSheet').classList.remove('open');
+ document.getElementById('cloudBtn').click();
+};
 
 document.getElementById('compareModelsBtn').onclick=()=>{
  closeAllProSheets(); document.getElementById('weatherCenterSheet').classList.remove('open');
@@ -787,7 +1044,7 @@ document.getElementById('radarInsideBtn').onclick=async()=>{
 
 document.getElementById('weatherCenterBtn').onclick=()=>document.getElementById('weatherCenterSheet').classList.add('open');
 document.getElementById('closeWeatherCenter').onclick=()=>document.getElementById('weatherCenterSheet').classList.remove('open');
-document.getElementById('lightningLink').onclick=()=>{closeAllProSheets();document.getElementById('lightningSheet').classList.add('open')};
+document.getElementById('lightningLink').onclick=()=>loadLightningOnMap();document.getElementById('lightningSheet').classList.add('open')};
 document.getElementById('twoHourBtn').onclick=async()=>{
   if(!rvMeta) rvMeta=await loadRainViewer();
   if(!rvMeta){ alert('تعذر تحميل بيانات الرادار الآن'); return; }
@@ -921,9 +1178,33 @@ document.getElementById('radarBtn').onclick=async function(){
  if(radarLayer){map.removeLayer(radarLayer);radarLayer=null;this.classList.remove('active');return}
  this.classList.add('active'); setupTimeline('radar');
 };
-document.getElementById('cloudBtn').onclick=function(){
- const go = confirm('صور السحب الفعلية ليست متاحة حاليًا عبر RainViewer API. اضغط موافق لفتح صفحة السحب والرادار في ينبع ويذر، أو إلغاء ثم استخدم زر NASA Worldview أعلى الخريطة.');
- if(go) window.open('https://www.yanbuweather.com/pages/cloudswithradar/','_blank','noopener');
+document.getElementById('cloudBtn').onclick=async function(){
+ if(!rvMeta)rvMeta=await loadRainViewer();
+ if(!rvMeta){alert('تعذر تحميل بيانات السحب الآن');return}
+ if(satLayer){
+   try{map.removeLayer(satLayer)}catch(e){}
+   satLayer=null;
+   this.classList.remove('active');
+   return;
+ }
+ if(!satFrames||!satFrames.length){
+   alert('صور الأقمار الصناعية غير متاحة من المصدر الحالي في هذه اللحظة.');
+   return;
+ }
+ activeWeather='satellite';
+ currentLayerKind='satellite';
+ this.classList.add('active');
+ const f=satFrames[satFrames.length-1];
+ const url=frameUrl(f,'satellite');
+ if(!url){alert('تعذر تكوين طبقة السحب الآن');return}
+ satLayer=L.tileLayer(url,{
+   opacity:.66,zIndex:560,maxZoom:10,
+   attribution:'Satellite overlay © RainViewer'
+ }).addTo(map);
+ const d=new Date(Number(f.time||0)*1000);
+ const tt=document.getElementById('timeText');
+ if(tt)tt.textContent=d.toLocaleString('ar',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+ setTimeout(()=>{try{map.invalidateSize(false)}catch(e){}},50);
 };
 document.getElementById('tempBtn').onclick=()=>document.getElementById('forecastSheet').classList.add('open');
 document.getElementById('windBtn').onclick=()=>document.getElementById('forecastSheet').classList.add('open');
