@@ -19,11 +19,14 @@ body.light{--bg:#edf4f7;--panel:rgba(255,255,255,.96);--panel2:#f1f7fa;--text:#1
 button,input,select{font:inherit}
 button{cursor:pointer;color:var(--text)}
 .app{height:100%;display:block}
-header{
- position:fixed;top:0;left:0;right:0;
- height:70px;min-height:70px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:10px;
- padding:8px 13px;background:var(--panel);backdrop-filter:blur(16px);
- border-bottom:1px solid var(--line);z-index:5000
+.mainTopbar{
+ position:fixed!important;top:0!important;left:0!important;right:0!important;
+ width:100vw!important;height:70px!important;min-height:70px!important;
+ box-sizing:border-box!important;display:flex!important;visibility:visible!important;opacity:1!important;
+ align-items:center!important;justify-content:space-between!important;gap:10px;
+ padding:8px 13px;background:#07131c!important;
+ border-bottom:1px solid var(--line);z-index:2147483647!important;
+ transform:none!important;filter:none!important;isolation:isolate;
 }
 .brand{font-weight:900;letter-spacing:.2px;white-space:nowrap}
 .brand small{display:block;color:var(--muted);font-size:10px;font-weight:500;margin-top:2px}
@@ -104,7 +107,7 @@ body.light .official{background:rgba(255,255,255,.96);color:#17313f}
 .suggest div:hover{background:var(--panel2)}
 .leaflet-control-zoom a{background:var(--panel)!important;color:var(--text)!important;border-color:var(--line)!important}
 @media(max-width:820px){
- header{height:82px;min-height:82px;box-sizing:border-box;padding:7px 8px;align-items:center;position:fixed;top:0;left:0;right:0;z-index:5000;background:#07131c}
+ .mainTopbar{height:82px!important;min-height:82px!important;padding:7px 8px!important;background:#07131c!important}
  .workspace{top:82px}
  .brand{font-size:14px;line-height:1.25;white-space:normal;min-width:145px;position:relative;z-index:5001}
  .brand small{font-size:11px;margin-top:4px}
@@ -143,7 +146,7 @@ body.light .official{background:rgba(255,255,255,.96);color:#17313f}
 </head>
 <body>
 <div class="app">
-<header>
+<div id="mainTopbar" class="mainTopbar">
  <div class="brand">KHABM 2000 ABOASRAR راصد الطقس<small class="trial-label">نسخة تجريبية</small></div>
  <div class="search">
   <span>🔎</span>
@@ -154,7 +157,7 @@ body.light .official{background:rgba(255,255,255,.96);color:#17313f}
   <button class="iconbtn" id="locateBtn" title="موقعي">◎</button>
   <button class="iconbtn" id="themeBtn" title="ليلي/نهاري">🌙</button>
  </div>
-</header>
+</div>
 
 <div class="workspace">
  <div id="map"></div>
