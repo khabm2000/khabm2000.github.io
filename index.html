@@ -41,7 +41,7 @@ button{cursor:pointer;color:var(--text)}
  border:1px solid var(--line);background:var(--panel2);border-radius:12px;min-width:42px;height:42px;
  display:flex;align-items:center;justify-content:center
 }
-.workspace{position:fixed;left:0;right:0;top:70px;bottom:0;min-height:0}
+.workspace{position:fixed;left:0;right:0;top:70px;height:calc(var(--app-height) - 70px);min-height:0}
 #map{z-index:1;position:absolute;inset:0;background:#17242e}
 .sidebar{
  position:absolute;top:14px;right:14px;width:295px;max-height:calc(100% - 115px);overflow:auto;
@@ -108,7 +108,7 @@ body.light .official{background:rgba(255,255,255,.96);color:#17313f}
 .leaflet-control-zoom a{background:var(--panel)!important;color:var(--text)!important;border-color:var(--line)!important}
 @media(max-width:820px){
  .mainTopbar{height:82px!important;min-height:82px!important;padding:7px 8px!important;background:#07131c!important}
- .workspace{top:82px}
+ .workspace{top:82px;height:calc(var(--app-height) - 82px)}
  .brand{font-size:14px;line-height:1.25;white-space:normal;min-width:145px;position:relative;z-index:5001}
  .brand small{font-size:11px;margin-top:4px}
  .search{max-width:none}.search input{padding:9px 35px 9px 8px;font-size:12px}
@@ -142,6 +142,30 @@ body.light .official{background:rgba(255,255,255,.96);color:#17313f}
 
 
 .trial-label{font-size:14px!important;font-weight:700;}
+
+:root{--app-height:100vh;}
+@supports (height:100dvh){
+  :root{--app-height:100dvh;}
+}
+html,body{
+  width:100%;
+  height:var(--app-height);
+  min-height:var(--app-height);
+  overflow:hidden;
+}
+body{
+  margin:0;
+  padding:0;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+.mainTopbar{
+  padding-top:max(7px,env(safe-area-inset-top))!important;
+}
+.workspace{
+  bottom:env(safe-area-inset-bottom)!important;
+}
+
 </style>
 </head>
 <body>
@@ -423,6 +447,26 @@ document.getElementById('searchBox').addEventListener('input',e=>{
  },450);
 });
 loadWeather(selected.lat,selected.lon,selected.name);
+</script>
+<script>
+
+(function(){
+  function setAppHeight(){
+    var h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    document.documentElement.style.setProperty('--app-height', h + 'px');
+    setTimeout(function(){
+      try{ map.invalidateSize(); }catch(e){}
+    }, 80);
+  }
+  setAppHeight();
+  window.addEventListener('resize', setAppHeight, {passive:true});
+  window.addEventListener('orientationchange', setAppHeight, {passive:true});
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', setAppHeight, {passive:true});
+    window.visualViewport.addEventListener('scroll', setAppHeight, {passive:true});
+  }
+})();
+
 </script>
 </body>
 </html>
