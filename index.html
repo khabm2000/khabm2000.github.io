@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- KHABM_BUILD: SAFE_CHROME_SAFARI_V2_20260907 -->
 <!-- KHABM_BUILD: CHROME_SAFARI_20260907_2215 -->
 <html lang="ar" dir="rtl">
 <head>
@@ -167,6 +168,90 @@ body{
   bottom:env(safe-area-inset-bottom)!important;
 }
 
+
+/* ===== KHABM SAFE CROSS-BROWSER LAYOUT ===== */
+html,body{
+  margin:0!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:100%!important;
+  overflow:hidden!important;
+}
+body{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+.app{
+  height:100vh!important;
+  height:100svh!important;
+  min-height:100vh!important;
+  display:flex!important;
+  flex-direction:column!important;
+  overflow:hidden!important;
+}
+.mainTopbar{
+  position:relative!important;
+  top:auto!important;left:auto!important;right:auto!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:70px!important;
+  flex:0 0 auto!important;
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  transform:none!important;
+  padding:8px 13px!important;
+  padding-top:max(8px,env(safe-area-inset-top))!important;
+  background:#07131c!important;
+  border-bottom:1px solid var(--line)!important;
+  z-index:2000!important;
+  filter:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.workspace{
+  position:relative!important;
+  top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  flex:1 1 auto!important;
+  overflow:hidden!important;
+}
+#map{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+}
+.sidebar,.timeline,.bottomDock{
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+@media(max-width:820px){
+  .mainTopbar{
+    min-height:82px!important;
+    padding:7px 8px!important;
+    padding-top:max(7px,env(safe-area-inset-top))!important;
+  }
+  .bottomDock{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    gap:5px!important;
+    width:calc(100% - 16px)!important;
+    max-width:100%!important;
+  }
+  .dockbtn{
+    flex:1 1 29%!important;
+    min-width:0!important;
+    white-space:normal!important;
+    line-height:1.2!important;
+  }
+}
+/* ===== END SAFE LAYOUT ===== */
+
+
+/* app-height disabled in SAFE mode */
 </style>
 </head>
 <body>
@@ -449,25 +534,6 @@ document.getElementById('searchBox').addEventListener('input',e=>{
 });
 loadWeather(selected.lat,selected.lon,selected.name);
 </script>
-<script>
 
-(function(){
-  function setAppHeight(){
-    var h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-    document.documentElement.style.setProperty('--app-height', h + 'px');
-    setTimeout(function(){
-      try{ map.invalidateSize(); }catch(e){}
-    }, 80);
-  }
-  setAppHeight();
-  window.addEventListener('resize', setAppHeight, {passive:true});
-  window.addEventListener('orientationchange', setAppHeight, {passive:true});
-  if(window.visualViewport){
-    window.visualViewport.addEventListener('resize', setAppHeight, {passive:true});
-    window.visualViewport.addEventListener('scroll', setAppHeight, {passive:true});
-  }
-})();
-
-</script>
 </body>
 </html>
