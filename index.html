@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- KHABM_BUILD: PROFESSIONAL_CHROME_SAFE_V2_20260907 -->
 <!-- KHABM_BUILD: PROFESSIONAL_WEATHER_CENTER_V1_20260907 -->
 <!-- KHABM_BUILD: SAFE_CHROME_SAFARI_V2_20260907 -->
 <!-- KHABM_BUILD: CHROME_SAFARI_20260907_2215 -->
@@ -274,6 +275,55 @@ body{
  .wcGrid a{font-size:10px}
 }
 
+
+/* ===== KHABM CHROME STABILITY HOTFIX ===== */
+html,body{
+  width:100%!important;
+  height:100%!important;
+  min-height:100%!important;
+  margin:0!important;
+  overflow:hidden!important;
+}
+.app{
+  width:100%!important;
+  height:100%!important;
+  min-height:100%!important;
+  display:flex!important;
+  flex-direction:column!important;
+  overflow:hidden!important;
+}
+.mainTopbar{
+  position:relative!important;
+  inset:auto!important;
+  flex:0 0 auto!important;
+  min-height:70px!important;
+  padding:8px 13px!important;
+  transform:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  contain:none!important;
+  will-change:auto!important;
+}
+.workspace{
+  position:relative!important;
+  inset:auto!important;
+  flex:1 1 0%!important;
+  width:100%!important;
+  height:0!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+#map{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+}
+@media(max-width:820px){
+ .mainTopbar{min-height:82px!important;padding:7px 8px!important}
+}
+/* ===== END CHROME HOTFIX ===== */
+
 </style>
 </head>
 <body>
@@ -362,7 +412,7 @@ body{
  <div class="bottomDock">
   <button class="dockbtn" id="twoHourBtn">⏱ ساعتان ماضية + ساعتان قادمة</button>
   <button class="dockbtn" id="forecastBtn">🕒 72 ساعة</button>
-  <a class="dockbtn" id="lightningLink" href="https://maps.blitzortung.org/" style="text-decoration:none">⚡ البرق مباشر</a>
+  <a class="dockbtn" id="lightningLink" href="https://maps.blitzortung.org/" target="_blank" rel="noopener noreferrer" style="text-decoration:none">⚡ البرق مباشر</a>
   <a class="dockbtn" id="dustLink" href="https://www.ventusky.com/air-quality-map/dust" target="_blank" rel="noopener" style="text-decoration:none">🌫️ الغبار</a>
   <button class="dockbtn" id="togglePanelBtn">☰ الطبقات</button>
   <button class="dockbtn" id="resetBtn">🌍 العالم</button>
@@ -382,45 +432,45 @@ body{
   <div class="wcSection">
    <div class="sectionTitle">الرصد المباشر</div>
    <div class="wcGrid">
-    <a href="https://www.rainviewer.com/weather-radar-map-live.html">🌧️ RainViewer</a>
-    <a href="https://maps.blitzortung.org/">⚡ البرق Blitzortung</a>
-    <a href="https://www.lightningmaps.org/">⚡ LightningMaps</a>
-    <a href="https://www.ventusky.com/air-quality-map/dust">🌫️ الغبار</a>
-    <a href="https://zoom.earth/">🛰️ Zoom Earth</a>
-    <a href="https://worldview.earthdata.nasa.gov/">🛰️ NASA Worldview</a>
-    <a href="https://view.eumetsat.int/productviewer">🛰️ EUMETSAT</a>
-    <a href="https://www.ncm.gov.sa/ar">🇸🇦 المركز الوطني للأرصاد</a>
+    <a href="https://www.rainviewer.com/weather-radar-map-live.html" target="_blank" rel="noopener noreferrer">🌧️ RainViewer</a>
+    <a href="https://maps.blitzortung.org/" target="_blank" rel="noopener noreferrer">⚡ البرق Blitzortung</a>
+    <a href="https://www.lightningmaps.org/" target="_blank" rel="noopener noreferrer">⚡ LightningMaps</a>
+    <a href="https://www.ventusky.com/air-quality-map/dust" target="_blank" rel="noopener noreferrer">🌫️ الغبار</a>
+    <a href="https://zoom.earth/" target="_blank" rel="noopener noreferrer">🛰️ Zoom Earth</a>
+    <a href="https://worldview.earthdata.nasa.gov/" target="_blank" rel="noopener noreferrer">🛰️ NASA Worldview</a>
+    <a href="https://view.eumetsat.int/productviewer" target="_blank" rel="noopener noreferrer">🛰️ EUMETSAT</a>
+    <a href="https://www.ncm.gov.sa/ar" target="_blank" rel="noopener noreferrer">🇸🇦 المركز الوطني للأرصاد</a>
    </div>
   </div>
 
   <div class="wcSection">
    <div class="sectionTitle">النماذج العالمية</div>
    <div class="wcGrid">
-    <a href="https://open-meteo.com/en/docs/ecmwf-api">ECMWF الأوروبي</a>
-    <a href="https://open-meteo.com/en/docs/gfs-api">GFS الأمريكي</a>
-    <a href="https://open-meteo.com/en/docs/dwd-api">ICON الألماني</a>
-    <a href="https://open-meteo.com/en/docs/gem-api">GEM الكندي</a>
-    <a href="https://open-meteo.com/en/docs">UKMO البريطاني</a>
-    <a href="https://open-meteo.com/en/docs">ACCESS الأسترالي</a>
-    <a href="https://open-meteo.com/en/docs">JMA الياباني</a>
-    <a href="https://open-meteo.com/en/docs">KMA الكوري</a>
-    <a href="https://open-meteo.com/en/docs">CMA الصيني</a>
-    <a href="https://open-meteo.com/en/docs">ARPEGE الفرنسي</a>
-    <a href="https://www.tropicaltidbits.com/analysis/models/">Tropical Tidbits</a>
-    <a href="https://meteologix.com/">Meteologix</a>
+    <a href="https://open-meteo.com/en/docs/ecmwf-api" target="_blank" rel="noopener noreferrer">ECMWF الأوروبي</a>
+    <a href="https://open-meteo.com/en/docs/gfs-api" target="_blank" rel="noopener noreferrer">GFS الأمريكي</a>
+    <a href="https://open-meteo.com/en/docs/dwd-api" target="_blank" rel="noopener noreferrer">ICON الألماني</a>
+    <a href="https://open-meteo.com/en/docs/gem-api" target="_blank" rel="noopener noreferrer">GEM الكندي</a>
+    <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">UKMO البريطاني</a>
+    <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">ACCESS الأسترالي</a>
+    <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">JMA الياباني</a>
+    <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">KMA الكوري</a>
+    <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">CMA الصيني</a>
+    <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">ARPEGE الفرنسي</a>
+    <a href="https://www.tropicaltidbits.com/analysis/models/" target="_blank" rel="noopener noreferrer">Tropical Tidbits</a>
+    <a href="https://meteologix.com/" target="_blank" rel="noopener noreferrer">Meteologix</a>
    </div>
   </div>
 
   <div class="wcSection">
    <div class="sectionTitle">روابط مرجعية مثل أقسام ينبع ويذر</div>
    <div class="wcGrid">
-    <a href="https://www.yanbuweather.com/pages/cloudswithradar/">☁️ السحب والرادار</a>
-    <a href="https://www.yanbuweather.com/pages/lightning/">⚡ خريطة البروق</a>
-    <a href="https://www.yanbuweather.com/pages/RainMap/">🌧️ خريطة المطر</a>
-    <a href="https://www.yanbuweather.com/pages/RainRadar/">📡 رادار المطر</a>
-    <a href="https://links.yanbuweather.com/pages/wrfmodel/">WRF</a>
-    <a href="https://links.yanbuweather.com/pages/noaa-gfs/">GFS</a>
-    <a href="https://www.yanbuweather.com/">جميع أقسام ينبع ويذر</a>
+    <a href="https://www.yanbuweather.com/pages/cloudswithradar/" target="_blank" rel="noopener noreferrer">☁️ السحب والرادار</a>
+    <a href="https://www.yanbuweather.com/pages/lightning/" target="_blank" rel="noopener noreferrer">⚡ خريطة البروق</a>
+    <a href="https://www.yanbuweather.com/pages/RainMap/" target="_blank" rel="noopener noreferrer">🌧️ خريطة المطر</a>
+    <a href="https://www.yanbuweather.com/pages/RainRadar/" target="_blank" rel="noopener noreferrer">📡 رادار المطر</a>
+    <a href="https://links.yanbuweather.com/pages/wrfmodel/" target="_blank" rel="noopener noreferrer">WRF</a>
+    <a href="https://links.yanbuweather.com/pages/noaa-gfs/" target="_blank" rel="noopener noreferrer">GFS</a>
+    <a href="https://www.yanbuweather.com/" target="_blank" rel="noopener noreferrer">جميع أقسام ينبع ويذر</a>
    </div>
   </div>
 
