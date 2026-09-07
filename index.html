@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- KHABM_BUILD: SAME_MAP_ONLY_RADAR_V6_20260907 -->
 <!-- KHABM_BUILD: SAME_MAP_RAINVIEWER_2H_V5_20260907 -->
 <!-- KHABM_BUILD: RADAR_2H_AND_TEMP_POPUP_V4_20260907 -->
 <!-- KHABM_BUILD: PROFESSIONAL_CENTER_V3_20260907 -->
@@ -356,13 +357,6 @@ html,body{
  .compareGrid{grid-template-columns:1fr}
  .summaryGrid{grid-template-columns:1fr 1fr}
  .lightningSheet iframe{height:45vh!important}
-}
-/* ===== END PROFESSIONAL MODULES ===== */
-
-
-
- .shortRadarSheet iframe{height:48vh!important}
-}
 .tempPopup{
  direction:rtl;text-align:right;min-width:150px;font-family:inherit
 }
@@ -456,7 +450,7 @@ html,body{
  </div>
 
  <div class="bottomDock">
-  <button class="dockbtn" id="twoHourBtn">🌧️ أمطار −2س إلى +2س</button>
+  <button class="dockbtn" id="twoHourBtn" type="button">🌧️ أمطار −2س إلى +2س</button>
   <button class="dockbtn" id="forecastBtn">🕒 72 ساعة</button>
   <button class="dockbtn" id="lightningLink">⚡ البرق مباشر</button>
   <a class="dockbtn" id="dustLink" href="https://www.ventusky.com/air-quality-map/dust" target="_blank" rel="noopener" style="text-decoration:none">🌫️ الغبار</a>
@@ -794,19 +788,30 @@ document.getElementById('weatherCenterBtn').onclick=()=>document.getElementById(
 document.getElementById('closeWeatherCenter').onclick=()=>document.getElementById('weatherCenterSheet').classList.remove('open');
 document.getElementById('lightningLink').onclick=()=>{closeAllProSheets();document.getElementById('lightningSheet').classList.add('open')};
 document.getElementById('twoHourBtn').onclick=async()=>{
- if(!rvMeta) rvMeta=await loadRainViewer();
- if(!rvMeta){alert('تعذر تحميل رادار RainViewer الآن');return}
- if(!radarFrames||!radarFrames.length){alert('لا توجد إطارات رادار متاحة الآن');return}
+  // لا نافذة، لا iframe، لا صفحة أخرى: طبقة RainViewer فوق نفس خريطة KHABM.
+  if(!rvMeta) rvMeta=await loadRainViewer();
+  if(!rvMeta || !radarFrames || !radarFrames.length){
+    alert('تعذر تحميل رادار RainViewer الآن');
+    return;
+  }
 
- // نعرض آخر ساعتين من الماضي + جميع إطارات nowcast القادمة من RainViewer.
- const now=Math.floor(Date.now()/1000);
- const cutoff=now-(2*60*60);
- radarFrames=radarFrames.filter(f=>(f.time||0)>=cutoff);
+  // أبقِ آخر ساعتين من الرصد + إطارات nowcast القادمة التي يوفرها RainViewer.
+  const now=Math.floor(Date.now()/1000);
+  const allFrames=[...(rvMeta.radar?.past||[]), ...(rvMeta.radar?.nowcast||[])];
+  radarFrames=allFrames.filter(f => {
+    const t=Number(f.time||0);
+    return t >= now-7200;
+  });
 
- setupTimeline('radar');
-};
-document.getElementById('closeShortRadar').onclick=()=>{
- document.getElementById('shortRadarSheet').classList.remove('open');
+  // تأكد أن الخريطة نفسها ظاهرة بكامل المساحة.
+  document.getElementById('forecastSheet')?.classList.remove('open');
+  document.getElementById('weatherCenterSheet')?.classList.remove('open');
+  document.getElementById('modelCompareSheet')?.classList.remove('open');
+  document.getElementById('rainSummarySheet')?.classList.remove('open');
+  document.getElementById('lightningSheet')?.classList.remove('open');
+
+  setupTimeline('radar');
+  setTimeout(()=>{ try{ map.invalidateSize(); }catch(e){} },50);
 };
 document.getElementById('forecastBtn').onclick=()=>{document.getElementById('forecastTitle').textContent='توقعات 72 ساعة';render72();document.getElementById('forecastSheet').classList.add('open')};
 document.getElementById('closeForecast').onclick=()=>document.getElementById('forecastSheet').classList.remove('open');
