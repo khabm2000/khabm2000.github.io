@@ -38,7 +38,7 @@ header{
  display:flex;align-items:center;justify-content:center
 }
 .workspace{position:relative;flex:1;min-height:0}
-#map{position:absolute;inset:0;background:#17242e}
+#map{z-index:1;position:absolute;inset:0;background:#17242e}
 .sidebar{
  position:absolute;top:14px;right:14px;width:295px;max-height:calc(100% - 115px);overflow:auto;
  background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:12px;
@@ -103,8 +103,8 @@ body.light .official{background:rgba(255,255,255,.96);color:#17313f}
 .suggest div:hover{background:var(--panel2)}
 .leaflet-control-zoom a{background:var(--panel)!important;color:var(--text)!important;border-color:var(--line)!important}
 @media(max-width:820px){
- header{height:82px;padding:7px 8px;align-items:center}
- .brand{font-size:14px;line-height:1.25;white-space:normal;min-width:145px}
+ header{height:82px;padding:7px 8px;align-items:center;position:relative;z-index:5000;background:#07131c}
+ .brand{font-size:14px;line-height:1.25;white-space:normal;min-width:145px;position:relative;z-index:5001}
  .brand small{font-size:11px;margin-top:4px}
  .search{max-width:none}.search input{padding:9px 35px 9px 8px;font-size:12px}
  .actions .desktopOnly{display:none}
