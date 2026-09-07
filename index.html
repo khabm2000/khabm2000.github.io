@@ -1,6 +1,5 @@
 <!doctype html>
-<!-- KHABM_BUILD: NIGHT_MAP_REMOVED_V12_20260908 -->
-<!-- KHABM_BUILD: V11_NO_NIGHT_MODE_20260908 -->
+<!-- KHABM_BUILD: REPAIRED_NO_NIGHT_V13_20260908 -->
 <!-- KHABM_BUILD: LIGHTNING_WEATHERBIT_READY_V10_20260908 -->
 <!-- KHABM_BUILD: PRO_SHORT_RANGE_ADVANCED_V9_20260907 -->
 <!-- KHABM_BUILD: NO_THEME_VISIBLE_LIGHTNING_V8_20260907 -->
@@ -415,7 +414,6 @@ html,body{
    <button class="layerbtn active" data-base="street">🗺️ أسماء</button>
    <button class="layerbtn" data-base="sat">🛰️ أقمار</button>
    <button class="layerbtn" data-base="terrain">⛰️ تضاريس</button>
-   
   </div>
 
   <div class="sectionTitle" style="margin-top:12px">الرصد والطبقات</div>
@@ -637,7 +635,8 @@ const map=L.map('map',{zoomControl:true,worldCopyJump:true}).setView([25,45],4);
 const bases={
  street:L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}),
  sat:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Tiles © Esri'}),
- terrain:L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenStreetMap, SRTM | OpenTopoMap'}),};
+ terrain:L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenStreetMap, SRTM | OpenTopoMap'})
+};
 const satLabels=L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png',{maxZoom:20,opacity:.96,attribution:'© OpenStreetMap © CARTO'});
 let baseName='street'; bases.street.addTo(map);
 
@@ -648,7 +647,6 @@ function setBase(name){
  document.querySelectorAll('[data-base]').forEach(b=>b.classList.toggle('active',b.dataset.base===name));
 }
 document.querySelectorAll('[data-base]').forEach(b=>b.onclick=()=>setBase(b.dataset.base));
-};
 
 let marker=L.marker([24.7,46.7]).addTo(map);
 let lightningLayer=L.layerGroup().addTo(map);
@@ -1044,7 +1042,7 @@ document.getElementById('radarInsideBtn').onclick=async()=>{
 
 document.getElementById('weatherCenterBtn').onclick=()=>document.getElementById('weatherCenterSheet').classList.add('open');
 document.getElementById('closeWeatherCenter').onclick=()=>document.getElementById('weatherCenterSheet').classList.remove('open');
-document.getElementById('lightningLink').onclick=()=>loadLightningOnMap();document.getElementById('lightningSheet').classList.add('open')};
+document.getElementById('lightningLink').onclick=()=>loadLightningOnMap();
 document.getElementById('twoHourBtn').onclick=async()=>{
   if(!rvMeta) rvMeta=await loadRainViewer();
   if(!rvMeta){ alert('تعذر تحميل بيانات الرادار الآن'); return; }
