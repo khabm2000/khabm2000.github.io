@@ -46,13 +46,28 @@ footer{background:#071827;padding:8px} .notice{border:1.5px solid #315f7d;border
  .note{font-size:9px}
  .cities{height:86px;padding:6px}
  .city{flex-basis:86px}
- .mapwrap{height:calc(100svh - 252px - 72px);min-height:650px;padding-bottom:env(safe-area-inset-bottom)}
+ .mapwrap{height:920px;min-height:920px;padding-bottom:calc(env(safe-area-inset-bottom) + 16px)}
  .card{width:136px;padding:10px;top:150px}
  .temp{font-size:27px}
  .rail{right:7px;top:72px;gap:5px}
  .rbtn{width:54px;height:58px}
  .rbtn i{font-size:21px}
  .topcontrols{right:69px}
+}
+</style>
+
+<style>
+/* V24 — full map + no fixed Riyadh card */
+@media (max-width:699px){
+  .mapwrap{height:920px;min-height:920px}
+  .rail{top:70px;right:6px;gap:4px}
+  .rbtn{width:50px;height:52px;border-radius:13px;font-size:7px}
+  .rbtn i{font-size:19px;margin-bottom:3px}
+  .legend{left:62px;right:62px;bottom:18px}
+  .zoom{bottom:88px}
+}
+@media (min-width:700px){
+  .mapwrap{height:1180px;min-height:1180px}
 }
 </style>
 </head>
@@ -74,7 +89,7 @@ footer{background:#071827;padding:8px} .notice{border:1.5px solid #315f7d;border
  <div class="mapmsg">الخريطة الفضائية الحية</div><div id="map"></div>
  <div class="topcontrols"><button class="float loc" id="loc">⌾</button><button class="float h72" data-open="72">◷ 72 ساعة</button><button class="float models" data-open="models">🌍 توقعات النماذج ▼</button></div>
  <div class="rail"><button class="rbtn" data-open="radar"><i>🌧️</i>الرادار</button><button class="rbtn" data-open="rain"><i>🌈</i>شدة المطر</button><button class="rbtn" data-open="lightning"><i>⚡</i>البرق</button><button class="rbtn" data-open="dust"><i>⠿</i>الغبار</button><button class="rbtn" data-open="pressure"><i>🧭</i>الضغط</button><button class="rbtn" data-open="humidity"><i>💧</i>الرطوبة</button><button class="rbtn" data-open="wind"><i>💨</i>الرياح</button><button class="rbtn" data-open="layers"><i>🔷</i>الطبقات</button></div>
- <div class="card" id="weatherCard"><button class="cardclose" id="cardClose" aria-label="إغلاق">×</button><b id="pname">الرياض</b><div class="temp" id="ptemp">🌤️ —</div><div class="desc" id="pdesc">جارٍ التحديث</div><div class="meta" id="pmeta">المحسوسة —<br>الرطوبة —<br>الرياح —</div></div>
+ <div class="card hidden" id="weatherCard"><button class="cardclose" id="cardClose" aria-label="إغلاق">×</button><b id="pname">الرياض</b><div class="temp" id="ptemp">🌤️ —</div><div class="desc" id="pdesc">جارٍ التحديث</div><div class="meta" id="pmeta">المحسوسة —<br>الرطوبة —<br>الرياح —</div></div>
  <div class="zoom"><button id="zin">+</button><button id="zout">−</button></div>
  <div class="legend"><b>مقياس شدة الهطول بالرادار</b><div class="grad"></div><div class="ticks"><span>خفيف</span><span>متوسط</span><span>غزير</span><span>شديد</span></div></div>
 </section>
@@ -93,7 +108,7 @@ async function weather(lat,lon,name,card=true){try{let u=`https://api.open-meteo
 async function loadCities(){for(const el of document.querySelectorAll('[data-city]')){let n=el.dataset.city,[a,o]=cities[n],c=await weather(a,o,n,false);el.querySelector('span').textContent=c?`${icon(c.weather_code)} ${Math.round(c.temperature_2m)}°`:'—'}}
 let map,marker;
 if(window.L){map=L.map('map',{zoomControl:false}).setView(cities['الرياض'],5);L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Tiles © Esri'}).addTo(map);L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png',{subdomains:'abcd',opacity:.9,maxZoom:20,attribution:'© OpenStreetMap © CARTO'}).addTo(map);marker=L.marker(cities['الرياض']).addTo(map);L.control.scale({imperial:false,position:'bottomleft',maxWidth:85}).addTo(map);map.on('click',e=>{marker.setLatLng(e.latlng);weather(e.latlng.lat,e.latlng.lng,'الموقع المحدد')});$('zin').onclick=()=>map.zoomIn();$('zout').onclick=()=>map.zoomOut();}
-weather(...cities['الرياض'],'الرياض');loadCities();
+loadCities();
 $('cardClose').onclick=(e)=>{e.stopPropagation();$('weatherCard').classList.add('hidden')};
 $('loc').onclick=()=>navigator.geolocation&&navigator.geolocation.getCurrentPosition(p=>{let q=[p.coords.latitude,p.coords.longitude];if(map){map.flyTo(q,8);marker.setLatLng(q)}weather(q[0],q[1],'موقعي')});
 document.querySelectorAll('[data-city]').forEach(el=>el.addEventListener('click',()=>{
