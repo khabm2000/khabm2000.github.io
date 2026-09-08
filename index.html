@@ -70,6 +70,108 @@ footer{background:#071827;padding:8px} .notice{border:1.5px solid #315f7d;border
   .mapwrap{height:1180px;min-height:1180px}
 }
 </style>
+
+<style>
+/* V25 — final visual polish before live-layer integration */
+
+/* Footer / NCM notice: always clearly visible after the map */
+footer{
+  position:relative;
+  z-index:20;
+  background:#071827;
+  padding:10px 10px calc(12px + env(safe-area-inset-bottom));
+  border-top:1px solid #315a75;
+}
+.notice{
+  font-size:9px;
+  line-height:1.7;
+  padding:10px 12px;
+  background:#0a2135;
+}
+.notice strong{color:#ffd15a}
+.ncm{color:#8ed4ff;font-weight:900}
+
+/* Mobile refinements */
+@media (max-width:699px){
+  header{height:232px}
+  .hero{
+    height:152px;
+    grid-template-columns:70px 1fr 106px;
+    padding:6px 8px;
+    gap:5px
+  }
+  .snap img{width:46px;height:46px}
+  .snap{font-size:8px}
+  .title{font-size:23px}
+  .sub{font-size:10px}
+  .note{font-size:8px}
+  .search{width:70px;height:40px}
+  .menu{width:40px;height:40px}
+  .trial{padding:4px 10px;font-size:9px;margin-top:7px}
+
+  .cities{
+    height:80px;
+    padding:5px 6px 6px;
+    gap:5px;
+    scroll-padding-left:6px;
+    scroll-padding-right:6px
+  }
+  .city{flex-basis:82px;min-width:82px}
+  .city b{font-size:9px}
+  .city span{font-size:15px}
+
+  .mapwrap{
+    height:900px;
+    min-height:900px
+  }
+
+  .topcontrols{
+    left:8px;
+    right:60px;
+    top:10px;
+    gap:5px
+  }
+  .float{height:42px;border-radius:12px}
+  .loc{width:44px;font-size:22px}
+  .models{width:160px;font-size:9px}
+  .h72{width:94px;font-size:9px}
+
+  .rail{
+    right:5px;
+    top:64px;
+    gap:4px
+  }
+  .rbtn{
+    width:46px;
+    height:50px;
+    border-radius:12px;
+    font-size:6.8px
+  }
+  .rbtn i{
+    font-size:18px;
+    margin-bottom:2px
+  }
+
+  .legend{
+    left:56px;
+    right:56px;
+    bottom:15px
+  }
+  .zoom{bottom:84px}
+}
+
+/* Prevent left-edge city cards from looking clipped */
+.cities::-webkit-scrollbar{display:none}
+.cities{scrollbar-width:none}
+</style>
+
+<style>
+/* V26 — city strip cleanup */
+.cities{justify-content:flex-start}
+@media(max-width:699px){
+  .cities{padding-right:8px;padding-left:8px}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -80,7 +182,6 @@ footer{background:#071827;padding:8px} .notice{border:1.5px solid #315f7d;border
   <div class="actions"><div class="row"><button class="search" data-open="search">⌕ بحث</button><button class="menu" data-open="menu">☰</button></div><span class="trial">نسخة تجريبية</span></div>
  </div>
  <div class="cities" id="cities">
-  <div class="city more"><b>📍 المدن</b><span>—</span></div>
   <div class="city" data-city="الطائف"><b>الطائف</b><span>…</span></div><div class="city" data-city="المدينة"><b>المدينة</b><span>…</span></div><div class="city" data-city="جدة"><b>جدة</b><span>…</span></div><div class="city" data-city="مكة"><b>مكة</b><span>…</span></div><div class="city" data-city="الرياض"><b>الرياض</b><span>…</span></div>
  </div>
 </header>
@@ -94,7 +195,15 @@ footer{background:#071827;padding:8px} .notice{border:1.5px solid #315f7d;border
  <div class="legend"><b>مقياس شدة الهطول بالرادار</b><div class="grad"></div><div class="ticks"><span>خفيف</span><span>متوسط</span><span>غزير</span><span>شديد</span></div></div>
 </section>
 
-<footer><div class="notice"><div class="info">i</div><div>هذا الموقع مخصص لهواة الطقس ولأغراض المتابعة والاسترشاد فقط، وليس نشرة جوية رسمية. للمعلومات الدقيقة عن الطقس والتحذيرات والتنبيهات الرسمية يرجى الرجوع إلى <span class="ncm">المركز الوطني للأرصاد</span>.</div></div><div class="credits"><span><span class="dot"></span>آخر تحديث: <b id="clock">—</b></span><span>Open‑Meteo • RainViewer • EUMETSAT</span><span>KHABM 2000 ABOASRAR</span></div></footer>
+<footer><div class="notice">
+  <div class="info">i</div>
+  <div>
+    <strong>تنبيه مهم:</strong>
+    هذا الموقع لهواة الطقس وليس نشرة جوية رسمية.
+    للمعلومات الدقيقة عن الطقس والتحذيرات والتنبيهات الرسمية يرجى الرجوع إلى
+    <span class="ncm">المركز الوطني للأرصاد</span>.
+  </div>
+</div><div class="credits"><span><span class="dot"></span>آخر تحديث: <b id="clock">—</b></span><span>Open‑Meteo • RainViewer • EUMETSAT</span><span>KHABM 2000 ABOASRAR</span></div></footer>
 </div>
 
 <div class="sheet" id="sheet"><button class="x" id="close">×</button><h3 id="st"></h3><div id="sb"></div></div>
