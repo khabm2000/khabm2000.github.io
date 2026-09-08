@@ -349,6 +349,41 @@ footer{padding:16px 20px calc(18px + env(safe-area-inset-bottom))}
   .credits{font-size:5px;padding:5px 2px 0}
 }
 </style>
+
+<style>
+/* V29 — two final micro-adjustments only */
+@media(max-width:699px){
+  .mapwrap{
+    height:calc(100svh - 190px - 92px + 52px);
+    min-height:572px;
+    max-height:702px;
+  }
+  .legend{
+    bottom:16px;
+  }
+}
+</style>
+
+<style>
+.radar-player{
+  position:absolute; z-index:650; left:50%; transform:translateX(-50%);
+  bottom:56px; width:min(78%,560px);
+  background:rgba(5,25,40,.96); border:1.5px solid #315f7d; border-radius:14px;
+  padding:8px 10px; display:none; box-shadow:0 6px 20px #0007;
+}
+.radar-player.on{display:block}
+.radar-row{display:grid;grid-template-columns:42px 1fr 54px;gap:8px;align-items:center}
+.radar-play,.radar-close{height:36px;border:1px solid #315f7d;background:#0b2b45;color:#fff;border-radius:10px;font-weight:900}
+.radar-time{font-size:9px;text-align:center;margin-top:4px;color:#d9efff}
+.radar-range{width:100%}
+.radar-label{font-size:8px;text-align:center;color:#9bdcff;margin-bottom:4px}
+@media(max-width:699px){
+  .radar-player{bottom:48px;width:76%;padding:6px 8px}
+  .radar-row{grid-template-columns:36px 1fr 42px;gap:5px}
+  .radar-play,.radar-close{height:32px}
+  .radar-label,.radar-time{font-size:6.5px}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -370,6 +405,15 @@ footer{padding:16px 20px calc(18px + env(safe-area-inset-bottom))}
  <div class="card hidden" id="weatherCard"><button class="cardclose" id="cardClose" aria-label="إغلاق">×</button><b id="pname">الرياض</b><div class="temp" id="ptemp">🌤️ —</div><div class="desc" id="pdesc">جارٍ التحديث</div><div class="meta" id="pmeta">المحسوسة —<br>الرطوبة —<br>الرياح —</div></div>
  <div class="zoom"><button id="zin">+</button><button id="zout">−</button></div>
  <div class="legend"><b>مقياس شدة الهطول بالرادار</b><div class="grad"></div><div class="ticks"><span>خفيف</span><span>متوسط</span><span>غزير</span><span>شديد</span></div></div>
+<div class="radar-player" id="radarPlayer">
+      <div class="radar-label">رادار المطر المتحرك — آخر ساعتين</div>
+      <div class="radar-row">
+        <button class="radar-play" id="radarPlay">▶</button>
+        <input class="radar-range" id="radarRange" type="range" min="0" max="0" value="0" step="1">
+        <button class="radar-close" id="radarClose">×</button>
+      </div>
+      <div class="radar-time" id="radarTime">—</div>
+    </div>
 </section>
 
 <footer><div class="notice">
@@ -401,8 +445,61 @@ document.querySelectorAll('[data-city]').forEach(el=>el.addEventListener('click'
  let n=el.dataset.city,q=cities[n]; if(!q)return;
  if(map){map.flyTo(q,8);marker.setLatLng(q)} weather(q[0],q[1],n,true);
 }));
+
+let radarFrames=[], radarLayer=null, radarIndex=0, radarTimer=null, radarHost='';
+async function initRadar(){
+  try{
+    const d=await fetch('https://api.rainviewer.com/public/weather-maps.json',{cache:'no-store'}).then(r=>r.json());
+    radarHost=d.host||'https://tilecache.rainviewer.com';
+    radarFrames=(d.radar&&d.radar.past)||[];
+    if(!radarFrames.length) throw new Error('no frames');
+    const rg=$('radarRange');
+    rg.max=radarFrames.length-1;
+    radarIndex=radarFrames.length-1;
+    rg.value=radarIndex;
+    $('radarPlayer').classList.add('on');
+    showRadarFrame(radarIndex);
+  }catch(e){
+    $('radarPlayer').classList.add('on');
+    $('radarTime').textContent='تعذر تحميل بيانات الرادار الآن';
+  }
+}
+function showRadarFrame(i){
+  if(!radarFrames.length||!map)return;
+  radarIndex=Math.max(0,Math.min(i,radarFrames.length-1));
+  $('radarRange').value=radarIndex;
+  const f=radarFrames[radarIndex];
+  if(radarLayer){map.removeLayer(radarLayer)}
+  radarLayer=L.tileLayer(radarHost+f.path+'/256/{z}/{x}/{y}/2/1_1.png',{
+    opacity:.68, maxZoom:7, zIndex:450, attribution:'Radar © RainViewer'
+  }).addTo(map);
+  const t=new Date(f.time*1000);
+  $('radarTime').textContent=t.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+}
+function stopRadar(){
+  if(radarTimer){clearInterval(radarTimer);radarTimer=null}
+  $('radarPlay').textContent='▶';
+}
+$('radarPlay').onclick=()=>{
+  if(!radarFrames.length)return;
+  if(radarTimer){stopRadar();return}
+  $('radarPlay').textContent='❚❚';
+  radarTimer=setInterval(()=>{
+    radarIndex=(radarIndex+1)%radarFrames.length;
+    showRadarFrame(radarIndex);
+  },650);
+};
+$('radarRange').oninput=e=>{stopRadar();showRadarFrame(+e.target.value)};
+$('radarClose').onclick=()=>{
+  stopRadar();
+  if(radarLayer&&map){map.removeLayer(radarLayer);radarLayer=null}
+  $('radarPlayer').classList.remove('on');
+};
+
 const names={search:'البحث',menu:'القائمة',72:'توقع 72 ساعة',models:'توقعات النماذج',radar:'الرادار',rain:'شدة المطر',lightning:'البرق',dust:'الغبار',pressure:'الضغط',humidity:'الرطوبة',wind:'الرياح',layers:'الطبقات'};
-document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{let k=b.dataset.open;ST.textContent=names[k];SB.innerHTML=k==='models'?'<p><a target="_blank" href="https://www.yanbuweather.com/pages/ecmwf_original/">ECMWF — خرائط الهطول</a><br><a target="_blank" href="https://www.yanbuweather.com/pages/gfsmodel/">GFS — خرائط الهطول</a><br><a target="_blank" href="https://www.yanbuweather.com/pages/weather_models/">مقارنة النماذج</a></p>':'<p>هذه الوظيفة ستُربط بالطبقة الحية بعد اعتماد الواجهة بصريًا.</p>';S.classList.add('open')});
+document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{let k=b.dataset.open;
+if(k==='radar'){initRadar();return}
+ST.textContent=names[k];SB.innerHTML=k==='models'?'<p><a target="_blank" href="https://www.yanbuweather.com/pages/ecmwf_original/">ECMWF — خرائط الهطول</a><br><a target="_blank" href="https://www.yanbuweather.com/pages/gfsmodel/">GFS — خرائط الهطول</a><br><a target="_blank" href="https://www.yanbuweather.com/pages/weather_models/">مقارنة النماذج</a></p>':'<p>هذه الوظيفة ستُربط بالطبقة الحية بعد اعتماد الواجهة بصريًا.</p>';S.classList.add('open')});
 $('close').onclick=()=>S.classList.remove('open');
 function tick(){$('clock').textContent=new Date().toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'})}tick();setInterval(tick,60000);
 </script>
