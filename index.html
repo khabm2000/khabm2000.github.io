@@ -172,6 +172,124 @@ footer{
   .cities{padding-right:8px;padding-left:8px}
 }
 </style>
+
+<style>
+/* V27 — approved full composition */
+html,body{overflow-x:hidden}
+.app{max-width:1024px}
+header{height:280px}
+.hero{
+  height:158px;
+  grid-template-columns:120px 1fr 210px;
+  padding:10px 20px;
+  gap:12px
+}
+.snap img{width:70px;height:70px}
+.snap{font-size:10px}
+.title{font-size:34px}
+.sub{font-size:15px}
+.note{font-size:12px}
+.actions .search{width:105px;height:48px}
+.actions .menu{width:50px;height:48px}
+.trial{font-size:11px;padding:6px 16px}
+.cities{
+  height:122px;
+  padding:12px 20px;
+  gap:10px;
+  overflow:hidden;
+  direction:rtl
+}
+.city{
+  flex:1 1 0;
+  min-width:0;
+  height:96px;
+  border-radius:15px
+}
+.city b{font-size:13px}
+.city span{font-size:23px}
+
+/* Map is deliberately tall enough to show the complete composition before footer */
+.mapwrap{height:1050px;min-height:1050px}
+.topcontrols{
+  top:18px;
+  left:22px;
+  right:115px;
+  gap:12px
+}
+.float{height:58px;border-radius:15px}
+.loc{width:120px;font-size:15px}
+.loc::after{content:" موقعي";font-size:13px;font-weight:800}
+.h72{width:190px;font-size:14px}
+.models{width:305px;font-size:14px}
+.rail{right:14px;top:85px;gap:7px}
+.rbtn{
+  width:72px;height:82px;border-radius:17px;font-size:10px
+}
+.rbtn i{font-size:29px;margin-bottom:6px}
+.legend{
+  left:175px;right:175px;bottom:22px;
+  padding:12px 18px;border-radius:16px
+}
+.legend b{font-size:13px}
+.grad{height:14px;margin-top:8px}
+.ticks{font-size:9px;margin-top:5px}
+.zoom{left:24px;bottom:125px}
+.zoom button{width:54px;height:54px}
+.card{top:180px}
+footer{padding:16px 20px calc(18px + env(safe-area-inset-bottom))}
+.notice{font-size:12px;line-height:1.8;padding:14px 18px;border-radius:15px}
+.info{width:34px;height:34px}
+.credits{font-size:9px;padding-top:12px}
+
+/* Phone: keep the same full composition, scaled to viewport width */
+@media(max-width:699px){
+  header{height:244px}
+  .hero{
+    height:144px;
+    grid-template-columns:78px 1fr 120px;
+    padding:8px 10px;
+    gap:5px
+  }
+  .snap img{width:52px;height:52px}
+  .snap{font-size:8px}
+  .title{font-size:25px}
+  .sub{font-size:10px}
+  .note{font-size:8px}
+  .actions .search{width:72px;height:40px}
+  .actions .menu{width:40px;height:40px}
+  .trial{font-size:9px;padding:4px 10px}
+  .cities{
+    height:100px;
+    padding:8px 5px;
+    gap:5px;
+    overflow:hidden
+  }
+  .city{height:82px;min-width:0}
+  .city b{font-size:9px}
+  .city span{font-size:16px}
+
+  .mapwrap{height:900px;min-height:900px}
+  .topcontrols{top:10px;left:7px;right:60px;gap:5px}
+  .float{height:44px}
+  .loc{width:68px;font-size:19px}
+  .loc::after{content:"";font-size:0}
+  .h72{width:104px;font-size:9px}
+  .models{width:164px;font-size:9px}
+  .rail{right:5px;top:62px;gap:4px}
+  .rbtn{width:48px;height:52px;border-radius:12px;font-size:7px}
+  .rbtn i{font-size:19px;margin-bottom:3px}
+  .legend{left:60px;right:60px;bottom:16px;padding:8px 10px}
+  .legend b{font-size:9px}
+  .grad{height:10px}
+  .ticks{font-size:7px}
+  .zoom{left:12px;bottom:84px}
+  .zoom button{width:42px;height:42px}
+  footer{padding:10px 8px calc(12px + env(safe-area-inset-bottom))}
+  .notice{font-size:8px;line-height:1.7;padding:9px 10px}
+  .info{width:27px;height:27px}
+  .credits{font-size:6px}
+}
+</style>
 </head>
 <body>
 <div class="app">
