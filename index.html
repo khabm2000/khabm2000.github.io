@@ -384,6 +384,20 @@ footer{padding:16px 20px calc(18px + env(safe-area-inset-bottom))}
   .radar-label,.radar-time{font-size:6.5px}
 }
 </style>
+
+<style>
+.radar-player:before{
+  content:"−2س  ◀  الآن  ▶  +2س";
+  display:block;
+  text-align:center;
+  font-size:8px;
+  color:#ffd15a;
+  margin-bottom:3px;
+}
+@media(max-width:699px){
+  .radar-player:before{font-size:6.5px}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -406,13 +420,13 @@ footer{padding:16px 20px calc(18px + env(safe-area-inset-bottom))}
  <div class="zoom"><button id="zin">+</button><button id="zout">−</button></div>
  <div class="legend"><b>مقياس شدة الهطول بالرادار</b><div class="grad"></div><div class="ticks"><span>خفيف</span><span>متوسط</span><span>غزير</span><span>شديد</span></div></div>
 <div class="radar-player" id="radarPlayer">
-      <div class="radar-label">رادار المطر المتحرك — آخر ساعتين</div>
+      <div class="radar-label">الهطول المتحرك — ساعتان ماضيتان + ساعتان قادمتان</div>
       <div class="radar-row">
         <button class="radar-play" id="radarPlay">▶</button>
         <input class="radar-range" id="radarRange" type="range" min="0" max="0" value="0" step="1">
         <button class="radar-close" id="radarClose">×</button>
       </div>
-      <div class="radar-time" id="radarTime">—</div>
+      <div class="radar-time" id="radarTime">—</div><div class="radar-time" id="radarSource">—</div>
     </div>
 </section>
 
@@ -446,53 +460,170 @@ document.querySelectorAll('[data-city]').forEach(el=>el.addEventListener('click'
  if(map){map.flyTo(q,8);marker.setLatLng(q)} weather(q[0],q[1],n,true);
 }));
 
-let radarFrames=[], radarLayer=null, radarIndex=0, radarTimer=null, radarHost='';
-async function initRadar(){
-  try{
-    const d=await fetch('https://api.rainviewer.com/public/weather-maps.json',{cache:'no-store'}).then(r=>r.json());
-    radarHost=d.host||'https://tilecache.rainviewer.com';
-    radarFrames=(d.radar&&d.radar.past)||[];
-    if(!radarFrames.length) throw new Error('no frames');
-    const rg=$('radarRange');
-    rg.max=radarFrames.length-1;
-    radarIndex=radarFrames.length-1;
-    rg.value=radarIndex;
-    $('radarPlayer').classList.add('on');
-    showRadarFrame(radarIndex);
-  }catch(e){
-    $('radarPlayer').classList.add('on');
-    $('radarTime').textContent='تعذر تحميل بيانات الرادار الآن';
-  }
-}
-function showRadarFrame(i){
-  if(!radarFrames.length||!map)return;
-  radarIndex=Math.max(0,Math.min(i,radarFrames.length-1));
-  $('radarRange').value=radarIndex;
-  const f=radarFrames[radarIndex];
-  if(radarLayer){map.removeLayer(radarLayer)}
-  radarLayer=L.tileLayer(radarHost+f.path+'/256/{z}/{x}/{y}/2/1_1.png',{
-    opacity:.68, maxZoom:7, zIndex:450, attribution:'Radar © RainViewer'
-  }).addTo(map);
-  const t=new Date(f.time*1000);
-  $('radarTime').textContent=t.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
-}
+
+let radarPast=[], futureFrames=[], timeline=[], radarLayer=null, forecastLayer=null;
+let radarIndex=0, radarTimer=null, radarHost='', forecastCache={};
+
 function stopRadar(){
   if(radarTimer){clearInterval(radarTimer);radarTimer=null}
   $('radarPlay').textContent='▶';
 }
+
+function clearPrecipLayers(){
+  if(radarLayer&&map){map.removeLayer(radarLayer);radarLayer=null}
+  if(forecastLayer&&map){map.removeLayer(forecastLayer);forecastLayer=null}
+}
+
+function fmtTime(ts){
+  return new Date(ts*1000).toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+}
+
+async function initRadar(){
+  try{
+    const d=await fetch('https://api.rainviewer.com/public/weather-maps.json',{cache:'no-store'}).then(r=>r.json());
+    radarHost=d.host||'https://tilecache.rainviewer.com';
+    radarPast=(d.radar&&d.radar.past)||[];
+
+    // Future timestamps: every 15 min from the next quarter-hour through +2h.
+    const nowSec=Math.floor(Date.now()/1000);
+    const q=15*60;
+    const first=Math.ceil(nowSec/q)*q;
+    futureFrames=[];
+    for(let t=first;t<=nowSec+2*3600+60;t+=q){
+      futureFrames.push({time:t,type:'forecast'});
+    }
+
+    timeline=[
+      ...radarPast.map(f=>({time:f.time,type:'radar',path:f.path})),
+      ...futureFrames
+    ].sort((a,b)=>a.time-b.time);
+
+    if(!timeline.length) throw new Error('no frames');
+
+    const rg=$('radarRange');
+    rg.max=timeline.length-1;
+
+    // Start on the most recent observed radar frame ("now").
+    radarIndex=Math.max(0, radarPast.length-1);
+    rg.value=radarIndex;
+    $('radarPlayer').classList.add('on');
+    showPrecipFrame(radarIndex);
+  }catch(e){
+    $('radarPlayer').classList.add('on');
+    $('radarTime').textContent='تعذر تحميل بيانات الهطول الآن';
+    $('radarSource').textContent='';
+  }
+}
+
+async function showPrecipFrame(i){
+  if(!timeline.length||!map)return;
+  radarIndex=Math.max(0,Math.min(i,timeline.length-1));
+  $('radarRange').value=radarIndex;
+  const f=timeline[radarIndex];
+  clearPrecipLayers();
+
+  $('radarTime').textContent=fmtTime(f.time);
+
+  if(f.type==='radar'){
+    $('radarSource').textContent='مرصود بالرادار • RainViewer';
+    radarLayer=L.tileLayer(radarHost+f.path+'/256/{z}/{x}/{y}/2/1_1.png',{
+      opacity:.68,maxZoom:7,zIndex:450,attribution:'Radar © RainViewer'
+    }).addTo(map);
+  }else{
+    $('radarSource').textContent='توقع هطول +2 ساعة • Open‑Meteo';
+    await drawFutureForecast(f.time);
+  }
+}
+
+function precipStyle(mm){
+  // Transparent for near-zero precipitation, stronger fill as forecast increases.
+  let opacity=0, fill='#2b72ff';
+  if(mm>=0.05){opacity=.18;fill='#2b72ff'}
+  if(mm>=0.3){opacity=.26;fill='#25b7e7'}
+  if(mm>=1){opacity=.34;fill='#36c95a'}
+  if(mm>=2){opacity=.42;fill='#e2d52a'}
+  if(mm>=5){opacity=.50;fill='#f18c22'}
+  if(mm>=10){opacity=.58;fill='#ed3b2d'}
+  return {color:fill,weight:0,fillColor:fill,fillOpacity:opacity};
+}
+
+async function drawFutureForecast(targetTs){
+  if(!map)return;
+
+  // Sample a compact grid over the currently visible map.
+  const b=map.getBounds();
+  const rows=5, cols=6;
+  const lats=[], lons=[], cells=[];
+  for(let r=0;r<rows;r++){
+    const latN=b.getNorth()-(b.getNorth()-b.getSouth())*(r+.5)/rows;
+    for(let c=0;c<cols;c++){
+      const lonE=b.getWest()+(b.getEast()-b.getWest())*(c+.5)/cols;
+      lats.push(latN.toFixed(4)); lons.push(lonE.toFixed(4));
+      cells.push({r,c,lat:latN,lon:lonE});
+    }
+  }
+
+  const key=targetTs+'|'+map.getZoom()+'|'+
+    b.getSouth().toFixed(2)+'|'+b.getWest().toFixed(2)+'|'+
+    b.getNorth().toFixed(2)+'|'+b.getEast().toFixed(2);
+
+  let values=forecastCache[key];
+  if(!values){
+    const dt=new Date(targetTs*1000);
+    const iso=dt.toISOString().slice(0,16);
+    const url='https://api.open-meteo.com/v1/forecast'
+      +'?latitude='+lats.join(',')
+      +'&longitude='+lons.join(',')
+      +'&minutely_15=precipitation'
+      +'&start_minutely_15='+encodeURIComponent(iso)
+      +'&end_minutely_15='+encodeURIComponent(iso)
+      +'&timezone=UTC';
+
+    const data=await fetch(url,{cache:'no-store'}).then(r=>r.json());
+    const arr=Array.isArray(data)?data:[data];
+    values=arr.map(x=>{
+      const p=x && x.minutely_15 && x.minutely_15.precipitation;
+      return (p && p.length)?Number(p[0]||0):0;
+    });
+    forecastCache[key]=values;
+  }
+
+  forecastLayer=L.layerGroup().addTo(map);
+
+  const latStep=(b.getNorth()-b.getSouth())/rows;
+  const lonStep=(b.getEast()-b.getWest())/cols;
+
+  cells.forEach((cell,idx)=>{
+    const mm=values[idx]||0;
+    if(mm<0.05)return;
+    const bounds=[
+      [cell.lat-latStep/2,cell.lon-lonStep/2],
+      [cell.lat+latStep/2,cell.lon+lonStep/2]
+    ];
+    L.rectangle(bounds,precipStyle(mm))
+      .bindTooltip(mm.toFixed(1)+' mm/15د',{sticky:true})
+      .addTo(forecastLayer);
+  });
+}
+
 $('radarPlay').onclick=()=>{
-  if(!radarFrames.length)return;
+  if(!timeline.length)return;
   if(radarTimer){stopRadar();return}
   $('radarPlay').textContent='❚❚';
-  radarTimer=setInterval(()=>{
-    radarIndex=(radarIndex+1)%radarFrames.length;
-    showRadarFrame(radarIndex);
-  },650);
+  radarTimer=setInterval(async()=>{
+    radarIndex=(radarIndex+1)%timeline.length;
+    await showPrecipFrame(radarIndex);
+  },850);
 };
-$('radarRange').oninput=e=>{stopRadar();showRadarFrame(+e.target.value)};
+
+$('radarRange').oninput=async e=>{
+  stopRadar();
+  await showPrecipFrame(+e.target.value);
+};
+
 $('radarClose').onclick=()=>{
   stopRadar();
-  if(radarLayer&&map){map.removeLayer(radarLayer);radarLayer=null}
+  clearPrecipLayers();
   $('radarPlayer').classList.remove('on');
 };
 
