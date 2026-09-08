@@ -25,7 +25,7 @@ header{height:276px;background:linear-gradient(#061522,#09233a);border-bottom:1p
 .loc{width:50px;font-size:26px;margin-right:auto} .models{width:174px;font-size:10px;margin-left:auto} .h72{width:106px;font-size:10px}
 .rail{position:absolute;z-index:500;right:8px;top:73px;display:flex;flex-direction:column;gap:6px}
 .rbtn{width:57px;height:62px;background:rgba(5,25,40,.97);border:1.5px solid #315f7d;color:white;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:8px;font-weight:800;box-shadow:0 4px 12px #0005} .rbtn i{font-style:normal;font-size:23px;line-height:1;margin-bottom:4px}
-.card{position:absolute;z-index:500;left:43%;top:145px;transform:translateX(-50%);width:148px;background:white;color:#111;border-radius:10px;padding:11px;text-align:right;box-shadow:0 4px 15px #0007} .card b{font-size:13px} .temp{font-size:30px;font-weight:900;margin:3px 0} .desc{font-size:11px} .meta{font-size:9px;line-height:1.6;margin-top:4px}
+.card{position:absolute;z-index:500;left:43%;top:145px;transform:translateX(-50%);width:148px;background:white;color:#111;border-radius:10px;padding:11px;text-align:right;box-shadow:0 4px 15px #0007} .cardclose{position:absolute;left:7px;top:5px;border:0;background:transparent;color:#777;font-size:19px;line-height:1;cursor:pointer}.card.hidden{display:none}.card b{font-size:13px} .temp{font-size:30px;font-weight:900;margin:3px 0} .desc{font-size:11px} .meta{font-size:9px;line-height:1.6;margin-top:4px}
 .legend{position:absolute;z-index:500;left:78px;right:70px;bottom:11px;background:rgba(5,25,40,.96);border:1.5px solid #315f7d;border-radius:13px;padding:7px 9px;text-align:center} .legend b{font-size:9px} .grad{height:10px;margin-top:5px;background:linear-gradient(90deg,#3736d8,#2572e7,#22bdd7,#2ecb62,#b6e528,#f2c51d,#f58318,#ed3324,#ef16b8);border-radius:3px} .ticks{display:flex;justify-content:space-between;font-size:7px;margin-top:3px}
 .zoom{position:absolute;z-index:500;left:11px;bottom:80px;background:#071d30;border:1.5px solid #315f7d;border-radius:13px;overflow:hidden} .zoom button{display:block;width:43px;height:43px;border:0;background:transparent;color:white;font-size:25px} .zoom button+button{border-top:1px solid #315f7d}
 
@@ -33,6 +33,27 @@ footer{background:#071827;padding:8px} .notice{border:1.5px solid #315f7d;border
 .sheet{position:fixed;z-index:5000;left:0;right:0;bottom:0;background:#071827;border-top:1px solid #315f7d;max-height:55vh;overflow:auto;padding:14px;transform:translateY(105%);transition:.2s} .sheet.open{transform:none} .sheet h3{margin:0 0 10px} .sheet .x{float:left;border:0;background:#12344e;color:white;border-radius:9px;width:35px;height:35px} .sheet p,.sheet a{font-size:12px;line-height:1.8;color:#d9efff}
 .leaflet-control-attribution{font-size:6px!important}
 @media(min-width:700px){header{height:365px}.hero{height:250px;grid-template-columns:125px 1fr 180px}.snap img{width:76px;height:76px}.title{font-size:42px}.sub{font-size:18px}.note{font-size:15px}.cities{height:115px}.city{flex-basis:120px}.mapwrap{height:1040px}}
+</style>
+
+<style>
+/* V23 visual polish — V22 structure retained */
+@media (max-width:699px){
+ header{height:252px}
+ .hero{height:166px;grid-template-columns:78px 1fr 112px;padding:7px 9px}
+ .snap img{width:50px;height:50px}
+ .title{font-size:25px}
+ .sub{font-size:11px}
+ .note{font-size:9px}
+ .cities{height:86px;padding:6px}
+ .city{flex-basis:86px}
+ .mapwrap{height:calc(100svh - 252px - 72px);min-height:650px;padding-bottom:env(safe-area-inset-bottom)}
+ .card{width:136px;padding:10px;top:150px}
+ .temp{font-size:27px}
+ .rail{right:7px;top:72px;gap:5px}
+ .rbtn{width:54px;height:58px}
+ .rbtn i{font-size:21px}
+ .topcontrols{right:69px}
+}
 </style>
 </head>
 <body>
@@ -53,7 +74,7 @@ footer{background:#071827;padding:8px} .notice{border:1.5px solid #315f7d;border
  <div class="mapmsg">الخريطة الفضائية الحية</div><div id="map"></div>
  <div class="topcontrols"><button class="float loc" id="loc">⌾</button><button class="float h72" data-open="72">◷ 72 ساعة</button><button class="float models" data-open="models">🌍 توقعات النماذج ▼</button></div>
  <div class="rail"><button class="rbtn" data-open="radar"><i>🌧️</i>الرادار</button><button class="rbtn" data-open="rain"><i>🌈</i>شدة المطر</button><button class="rbtn" data-open="lightning"><i>⚡</i>البرق</button><button class="rbtn" data-open="dust"><i>⠿</i>الغبار</button><button class="rbtn" data-open="pressure"><i>🧭</i>الضغط</button><button class="rbtn" data-open="humidity"><i>💧</i>الرطوبة</button><button class="rbtn" data-open="wind"><i>💨</i>الرياح</button><button class="rbtn" data-open="layers"><i>🔷</i>الطبقات</button></div>
- <div class="card"><b id="pname">الرياض</b><div class="temp" id="ptemp">🌤️ —</div><div class="desc" id="pdesc">جارٍ التحديث</div><div class="meta" id="pmeta">المحسوسة —<br>الرطوبة —<br>الرياح —</div></div>
+ <div class="card" id="weatherCard"><button class="cardclose" id="cardClose" aria-label="إغلاق">×</button><b id="pname">الرياض</b><div class="temp" id="ptemp">🌤️ —</div><div class="desc" id="pdesc">جارٍ التحديث</div><div class="meta" id="pmeta">المحسوسة —<br>الرطوبة —<br>الرياح —</div></div>
  <div class="zoom"><button id="zin">+</button><button id="zout">−</button></div>
  <div class="legend"><b>مقياس شدة الهطول بالرادار</b><div class="grad"></div><div class="ticks"><span>خفيف</span><span>متوسط</span><span>غزير</span><span>شديد</span></div></div>
 </section>
@@ -68,12 +89,17 @@ const cities={'الرياض':[24.7136,46.6753],'مكة':[21.3891,39.8579],'جد�
 const $=x=>document.getElementById(x),S=$('sheet'),ST=$('st'),SB=$('sb');
 function desc(c){return ({0:'صحو',1:'غالبًا صحو',2:'غائم جزئيًا',3:'غائم',45:'ضباب',51:'رذاذ',61:'مطر خفيف',63:'مطر',65:'مطر غزير',80:'زخات',81:'زخات',82:'زخات قوية',95:'عواصف رعدية'})[c]||'حالة جوية'}
 function icon(c){if(c===0)return'☀️';if([1,2].includes(c))return'🌤️';if(c===3)return'☁️';if([61,63,65,80,81].includes(c))return'🌧️';if([82,95,96,99].includes(c))return'⛈️';return'🌡️'}
-async function weather(lat,lon,name,card=true){try{let u=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`;let d=await fetch(u,{cache:'no-store'}).then(r=>r.json()),c=d.current;if(card){$('pname').textContent=name;$('ptemp').textContent=`${icon(c.weather_code)} ${Math.round(c.temperature_2m)}°`;$('pdesc').textContent=desc(c.weather_code);$('pmeta').innerHTML=`المحسوسة ${Math.round(c.apparent_temperature)}°<br>الرطوبة ${Math.round(c.relative_humidity_2m)}%<br>الرياح ${Math.round(c.wind_speed_10m)} كم/س`}return c}catch(e){return null}}
+async function weather(lat,lon,name,card=true){try{let u=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`;let d=await fetch(u,{cache:'no-store'}).then(r=>r.json()),c=d.current;if(card){$('weatherCard').classList.remove('hidden');$('pname').textContent=name;$('ptemp').textContent=`${icon(c.weather_code)} ${Math.round(c.temperature_2m)}°`;$('pdesc').textContent=desc(c.weather_code);$('pmeta').innerHTML=`المحسوسة ${Math.round(c.apparent_temperature)}°<br>الرطوبة ${Math.round(c.relative_humidity_2m)}%<br>الرياح ${Math.round(c.wind_speed_10m)} كم/س`}return c}catch(e){return null}}
 async function loadCities(){for(const el of document.querySelectorAll('[data-city]')){let n=el.dataset.city,[a,o]=cities[n],c=await weather(a,o,n,false);el.querySelector('span').textContent=c?`${icon(c.weather_code)} ${Math.round(c.temperature_2m)}°`:'—'}}
 let map,marker;
 if(window.L){map=L.map('map',{zoomControl:false}).setView(cities['الرياض'],5);L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Tiles © Esri'}).addTo(map);L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png',{subdomains:'abcd',opacity:.9,maxZoom:20,attribution:'© OpenStreetMap © CARTO'}).addTo(map);marker=L.marker(cities['الرياض']).addTo(map);L.control.scale({imperial:false,position:'bottomleft',maxWidth:85}).addTo(map);map.on('click',e=>{marker.setLatLng(e.latlng);weather(e.latlng.lat,e.latlng.lng,'الموقع المحدد')});$('zin').onclick=()=>map.zoomIn();$('zout').onclick=()=>map.zoomOut();}
 weather(...cities['الرياض'],'الرياض');loadCities();
+$('cardClose').onclick=(e)=>{e.stopPropagation();$('weatherCard').classList.add('hidden')};
 $('loc').onclick=()=>navigator.geolocation&&navigator.geolocation.getCurrentPosition(p=>{let q=[p.coords.latitude,p.coords.longitude];if(map){map.flyTo(q,8);marker.setLatLng(q)}weather(q[0],q[1],'موقعي')});
+document.querySelectorAll('[data-city]').forEach(el=>el.addEventListener('click',()=>{
+ let n=el.dataset.city,q=cities[n]; if(!q)return;
+ if(map){map.flyTo(q,8);marker.setLatLng(q)} weather(q[0],q[1],n,true);
+}));
 const names={search:'البحث',menu:'القائمة',72:'توقع 72 ساعة',models:'توقعات النماذج',radar:'الرادار',rain:'شدة المطر',lightning:'البرق',dust:'الغبار',pressure:'الضغط',humidity:'الرطوبة',wind:'الرياح',layers:'الطبقات'};
 document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{let k=b.dataset.open;ST.textContent=names[k];SB.innerHTML=k==='models'?'<p><a target="_blank" href="https://www.yanbuweather.com/pages/ecmwf_original/">ECMWF — خرائط الهطول</a><br><a target="_blank" href="https://www.yanbuweather.com/pages/gfsmodel/">GFS — خرائط الهطول</a><br><a target="_blank" href="https://www.yanbuweather.com/pages/weather_models/">مقارنة النماذج</a></p>':'<p>هذه الوظيفة ستُربط بالطبقة الحية بعد اعتماد الواجهة بصريًا.</p>';S.classList.add('open')});
 $('close').onclick=()=>S.classList.remove('open');
