@@ -892,21 +892,28 @@ function showLightningNotice(){
   stopRadar();
   clearPrecipLayers();
   $('upperPanel').classList.remove('on');
-  setBadge('البرق الحي • Blitzortung.org');
+  setBadge('البرق الحي العالمي • Blitzortung.org');
   ST.textContent='⚡ البرق الحي المباشر';
   SB.innerHTML=`
     <div style="height:min(68vh,620px);border-radius:12px;overflow:hidden;border:1px solid #315f7d;background:#071c2c">
       <iframe
         title="Blitzortung Live Lightning"
-        src="https://srv8.blitzortung.org/"
+        src="https://map.blitzortung.org/"
         style="width:100%;height:100%;border:0;display:block"
         loading="eager"
         allow="geolocation"
         referrerpolicy="no-referrer-when-downgrade">
       </iframe>
     </div>
+    <div style="display:flex;justify-content:center;gap:5px;align-items:center;margin-top:6px;font-size:8px;color:#d8ecfa;flex-wrap:wrap">
+      <span style="font-weight:900">عمر الضربة:</span>
+      <span>أبيض = الآن</span>
+      <span>→</span>
+      <span>أحمر داكن = أقدم</span>
+      <span>حتى 120 دقيقة</span>
+    </div>
     <p style="font-size:9px;margin:7px 0 0;text-align:center">
-      خريطة برق حية من Blitzortung.org — لا تحتاج مفتاح API.
+      خريطة البرق العالمية الحية المتجهة من Blitzortung.org — لا تحتاج مفتاح API.
     </p>`;
   S.classList.add('open');
 }
