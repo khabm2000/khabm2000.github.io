@@ -290,6 +290,65 @@ footer{padding:16px 20px calc(18px + env(safe-area-inset-bottom))}
   .credits{font-size:6px}
 }
 </style>
+
+<style>
+/* V28 — single-screen composition */
+@media(max-width:699px){
+  header{height:190px}
+  .hero{
+    height:112px;
+    grid-template-columns:64px 1fr 102px;
+    padding:5px 8px;
+    gap:4px
+  }
+  .snap img{width:42px;height:42px;margin-bottom:2px}
+  .snap{font-size:6.5px}
+  .title{font-size:21px}
+  .sub{font-size:8.5px;margin-top:2px}
+  .note{font-size:7px;margin-top:3px}
+  .actions .search{width:62px;height:34px;font-size:9px}
+  .actions .menu{width:34px;height:34px;font-size:18px}
+  .trial{font-size:7.5px;padding:3px 8px;margin-top:4px}
+  .cities{height:78px;padding:5px 4px;gap:4px}
+  .city{height:66px;border-radius:11px}
+  .city b{font-size:7.5px}
+  .city span{font-size:13px;margin-top:2px}
+
+  .mapwrap{
+    height:calc(100svh - 190px - 92px);
+    min-height:520px;
+    max-height:650px
+  }
+  .topcontrols{top:7px;left:6px;right:52px;gap:4px}
+  .float{height:35px;border-radius:10px}
+  .loc{width:38px;font-size:18px}
+  .h72{width:84px;font-size:7.5px}
+  .models{width:142px;font-size:7.5px}
+  .rail{right:4px;top:48px;gap:3px}
+  .rbtn{width:41px;height:44px;border-radius:10px;font-size:5.8px}
+  .rbtn i{font-size:16px;margin-bottom:1px}
+  .legend{
+    left:50px;right:50px;bottom:8px;
+    padding:5px 7px;border-radius:10px
+  }
+  .legend b{font-size:7px}
+  .grad{height:7px;margin-top:4px}
+  .ticks{font-size:5.5px;margin-top:2px}
+  .zoom{left:8px;bottom:54px;border-radius:9px}
+  .zoom button{width:34px;height:34px;font-size:19px}
+
+  footer{
+    min-height:92px;
+    padding:5px 7px calc(6px + env(safe-area-inset-bottom))
+  }
+  .notice{
+    font-size:6.7px;line-height:1.45;
+    padding:5px 7px;border-radius:10px
+  }
+  .info{width:22px;height:22px;font-size:10px}
+  .credits{font-size:5px;padding:5px 2px 0}
+}
+</style>
 </head>
 <body>
 <div class="app">
