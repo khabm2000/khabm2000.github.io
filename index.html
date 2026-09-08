@@ -406,6 +406,43 @@ footer{padding:16px 20px calc(18px + env(safe-area-inset-bottom))}
   .radar-player{bottom:66px;width:78%}
 }
 </style>
+
+<style>
+.timeline-types{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:5px;
+  align-items:center;
+  margin:0 0 5px;
+  direction:rtl;
+  font-size:8px;
+  font-weight:900;
+  text-align:center;
+}
+.timeline-types span{
+  padding:4px 6px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.18);
+  white-space:nowrap;
+}
+.timeline-types .observed{
+  background:#0d4f7a;
+  color:#dff5ff;
+}
+.timeline-types .now{
+  background:#f2f4f6;
+  color:#071c2c;
+  padding-inline:8px;
+}
+.timeline-types .forecast{
+  background:#7a5710;
+  color:#ffe9a6;
+}
+@media(max-width:699px){
+  .timeline-types{font-size:6.3px;gap:3px;margin-bottom:3px}
+  .timeline-types span{padding:3px 4px}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -428,7 +465,12 @@ footer{padding:16px 20px calc(18px + env(safe-area-inset-bottom))}
  <div class="zoom"><button id="zin">+</button><button id="zout">−</button></div>
  <div class="legend"><b>مقياس شدة الهطول بالرادار</b><div class="grad"></div><div class="ticks"><span>خفيف</span><span>متوسط</span><span>غزير</span><span>شديد</span></div></div>
 <div class="radar-player" id="radarPlayer">
-      <div class="radar-label">الهطول المتحرك — −2 ساعة ← الآن → +2 ساعة</div>
+      <div class="timeline-types" aria-label="نوع بيانات الهطول">
+  <span class="observed">مرصود بالرادار −2س</span>
+  <span class="now">الآن</span>
+  <span class="forecast">توقع هطول +2س</span>
+</div>
+<div class="radar-label">الهطول المتحرك — −2 ساعة ← الآن → +2 ساعة</div>
       <div class="radar-row">
         <button class="radar-play" id="radarPlay">▶</button>
         <input class="radar-range" id="radarRange" type="range" min="0" max="0" value="0" step="1">
@@ -538,7 +580,7 @@ async function showPrecipFrame(i){
       opacity:.68,maxZoom:7,zIndex:450,attribution:'Radar © RainViewer'
     }).addTo(map);
   }else{
-    $('radarSource').textContent='توقع هطول +2 ساعة • Open‑Meteo';
+    $('radarSource').textContent='توقع هطول • Open‑Meteo';
     await drawFutureForecast(f.time);
   }
 }
