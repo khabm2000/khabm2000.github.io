@@ -1,5 +1,7 @@
 <!doctype html>
-<!-- KHABM_BUILD: REPAIRED_NO_NIGHT_V13_20260908 -->
+<!-- KHABM_BUILD: V13_PRO_INTERFACE_20260908 -->
+<!-- KHABM_BUILD: NIGHT_MAP_REMOVED_V12_20260908 -->
+<!-- KHABM_BUILD: V11_NO_NIGHT_MODE_20260908 -->
 <!-- KHABM_BUILD: LIGHTNING_WEATHERBIT_READY_V10_20260908 -->
 <!-- KHABM_BUILD: PRO_SHORT_RANGE_ADVANCED_V9_20260907 -->
 <!-- KHABM_BUILD: NO_THEME_VISIBLE_LIGHTNING_V8_20260907 -->
@@ -372,6 +374,198 @@ html,body{
 
 .lightningMainBtn{font-weight:900!important;white-space:nowrap!important}
 </style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style id="v13-style">
+:root{
+  --v13-glass:rgba(8,22,33,.84);
+  --v13-glass-strong:rgba(8,22,33,.94);
+  --v13-border:rgba(180,220,240,.18);
+  --v13-accent:#52c7ff;
+  --v13-text:#f4fbff;
+  --v13-muted:#a9becb;
+  --v13-shadow:0 14px 40px rgba(0,0,0,.28);
+}
+html,body,button,input,select,a{
+  font-family:"IBM Plex Sans Arabic",-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif!important;
+}
+body{background:#081720!important}
+.mainTopbar{
+  min-height:64px!important;
+  padding:8px 12px!important;
+  background:linear-gradient(180deg,rgba(5,17,26,.96),rgba(5,17,26,.88))!important;
+  border-bottom:1px solid var(--v13-border)!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.16)!important;
+}
+.brand{font-size:15px!important;font-weight:700!important;letter-spacing:0!important}
+.brand small{font-size:10px!important;font-weight:400!important;color:var(--v13-muted)!important}
+.search input{
+  background:rgba(255,255,255,.07)!important;
+  border:1px solid var(--v13-border)!important;
+  border-radius:16px!important;
+  font-size:13px!important;
+}
+.workspace{background:#101c23!important}
+
+/* Keep map dominant */
+.sidebar,.bottomDock,.sourcebar{display:none!important}
+.timeline{
+  display:none;
+  left:50%!important;right:auto!important;bottom:78px!important;
+  width:min(720px,calc(100% - 32px))!important;
+  background:var(--v13-glass-strong)!important;
+  border:1px solid var(--v13-border)!important;
+  border-radius:18px!important;
+  box-shadow:var(--v13-shadow)!important;
+}
+.timeline.v13-open{display:block!important}
+
+/* Current weather card becomes a compact bottom card when requested */
+#nowCard{
+  position:absolute!important;
+  right:18px!important;
+  bottom:84px!important;
+  width:min(330px,calc(100% - 36px))!important;
+  margin:0!important;
+  z-index:1200!important;
+  background:var(--v13-glass-strong)!important;
+  border:1px solid var(--v13-border)!important;
+  border-radius:18px!important;
+  box-shadow:var(--v13-shadow)!important;
+  display:none;
+}
+#nowCard.v13-show{display:block!important}
+
+/* Snap becomes a small branded chip */
+.snap{
+  top:12px!important;left:12px!important;
+  background:var(--v13-glass)!important;
+  border:1px solid var(--v13-border)!important;
+  border-radius:14px!important;padding:5px 7px!important;
+  box-shadow:var(--v13-shadow)!important;
+}
+.snap img{width:34px!important;height:34px!important;border-radius:9px!important}
+.snap .txt b{font-size:10px!important}.snap .txt span{font-size:8px!important}
+
+/* New V13 navigation */
+.v13-toolbar{
+  position:absolute;top:14px;right:14px;z-index:1300;
+  display:flex;gap:8px;align-items:center;
+}
+.v13-btn,.v13-menu-btn{
+  height:42px;border-radius:13px;border:1px solid var(--v13-border);
+  background:var(--v13-glass);color:var(--v13-text);
+  box-shadow:var(--v13-shadow);backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  font-weight:600;font-size:12px;padding:0 12px;
+}
+.v13-iconbtn{width:42px;padding:0;font-size:18px}
+.v13-btn.active{border-color:var(--v13-accent);box-shadow:0 0 0 1px var(--v13-accent) inset,var(--v13-shadow)}
+
+.v13-model-wrap{position:relative}
+.v13-model-menu{
+  position:absolute;right:0;top:49px;width:245px;max-height:60vh;overflow:auto;
+  background:var(--v13-glass-strong);border:1px solid var(--v13-border);
+  border-radius:16px;padding:7px;box-shadow:var(--v13-shadow);
+  display:none;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)
+}
+.v13-model-wrap.open .v13-model-menu{display:block}
+.v13-model-item{
+  width:100%;text-align:right;border:0;background:transparent;color:var(--v13-text);
+  padding:10px 11px;border-radius:11px;font-size:12px;font-weight:500;
+}
+.v13-model-item:hover{background:rgba(255,255,255,.08)}
+.v13-model-item small{display:block;color:var(--v13-muted);font-weight:400;font-size:9px;margin-top:2px}
+
+/* Layer drawer */
+.v13-rail{
+  position:absolute;right:14px;top:70px;z-index:1290;
+  display:flex;flex-direction:column;gap:7px;
+}
+.v13-rail .v13-iconbtn{background:var(--v13-glass)}
+.v13-layer-panel{
+  position:absolute;right:62px;top:0;width:220px;
+  background:var(--v13-glass-strong);border:1px solid var(--v13-border);
+  border-radius:16px;padding:8px;box-shadow:var(--v13-shadow);display:none
+}
+.v13-layer-panel.open{display:block}
+.v13-layer-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.v13-layer{
+  border:1px solid var(--v13-border);background:rgba(255,255,255,.05);
+  color:var(--v13-text);border-radius:11px;padding:9px 6px;font-size:10px;font-weight:500;
+}
+
+/* city temperatures ticker */
+.v13-citybar{
+  position:absolute;left:50%;transform:translateX(-50%);bottom:14px;z-index:1250;
+  width:min(760px,calc(100% - 120px));
+  display:flex;gap:8px;overflow-x:auto;padding:7px;
+  background:var(--v13-glass);border:1px solid var(--v13-border);
+  border-radius:16px;box-shadow:var(--v13-shadow);
+  scrollbar-width:none;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)
+}
+.v13-citybar::-webkit-scrollbar{display:none}
+.v13-city{
+  min-width:max-content;padding:7px 10px;border-radius:11px;background:rgba(255,255,255,.055);
+  font-size:11px;color:var(--v13-text);white-space:nowrap;
+}
+.v13-city b{font-size:13px}
+
+/* Info/disclaimer becomes compact */
+.official{display:none!important}
+.v13-info-btn{
+  position:absolute;left:14px;bottom:74px;z-index:1260;
+  width:40px;height:40px;border-radius:50%;border:1px solid var(--v13-border);
+  background:var(--v13-glass);color:var(--v13-text);box-shadow:var(--v13-shadow);
+  font-size:17px;font-weight:700
+}
+.v13-info-panel{
+  position:absolute;left:14px;bottom:122px;z-index:1265;width:min(390px,calc(100% - 28px));
+  background:var(--v13-glass-strong);border:1px solid var(--v13-border);border-radius:16px;
+  box-shadow:var(--v13-shadow);padding:12px;color:var(--v13-text);font-size:10px;line-height:1.8;
+  display:none
+}
+.v13-info-panel.open{display:block}
+
+/* Forecast/pro sheets visually upgraded */
+.sheet{
+  background:var(--v13-glass-strong)!important;border:1px solid var(--v13-border)!important;
+  border-radius:20px!important;box-shadow:var(--v13-shadow)!important;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)
+}
+.hour,.compareCard,.summaryCard{
+  background:rgba(255,255,255,.055)!important;border:1px solid var(--v13-border)!important;
+}
+
+/* hide the old sidebar-only model card while preserving JS targets */
+#sidebar{visibility:hidden!important;pointer-events:none!important}
+#modelSelect{visibility:hidden!important;position:absolute!important;left:-9999px!important}
+
+/* mobile */
+@media(max-width:820px){
+  .mainTopbar{min-height:74px!important}
+  .brand{font-size:12px!important;max-width:150px!important}
+  .brand small{font-size:9px!important}
+  .search input{font-size:11px!important}
+  .snap{top:9px!important;left:8px!important}.snap .txt{display:none!important}
+  .v13-toolbar{top:10px;right:8px;gap:6px}
+  .v13-toolbar .v13-btn{padding:0 9px;font-size:10px;height:38px}
+  .v13-toolbar .v13-iconbtn{width:38px}
+  .v13-rail{right:8px;top:58px;gap:6px}
+  .v13-rail .v13-iconbtn{width:38px;height:38px}
+  .v13-layer-panel{right:46px;width:202px}
+  .v13-citybar{left:8px;right:8px;transform:none;width:auto;bottom:10px;padding:6px}
+  .v13-city{font-size:10px;padding:6px 8px}
+  .v13-info-btn{left:8px;bottom:64px;width:36px;height:36px}
+  #nowCard{right:8px!important;left:8px!important;bottom:64px!important;width:auto!important}
+  .timeline{bottom:64px!important;width:calc(100% - 16px)!important}
+  .sheet{left:8px!important;right:8px!important;width:auto!important;bottom:64px!important;max-height:58%!important}
+  .v13-model-menu{right:auto;left:0;width:220px}
+}
+</style>
+
 </head>
 <!--
  LIGHTNING BACKEND REQUIRED:
@@ -400,6 +594,53 @@ html,body{
 <div class="workspace">
  <div id="map"></div>
 
+ <div class="v13-toolbar" id="v13Toolbar">
+   <div class="v13-model-wrap" id="v13ModelWrap">
+     <button class="v13-menu-btn" id="v13ModelsBtn">🌍 توقعات النماذج ▾</button>
+     <div class="v13-model-menu" id="v13ModelMenu">
+       <button class="v13-model-item" data-model="ecmwf_ifs025">ECMWF الأوروبي<small>توقع 72 ساعة داخل KHABM</small></button>
+       <button class="v13-model-item" data-model="ncep_gfs_seamless">GFS الأمريكي<small>توقع 72 ساعة داخل KHABM</small></button>
+       <button class="v13-model-item" data-model="icon_seamless">ICON الألماني<small>توقع 72 ساعة داخل KHABM</small></button>
+       <button class="v13-model-item" data-model="cmc_gem_seamless">GEM الكندي<small>توقع 72 ساعة داخل KHABM</small></button>
+       <button class="v13-model-item" data-model="ukmo_global_deterministic_10km">UKMO البريطاني<small>توقع 72 ساعة داخل KHABM</small></button>
+       <button class="v13-model-item" data-model="bom_access_global">ACCESS الأسترالي<small>توقع 72 ساعة داخل KHABM</small></button>
+       <button class="v13-model-item" data-model="jma_gsm">JMA الياباني<small>توقع 72 ساعة داخل KHABM</small></button>
+       <button class="v13-model-item" data-model="meteofrance_arpege_world">ARPEGE الفرنسي<small>توقع 72 ساعة داخل KHABM</small></button>
+     </div>
+   </div>
+   <button class="v13-btn" id="v13ForecastBtn">🕒 72 ساعة</button>
+ </div>
+
+ <div class="v13-rail">
+   <button class="v13-btn v13-iconbtn" id="v13RadarBtn" title="الرادار">🌧️</button>
+   <button class="v13-btn v13-iconbtn" id="v13CloudBtn" title="صور السحب">☁️</button>
+   <button class="v13-btn v13-iconbtn" id="v13LightningBtn" title="البرق">⚡</button>
+   <button class="v13-btn v13-iconbtn" id="v13LayersBtn" title="الطبقات">☰</button>
+   <div class="v13-layer-panel" id="v13LayerPanel">
+     <div class="v13-layer-grid">
+       <button class="v13-layer" data-v13-base="street">🗺️ أسماء</button>
+       <button class="v13-layer" data-v13-base="sat">🛰️ أقمار</button>
+       <button class="v13-layer" data-v13-base="terrain">⛰️ تضاريس</button>
+       <button class="v13-layer" id="v13DustBtn">🌫️ غبار</button>
+       <button class="v13-layer" id="v13WindBtn">💨 رياح</button>
+       <button class="v13-layer" id="v13TempBtn">🌡️ حرارة</button>
+     </div>
+   </div>
+ </div>
+
+ <div class="v13-citybar" id="v13CityBar">
+   <div class="v13-city">جاري تحديث درجات المدن…</div>
+ </div>
+
+ <button class="v13-info-btn" id="v13InfoBtn" title="المصادر والتنبيه">ⓘ</button>
+ <div class="v13-info-panel" id="v13InfoPanel">
+   <b>المصادر والتنبيه</b><br>
+   هذا الموقع يقدم معلومات وخرائط وتوقعات جوية لأغراض المتابعة والاسترشاد، ولا يُعد مصدرًا رسميًا للتنبؤات أو التحذيرات الجوية.
+   للمعلومات الدقيقة والتحذيرات والتنبيهات الرسمية يرجى الرجوع إلى المركز الوطني للأرصاد والجهات الرسمية المختصة.
+   التوقعات قابلة للتغير مع كل تحديث، وكل شيء بأمر الله وقدرته ومشيئته، والله أعلم وأحكم.
+ </div>
+
+
 
  <div class="snap">
   <a href="https://www.snapchat.com/add/khabm2000" target="_blank" rel="noopener">
@@ -414,6 +655,7 @@ html,body{
    <button class="layerbtn active" data-base="street">🗺️ أسماء</button>
    <button class="layerbtn" data-base="sat">🛰️ أقمار</button>
    <button class="layerbtn" data-base="terrain">⛰️ تضاريس</button>
+   
   </div>
 
   <div class="sectionTitle" style="margin-top:12px">الرصد والطبقات</div>
@@ -635,8 +877,7 @@ const map=L.map('map',{zoomControl:true,worldCopyJump:true}).setView([25,45],4);
 const bases={
  street:L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}),
  sat:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Tiles © Esri'}),
- terrain:L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenStreetMap, SRTM | OpenTopoMap'})
-};
+ terrain:L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'© OpenStreetMap, SRTM | OpenTopoMap'}),};
 const satLabels=L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png',{maxZoom:20,opacity:.96,attribution:'© OpenStreetMap © CARTO'});
 let baseName='street'; bases.street.addTo(map);
 
@@ -647,6 +888,7 @@ function setBase(name){
  document.querySelectorAll('[data-base]').forEach(b=>b.classList.toggle('active',b.dataset.base===name));
 }
 document.querySelectorAll('[data-base]').forEach(b=>b.onclick=()=>setBase(b.dataset.base));
+};
 
 let marker=L.marker([24.7,46.7]).addTo(map);
 let lightningLayer=L.layerGroup().addTo(map);
@@ -1042,7 +1284,7 @@ document.getElementById('radarInsideBtn').onclick=async()=>{
 
 document.getElementById('weatherCenterBtn').onclick=()=>document.getElementById('weatherCenterSheet').classList.add('open');
 document.getElementById('closeWeatherCenter').onclick=()=>document.getElementById('weatherCenterSheet').classList.remove('open');
-document.getElementById('lightningLink').onclick=()=>loadLightningOnMap();
+document.getElementById('lightningLink').onclick=()=>loadLightningOnMap();document.getElementById('lightningSheet').classList.add('open')};
 document.getElementById('twoHourBtn').onclick=async()=>{
   if(!rvMeta) rvMeta=await loadRainViewer();
   if(!rvMeta){ alert('تعذر تحميل بيانات الرادار الآن'); return; }
@@ -1233,6 +1475,111 @@ document.getElementById('searchBox').addEventListener('input',e=>{
  },450);
 });
 loadWeather(selected.lat,selected.lon,selected.name);
+
+// ===== KHABM V13 PROFESSIONAL INTERFACE =====
+(function(){
+  const $ = id => document.getElementById(id);
+
+  // Show compact weather card after any map selection.
+  map.on('click',()=> {
+    setTimeout(()=> $('nowCard')?.classList.add('v13-show'), 120);
+  });
+  map.on('locationfound',()=> {
+    setTimeout(()=> $('nowCard')?.classList.add('v13-show'), 120);
+  });
+
+  // Models dropdown
+  $('v13ModelsBtn')?.addEventListener('click', e=>{
+    e.stopPropagation();
+    $('v13ModelWrap')?.classList.toggle('open');
+  });
+  document.addEventListener('click', e=>{
+    if(!$('v13ModelWrap')?.contains(e.target)) $('v13ModelWrap')?.classList.remove('open');
+    if(!$('v13LayerPanel')?.contains(e.target) && e.target?.id!=='v13LayersBtn') $('v13LayerPanel')?.classList.remove('open');
+  });
+
+  document.querySelectorAll('.v13-model-item').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const m = btn.dataset.model || '';
+      if($('modelSelect')){
+        $('modelSelect').value = m;
+        $('modelSelect').dispatchEvent(new Event('change'));
+      }
+      $('v13ModelWrap')?.classList.remove('open');
+      if($('forecastTitle')) $('forecastTitle').textContent = 'توقعات 72 ساعة — ' + btn.childNodes[0].textContent.trim();
+      setTimeout(()=> {
+        if(typeof render72 === 'function') render72();
+        $('forecastSheet')?.classList.add('open');
+      }, 450);
+    });
+  });
+
+  // Forecast
+  $('v13ForecastBtn')?.addEventListener('click', ()=>{
+    $('forecastBtn')?.click();
+  });
+
+  // Radar on same map + timeline only when active
+  $('v13RadarBtn')?.addEventListener('click', async function(){
+    $('radarBtn')?.click();
+    this.classList.toggle('active');
+    $('timeline')?.classList.toggle('v13-open');
+  });
+
+  // Cloud / lightning use the existing safe behavior
+  $('v13CloudBtn')?.addEventListener('click', ()=> $('cloudBtn')?.click());
+  $('v13LightningBtn')?.addEventListener('click', ()=> $('lightningLink')?.click());
+
+  // Layers drawer
+  $('v13LayersBtn')?.addEventListener('click', e=>{
+    e.stopPropagation();
+    $('v13LayerPanel')?.classList.toggle('open');
+  });
+  document.querySelectorAll('[data-v13-base]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const old = document.querySelector(`[data-base="${btn.dataset.v13Base}"]`);
+      old?.click();
+      $('v13LayerPanel')?.classList.remove('open');
+    });
+  });
+  $('v13DustBtn')?.addEventListener('click', ()=> window.open('https://www.ventusky.com/air-quality-map/dust','_blank','noopener'));
+  $('v13WindBtn')?.addEventListener('click', ()=> {
+    $('windBtn')?.click();
+    $('nowCard')?.classList.add('v13-show');
+  });
+  $('v13TempBtn')?.addEventListener('click', ()=> {
+    $('tempBtn')?.click();
+    $('nowCard')?.classList.add('v13-show');
+  });
+
+  // Info
+  $('v13InfoBtn')?.addEventListener('click', ()=> $('v13InfoPanel')?.classList.toggle('open'));
+
+  // Live city temperatures
+  const cities = [
+    ['الرياض',24.7136,46.6753],['جدة',21.5433,39.1728],['مكة',21.3891,39.8579],
+    ['المدينة',24.5247,39.5692],['الطائف',21.2703,40.4158],['الدمام',26.4207,50.0888],
+    ['أبها',18.2164,42.5053],['تبوك',28.3838,36.5550],['حائل',27.5114,41.7208]
+  ];
+  async function loadCityTemps(){
+    try{
+      const lat=cities.map(c=>c[1]).join(',');
+      const lon=cities.map(c=>c[2]).join(',');
+      const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&timezone=auto`;
+      const d=await fetch(url).then(r=>r.json());
+      const arr=Array.isArray(d)?d:[d];
+      $('v13CityBar').innerHTML=cities.map((c,i)=>{
+        const t=arr[i]?.current?.temperature_2m;
+        return `<div class="v13-city">${c[0]} <b>${Number.isFinite(Number(t))?Math.round(Number(t))+'°':'—'}</b></div>`;
+      }).join('');
+    }catch(e){
+      $('v13CityBar').innerHTML='<div class="v13-city">تعذر تحديث درجات المدن الآن</div>';
+    }
+  }
+  loadCityTemps();
+  setInterval(loadCityTemps, 15*60*1000);
+})();
+
 </script>
 
 </body>
