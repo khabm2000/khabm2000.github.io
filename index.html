@@ -3438,6 +3438,50 @@ function tick(){$('clock').textContent=new Date().toLocaleTimeString('ar-SA',{ho
 })();
 </script>
 
+
+<style id="khabm-v16-remove-bottom-gap-only">
+@media (max-width:699px){
+  /* V16: keep V15 design; remove only the empty area below the footer. */
+  html,body{height:auto!important;min-height:0!important;max-height:none!important;background:#031522!important;}
+  body{position:static!important;inset:auto!important;overflow-x:hidden!important;overflow-y:hidden!important;}
+  .app{height:auto!important;min-height:0!important;max-height:none!important;overflow:hidden!important;}
+  footer{margin-bottom:0!important;padding-bottom:calc(2px + env(safe-area-inset-bottom,0px))!important;}
+}
+</style>
+<script id="khabm-v16-trim-document">
+(function(){
+ function trim(){
+   try{
+     var app=document.querySelector('.app');
+     if(!app)return;
+     document.documentElement.style.height='auto';
+     document.body.style.height='auto';
+     document.body.style.minHeight='0';
+     document.body.style.maxHeight='none';
+     app.style.setProperty('height','auto','important');
+     app.style.setProperty('min-height','0','important');
+     app.style.setProperty('max-height','none','important');
+     window.scrollTo(0,0);
+     if(window.map&&window.map.invalidateSize)setTimeout(function(){window.map.invalidateSize(true)},80);
+   }catch(e){}
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',trim);else trim();
+ addEventListener('load',trim,{once:true});
+})();
+</script>
+
+<style id="khabm-v19-red-line-bottom-limit">
+@media (max-width:699px){
+  /* Only define the end of the dark site near the user's red line. */
+  html{background:#fff!important;}
+  body{background:#fff!important;margin:0!important;padding:0!important;}
+  .app{
+    background:#031522!important;
+    padding-bottom:72px!important;
+    box-sizing:border-box!important;
+  }
+}
+</style>
 </body></html>
 <!-- KHABM V30: humidity and dew point route to Windy overlays (rh/dewpoint); lightning 1/2 retained; legacy internal humidity/dewpoint rendering bypassed from all UI entry points. -->
 <!-- KHABM V21: visible cloud-cover and cloud-now buttons removed. Cloud values remain only in forecast data/table. -->
