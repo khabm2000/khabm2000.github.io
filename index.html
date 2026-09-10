@@ -500,7 +500,7 @@ body{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset
     box-shadow:0 4px 14px rgba(0,0,0,.28)!important;
   }
   .snap{
-    font-size:8px!important;
+    font-size:7px!important;
     line-height:1.15!important;
   }
 }
@@ -892,6 +892,12 @@ footer{background:#031522!important;padding:12px 14px calc(12px + env(safe-area-
 </header>
 
 <section class="mapwrap">
+
+<div id="khabmV76RightButtons" aria-label="روابط الرادارات">
+  <button id="khabmV76ForecastBtn" type="button"><i>🌧️</i><span>توقع الأمطار</span></button>
+  <button id="khabmV76RadarsBtn" type="button"><i>📡</i><span>الرادارات</span></button>
+</div>
+
  <div class="mapmsg">الخريطة الفضائية الحية</div><div id="map"></div>
  
 <div id="layerResultV7" style="
@@ -1745,6 +1751,7 @@ if(k==='lightning'){showLightningNotice();return}
 ST.textContent=names[k];SB.innerHTML=k==='models'?`<div dir="rtl" style="display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:4px">
 <a target="_blank" rel="noopener" href="https://www.yanbuweather.com/weather/">صفحة الطقس</a>
 <a target="_blank" rel="noopener" href="https://www.yanbuweather.com/pages/RainForecast/">توقعات الأمطار</a>
+<a href="#" data-v76-model-radars="1">📡 الرادارات المباشرة</a>
 <a target="_blank" rel="noopener" href="https://www.yanbuweather.com/pages/ecmwf_original/">ECMWF</a>
 <a target="_blank" rel="noopener" href="https://links.yanbuweather.com/pages/theweather/">theweather</a>
 <a target="_blank" rel="noopener" href="https://links.yanbuweather.com/pages/foreca/?2=">foreca</a>
@@ -2512,6 +2519,10 @@ function tick(){$('clock').textContent=new Date().toLocaleTimeString('ar-SA',{ho
    <button id="allLayersCloseV12" style="border:0;background:#17384f;color:#fff;border-radius:8px;width:28px;height:28px;font-size:18px">×</button>
  </div>
  <div id="allLayersGridV12" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+
+    <button id="khabmV76AllForecast" type="button">🌧️<br>توقع الأمطار</button>
+    <button id="khabmV76AllRadars" type="button">📡<br>الرادارات</button>
+
    <button data-layer-open="dust">⠿<br>الغبار</button>
    <button data-layer-open="temp">🌡️<br>الحرارة</button>
    <button data-layer-open="dewpoint">💧<br>نقطة الندى</button>
@@ -3678,6 +3689,250 @@ function tick(){$('clock').textContent=new Date().toLocaleTimeString('ar-SA',{ho
 }
 </style>
 <!-- KHABM_DEPLOY_MARKER: V51_V50_SAUDI_SEARCH_NO_WHITE_SIDES -->
+
+<div id="yanbuRadarsV74" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,15,28,.88);padding:7vh 4vw;overflow:auto;direction:rtl">
+ <div style="max-width:760px;margin:auto;background:#0d2639;border:2px solid #4d86aa;border-radius:22px;padding:18px;color:white">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+   <b style="font-size:24px">📡 الرادارات المباشرة</b>
+   <button onclick="document.getElementById('yanbuRadarsV74').style.display='none'" style="font-size:25px;padding:8px 15px">✕</button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+   <button onclick="v74open('https://www.yanbuweather.com/pages/RainRadar/')">🌧️ رادار المطر</button>
+   <button onclick="v74open('https://www.yanbuweather.com/pages/radar/')">🇸🇦 رادار المملكة</button>
+   <button onclick="v74open('https://www.yanbuweather.com/pages/radar_one_minute/')">⏱️ رادار الدقيقة الواحدة</button>
+   <button onclick="v74open('https://www.yanbuweather.com/pages/cloudswithradar/')">☁️ السحب والرادار</button>
+   <button onclick="v74open('https://www.yanbuweather.com/pages/RainMap/')">🗺️ خريطة المطر</button>
+   <button onclick="v74open('https://www.yanbuweather.com/pages/lightning/')">⚡ خريطة البروق</button>
+  </div>
+ </div>
+</div>
+<script id="V74_RADARS_WINDY">
+function v74open(u){window.open(u,'_blank','noopener')}
+document.addEventListener('click',function(e){
+ const b=e.target.closest('button,a');
+ if(!b)return;
+ const t=(b.textContent||'').trim();
+ if(t==='رادارات' || t.includes('رادارات ينبع')){
+   e.preventDefault(); e.stopPropagation();
+   document.getElementById('yanbuRadarsV74').style.display='block';
+ }
+},true);
+</script>
+
+
+<style id="KHABM_V76_RIGHT_BUTTONS_CSS">
+/* Only the two new buttons. Existing bottom rail, map, and Play are untouched. */
+#khabmV76RightButtons{
+ position:absolute!important;
+ right:7px!important;
+ top:82px!important;
+ z-index:130000!important;
+ display:flex!important;
+ flex-direction:column!important;
+ gap:8px!important;
+ pointer-events:auto!important;
+}
+#khabmV76RightButtons button{
+ display:flex!important;
+ width:54px!important;
+ height:54px!important;
+ padding:4px!important;
+ border:1.5px solid #315f7d!important;
+ border-radius:15px!important;
+ background:rgba(5,25,40,.97)!important;
+ color:#fff!important;
+ box-shadow:0 4px 12px #0005!important;
+ flex-direction:column!important;
+ align-items:center!important;
+ justify-content:center!important;
+ font-family:Arial,sans-serif!important;
+ font-weight:800!important;
+ font-size:8px!important;
+ line-height:1.15!important;
+ visibility:visible!important;
+ opacity:1!important;
+}
+#khabmV76RightButtons i{font-style:normal!important;font-size:19px!important;line-height:1!important;margin-bottom:4px!important}
+#khabmV76Picker{
+ display:none;position:fixed;inset:0;z-index:220000;background:rgba(0,14,27,.91);
+ padding:7vh 4vw;overflow:auto;direction:rtl
+}
+#khabmV76Picker.open{display:block!important}
+#khabmV76PickerBox{
+ max-width:760px;margin:auto;background:#0d2639;border:2px solid #4d86aa;
+ border-radius:20px;padding:16px;color:white
+}
+#khabmV76PickerHead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+#khabmV76PickerTitle{font-size:20px;font-weight:900}
+#khabmV76PickerClose{width:38px;height:38px;border:0;border-radius:10px;background:#17384f;color:#fff;font-size:23px}
+#khabmV76PickerGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#khabmV76PickerGrid a{
+ min-height:46px;padding:7px;border:1px solid #4b7d98;border-radius:12px;
+ background:#14344b;color:white;text-decoration:none;display:flex;align-items:center;
+ justify-content:center;text-align:center;font:800 11px Arial
+}
+@media(max-width:699px){
+ #khabmV76RightButtons{right:6px!important;top:82px!important}
+ #khabmV76RightButtons button{width:52px!important;height:52px!important;font-size:7px!important}
+ #khabmV76PickerGrid{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<div id="khabmV76Picker" aria-hidden="true">
+ <div id="khabmV76PickerBox">
+   <div id="khabmV76PickerHead">
+     <b id="khabmV76PickerTitle">القائمة</b>
+     <button id="khabmV76PickerClose" type="button">×</button>
+   </div>
+   <div id="khabmV76PickerGrid"></div>
+ </div>
+</div>
+
+<script id="KHABM_V76_RIGHT_BUTTONS_JS">
+(function(){
+ const RADARS=[
+  ['🌧️ رادار المطر — ينبع ويذر','https://www.yanbuweather.com/pages/RainRadar/'],
+  ['🇸🇦 رادار المملكة الشامل — ينبع ويذر','https://www.yanbuweather.com/pages/radar/all/'],
+  ['☁️ السحب مع الرادار — ينبع ويذر','https://www.yanbuweather.com/pages/cloudswithradar/'],
+  ['🗺️ خريطة المطر المتحركة — ينبع ويذر','https://www.yanbuweather.com/pages/RainMap/'],
+  ['📡 رادار ينبع','https://www.yanbuweather.com/pages/radar/yanbu/'],
+  ['📡 رادار جدة','https://www.yanbuweather.com/pages/radar/jeddah/'],
+  ['⚡ خريطة البروق — ينبع ويذر','https://www.yanbuweather.com/pages/lightning/'],
+  ['⚡ رادار البروق iMap — ينبع ويذر','https://links.yanbuweather.com/pages/imap/'],
+  ['🌧️ Zoom Earth — رادار المطر','https://zoom.earth/maps/radar/'],
+  ['⚡ Blitzortung — البروق المباشر','https://map.blitzortung.org/'],
+  ['⚡ LightningMaps — البروق المباشر','https://www.lightningmaps.org/']
+ ];
+ const FORECAST=[
+  ['🌦️ صفحة الطقس','https://www.yanbuweather.com/weather/'],
+  ['🌧️ توقعات الأمطار','https://www.yanbuweather.com/pages/RainForecast/'],
+  ['🌍 ECMWF','https://www.yanbuweather.com/pages/ecmwf_original/'],
+  ['🌤️ theweather','https://links.yanbuweather.com/pages/theweather/'],
+  ['☁️ foreca','https://links.yanbuweather.com/pages/foreca/?2='],
+  ['🇬🇧 البريطاني','https://www.yanbuweather.com/pages/ukmomodel2/'],
+  ['🗺️ COLA','https://www.yanbuweather.com/pages/cola/'],
+  ['🇨🇦 النموذج الكندي','https://www.yanbuweather.com/pages/gemmodel/'],
+  ['🌦️ نماذج الطقس','https://www.yanbuweather.com/pages/ModelsRainForecast/'],
+  ['📈 K-Index / NOAA-GFS','https://links.yanbuweather.com/pages/noaa-gfs/'],
+  ['🌐 meteo365','https://links.yanbuweather.com/pages/meteo365/'],
+  ['🇦🇺 النموذج الأسترالي','https://www.yanbuweather.com/pages/weathermaps-accessg/'],
+  ['📺 BBC','https://links.yanbuweather.com/pages/bbc2/'],
+  ['🗺️ ECMWF خرائط','https://www.yanbuweather.com/pages/weathermaps-ecmwf/'],
+  ['🇪🇺 النموذج الأوروبي','https://www.yanbuweather.com/pages/ecmwf/'],
+  ['🇫🇷 WRF الفرنسي','https://links.yanbuweather.com/pages/wrfmodel/'],
+  ['🇺🇸 نموذج GFS','https://www.yanbuweather.com/pages/gfsmodel/?2='],
+  ['🇺🇸 النموذج الأمريكي','https://www.yanbuweather.com/pages/gfsmodel2/'],
+  ['📊 500hPa Anomaly','https://www.yanbuweather.com/pages/ecmwfmodel/'],
+  ['🇩🇪 النموذج الألماني ICON','https://www.yanbuweather.com/pages/iconmodel/'],
+  ['🇮🇳 النموذج الهندي','https://www.yanbuweather.com/pages/ncmrwfmodel/'],
+  ['🌍 Meteologix — جميع النماذج العالمية','https://meteologix.com/sa/model-charts'],
+  ['🌧️ Tropical Tidbits — خرائط النماذج','https://www.tropicaltidbits.com/analysis/models/'],
+  ['🌧️ Tropical Tidbits — GFS أمطار','https://www.tropicaltidbits.com/analysis/models/?model=gfs&pkg=mslp_pcpn&region=me'],
+  ['🌧️ Tropical Tidbits — ECMWF','https://www.tropicaltidbits.com/analysis/models/?model=ecmwf&pkg=mslp_pcpn&region=me'],
+  ['🌧️ Tropical Tidbits — ICON أمطار','https://www.tropicaltidbits.com/analysis/models/?model=icon&pkg=mslp_pcpn&region=me'],
+  ['🌐 Windy — توقعات المطر','https://www.windy.com/-Rain-thunder-rain'],
+  ['🌐 Ventusky — هطول الأمطار','https://www.ventusky.com/'],
+  ['🌐 Meteoblue — خرائط الطقس','https://www.meteoblue.com/en/weather/maps/'],
+  ['🌐 Weather.us — نماذج الطقس','https://weather.us/model-charts'],
+  ['🌐 WXCharts — نماذج الطقس','https://www.wxcharts.com/'],
+  ['🌐 Pivotal Weather — النماذج','https://www.pivotalweather.com/model.php'],
+  ['🌐 Weathernerds — النماذج','https://www.weathernerds.org/models/'],
+  ['🌐 NOAA NOMADS','https://nomads.ncep.noaa.gov/'],
+  ['🌐 ECMWF Charts','https://charts.ecmwf.int/'],
+  ['🌐 DWD ICON','https://www.dwd.de/EN/ourservices/nwp_forecast_data/nwp_forecast_data.html'],
+  ['🌐 JMA Numerical Prediction','https://www.jma.go.jp/jma/jma-eng/jma-center/nwp/nwp-top.htm'],
+  ['🌐 UK Met Office Charts','https://www.metoffice.gov.uk/weather/maps-and-charts/surface-pressure'],
+  ['🌐 Environment Canada Models','https://weather.gc.ca/model_forecast/index_e.html'],
+  ['🌐 BOM Australia Maps','https://www.bom.gov.au/australia/charts/'],
+  ['🌐 NOAA CPC Precipitation','https://www.cpc.ncep.noaa.gov/products/forecasts/'],
+  ['🌧️ Zoom Earth — توقع الهطول','https://zoom.earth/maps/precipitation/'],
+  ['🌧️ ECMWF OpenCharts — الهطول','https://charts.ecmwf.int/'],
+  ['🌧️ Met Office — الخريطة العالمية','https://weather.metoffice.gov.uk/maps-and-charts'],
+  ['🌧️ RainViewer — خريطة الطقس','https://www.rainviewer.com/weather-radar-map-live.html'],
+  ['🌧️ Weather & Radar — المطر','https://www.weatherandradar.com/'],
+  ['🌧️ AccuWeather — خرائط الطقس','https://www.accuweather.com/en/weather-radar'],
+  ['🌧️ Weather.com — خرائط الطقس','https://weather.com/weather/radar/interactive/l/'],
+  ['🌧️ Meteored — خرائط الطقس','https://www.weather2travel.com/weather-maps/'],
+  ['🌧️ NOAA WPC — توقعات الهطول','https://www.wpc.ncep.noaa.gov/qpf/qpf2.shtml'],
+  ['🌧️ NOAA GFS — NOMADS','https://nomads.ncep.noaa.gov/'],
+  ['🌧️ ECMWF — خرائط التوقعات','https://charts.ecmwf.int/'],
+  ['🌧️ ICON — DWD','https://www.dwd.de/EN/ourservices/nwp_forecast_data/nwp_forecast_data.html'],
+  ['🌧️ GEM — كندا','https://weather.gc.ca/model_forecast/index_e.html'],
+  ['🌧️ ACCESS — أستراليا','https://www.bom.gov.au/australia/charts/'],
+  ['🌧️ JMA — اليابان','https://www.jma.go.jp/jma/jma-eng/jma-center/nwp/nwp-top.htm'],
+  ['🌧️ Met Office — بريطانيا','https://www.metoffice.gov.uk/weather/maps-and-charts'],
+  ['🌧️ Weather.us — أمطار الشرق الأوسط GFS','https://weather.us/model-charts/standard/middle-east/precipitation-total.html'],
+  ['🌧️ Weather.us — أمطار ECMWF','https://weather.us/model-charts/euro/middle-east/precipitation-total.html'],
+  ['🌧️ Weather.us — تراكم ECMWF','https://weather.us/model-charts/euro/middle-east/acc-total-precipitation.html'],
+  ['🌧️ Weather.us — أمطار ICON','https://weather.us/model-charts/german/middle-east/precipitation-total.html'],
+  ['🌧️ Weather.us — أمطار GEM الكندي','https://weather.us/model-charts/can/middle-east/precipitation-total.html'],
+  ['🇬🇧 Weather.us — UKMO الشرق الأوسط','https://weather.us/model-charts/gbr/middle-east'],
+  ['🇯🇵 Weather.us — JMA الشرق الأوسط','https://weather.us/model-charts/jpn/middle-east'],
+  ['🇰🇷 Weather.us — GDAPS/UM الكوري','https://weather.us/model-charts/korea/middle-east'],
+  ['⚡ ECMWF — توقع كثافة البرق','https://charts.ecmwf.int/products/medium-lightning'],
+  ['⚡ ECMWF ENS — احتمال البرق','https://charts.ecmwf.int/products/medium-ens-lightning'],
+  ['🌦️ المركز العربي للمناخ — نماذج الطقس','https://www.arab4climate.com/نماذج-الطقس/'],
+  ['🗓️ المركز العربي للمناخ — نماذج بعيدة وموسمية','https://www.arab4climate.com/نماذج-الطقس-بعيدة-المدى-والمناخية/'],
+  ['🛰️ EUMETSAT — الأقمار الصناعية','https://view.eumetsat.int/productviewer'],
+  ['🛰️ NASA Worldview — الأقمار الصناعية','https://worldview.earthdata.nasa.gov/']
+ ];
+ function show(title,items){
+   const p=document.getElementById('khabmV76Picker');
+   document.getElementById('khabmV76PickerTitle').textContent=title;
+   document.getElementById('khabmV76PickerGrid').innerHTML=
+     items.map(x=>'<a href="'+x[1]+'" target="_blank" rel="noopener">'+x[0]+'</a>').join('');
+   p.classList.add('open'); p.setAttribute('aria-hidden','false');
+ }
+ function hide(){
+   const p=document.getElementById('khabmV76Picker');
+   p.classList.remove('open'); p.setAttribute('aria-hidden','true');
+ }
+ window.khabmV76Radars=()=>show('📡 الرادارات المباشرة',RADARS);
+ window.khabmV76Forecast=()=>show('🌧️ توقعات الأمطار',FORECAST);
+
+ document.getElementById('khabmV76RadarsBtn').onclick=window.khabmV76Radars;
+ document.getElementById('khabmV76ForecastBtn').onclick=window.khabmV76Forecast;
+ document.getElementById('khabmV76AllRadars')?.addEventListener('click',window.khabmV76Radars);
+ document.getElementById('khabmV76AllForecast')?.addEventListener('click',window.khabmV76Forecast);
+ document.querySelector('[data-v76-model-radars]')?.addEventListener('click',function(e){e.preventDefault();window.khabmV76Radars()});
+ document.getElementById('khabmV76PickerClose').onclick=hide;
+ document.getElementById('khabmV76Picker').addEventListener('click',e=>{if(e.target.id==='khabmV76Picker')hide()});
+})();
+</script>
+
+
+<script id="KHABM_V80_LIGHTNING2_YANBU">
+(function(){
+ const Y='https://www.yanbuweather.com/pages/lightning/';
+ document.addEventListener('click',function(e){
+   const b=e.target.closest('[data-open="lightning2"],[data-layer-open="lightning2"],[data-menu-action="lightning2"]');
+   if(!b)return;
+   e.preventDefault(); e.stopImmediatePropagation();
+   /* Try the site's own in-app URL modal first; fallback to a same-tab navigation only if unavailable. */
+   if(typeof window.openUrlModal==='function') window.openUrlModal(Y,'⚡ برق 2 — ينبع ويذر');
+   else if(typeof window.openExternalModal==='function') window.openExternalModal(Y,'⚡ برق 2 — ينبع ويذر');
+   else location.href=Y;
+ },true);
+})();
+</script>
 </body></html>
 <!-- KHABM V30: humidity and dew point route to Windy overlays (rh/dewpoint); lightning 1/2 retained; legacy internal humidity/dewpoint rendering bypassed from all UI entry points. -->
 <!-- KHABM V21: visible cloud-cover and cloud-now buttons removed. Cloud values remain only in forecast data/table. -->
+
+<style id="V74_KEEP_ORIGINAL_PLAY_NO_TIME_TEXT">
+#radarTimeLabel,#radarTime,#timeLabel,.radar-time-label,.khabm-radar-time,
+.radar-relative-time,[data-radar-time]{display:none!important}
+</style>
+
+<script id="V74_ONE_LIGHTNING">
+(function(){
+ function clean(){
+  document.querySelectorAll('button,a').forEach(function(b){
+   var t=(b.textContent||'').trim();
+   if(/^برق\s*[23]$/.test(t)) b.style.display='none';
+  });
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',clean);else clean();
+ setTimeout(clean,500);
+})();
+</script>
