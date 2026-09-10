@@ -3482,6 +3482,150 @@ function tick(){$('clock').textContent=new Date().toLocaleTimeString('ar-SA',{ho
   }
 }
 </style>
+
+<style id="khabm-v20-footer-readability">
+@media (max-width:699px){
+  /* Preserve V19 geometry and red-line bottom limit; improve only the tiny footer notice in browsers. */
+  footer .notice{font-size:8.4px!important;line-height:1.38!important;}
+  footer .notice strong{font-size:8.8px!important;}
+  footer .notice .ncm{font-size:8.4px!important;}
+  footer .credits{font-size:5.6px!important;line-height:1.2!important;}
+}
+</style>
+
+<style id="khabm-v21-trim-and-slight-zoom">
+@media (max-width:699px){
+  /* V21: only trim the bottom gap and slightly enlarge the visible site to compensate. */
+  .app{
+    padding-bottom:38px!important;
+    width:102%!important;
+    max-width:102%!important;
+    margin-left:-1%!important;
+    margin-right:-1%!important;
+  }
+  footer .notice{font-size:8.7px!important;}
+  footer .notice strong{font-size:9.1px!important;}
+  footer .notice .ncm{font-size:8.7px!important;}
+  footer .credits{font-size:5.9px!important;}
+}
+</style>
+
+<style id="khabm-v22-slightly-larger-map-text-trim">
+@media (max-width:699px){
+  /* V22: slightly enlarge the whole approved interface (text + map) and use the bottom space, without redesigning anything. */
+  .app{
+    width:96.6%!important;
+    max-width:96.6%!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    padding-bottom:8px!important;
+    zoom:1.035;
+  }
+  /* Small readability lift only; keep the same proportions and layout. */
+  .pro-title{font-size:21px!important;}
+  .pro-search span{font-size:10.6px!important;}
+  .pro-cities .city b{font-size:9.5px!important;}
+  .pro-cities .city span{font-size:15.8px!important;}
+  .pro-action strong{font-size:9px!important;}
+  .pro-layers .layersCtaText strong{font-size:13.8px!important;}
+  footer .notice{font-size:9px!important;}
+  footer .notice strong{font-size:9.4px!important;}
+  footer .notice .ncm{font-size:9px!important;}
+  footer .credits{font-size:6.2px!important;}
+}
+</style>
+
+<style id="khabm-v23-safe-popups-v22-design">
+@media (max-width:699px){
+  /* V23: keep V22 design exactly; only make popup tops/close buttons safe and easy to reach. */
+  #khabmWindyModal{
+    align-items:flex-start!important;
+    padding:calc(env(safe-area-inset-top,0px) + 12px) 4px 4px!important;
+  }
+  #khabmWindyBox{
+    width:99vw!important;
+    height:calc(100dvh - env(safe-area-inset-top,0px) - 24px)!important;
+    max-height:calc(100dvh - env(safe-area-inset-top,0px) - 24px)!important;
+  }
+  #khabmWindyHead{
+    height:52px!important;
+    min-height:52px!important;
+    padding:0 10px!important;
+    position:relative!important;
+    z-index:20!important;
+  }
+  #khabmWindyClose{
+    width:46px!important;
+    height:44px!important;
+    min-width:46px!important;
+    min-height:44px!important;
+    font-size:30px!important;
+    border-radius:12px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+  .sheet{
+    max-height:calc(100dvh - env(safe-area-inset-top,0px) - 28px)!important;
+    padding-top:16px!important;
+  }
+  .sheet .x,#close{
+    width:46px!important;
+    height:46px!important;
+    min-width:46px!important;
+    min-height:46px!important;
+    font-size:28px!important;
+    border-radius:12px!important;
+  }
+  #khabmMenuCloseV10,#khabmSearchCloseV11,#allLayersCloseV12{
+    width:44px!important;
+    height:44px!important;
+    min-width:44px!important;
+    min-height:44px!important;
+    font-size:27px!important;
+    border-radius:11px!important;
+  }
+  .cardclose{
+    width:40px!important;
+    height:40px!important;
+    font-size:27px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+}
+</style>
+<!-- KHABM_DEPLOY_MARKER: V23_V22_DESIGN_SAFE_POPUPS -->
+
+<style id="khabm-v24-trim-bottom-slight-zoom">
+@media (max-width:699px){
+  /* V24: preserve V23 popup fix/design; only use the lower empty space and enlarge slightly. */
+  html,body{height:auto!important;min-height:0!important;max-height:none!important;overflow-x:hidden!important;overflow-y:hidden!important;}
+  .app{
+    height:auto!important;min-height:0!important;max-height:none!important;
+    padding-bottom:0!important;
+    width:94.8%!important;max-width:94.8%!important;
+    margin-left:auto!important;margin-right:auto!important;
+    zoom:1.055!important;
+  }
+  .mapwrap{
+    flex:0 1 48dvh!important;
+    height:48dvh!important;
+    max-height:48dvh!important;
+  }
+  .pro-title{font-size:21.6px!important;}
+  .pro-search span{font-size:11px!important;}
+  .pro-cities .city b{font-size:9.8px!important;}
+  .pro-cities .city span{font-size:16.2px!important;}
+  .pro-action strong{font-size:9.3px!important;}
+  .pro-layers .layersCtaText strong{font-size:14.2px!important;}
+  footer .notice{font-size:9.3px!important;}
+  footer .notice strong{font-size:9.7px!important;}
+  footer .notice .ncm{font-size:9.3px!important;}
+  footer .credits{font-size:6.4px!important;}
+}
+</style>
+<!-- KHABM_DEPLOY_MARKER: V24_V23_TRIM_BOTTOM_SLIGHT_ZOOM -->
 </body></html>
 <!-- KHABM V30: humidity and dew point route to Windy overlays (rh/dewpoint); lightning 1/2 retained; legacy internal humidity/dewpoint rendering bypassed from all UI entry points. -->
 <!-- KHABM V21: visible cloud-cover and cloud-now buttons removed. Cloud values remain only in forecast data/table. -->
