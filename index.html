@@ -2278,14 +2278,58 @@ function tick(){$('clock').textContent=new Date().toLocaleTimeString('ar-SA',{ho
     if(!q){ searchResults.innerHTML='<div style="padding:7px">اكتب اسم مدينة أو قرية أولًا.</div>'; return; }
     searchResults.innerHTML='<div style="padding:7px">جارٍ البحث…</div>';
     try{
-      const u=`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=8&language=ar&format=json`;
-      const r=await fetch(u,{cache:'no-store'});
-      if(!r.ok) throw new Error('HTTP '+r.status);
-      const d=await r.json();
-      const rows=(d.results||[]);
-      if(!rows.length){ searchResults.innerHTML='<div style="padding:7px">لم أجد نتيجة مطابقة.</div>'; return; }
+      // KHABM V50 — بحث موسع: Open-Meteo ثم OpenStreetMap/Nominatim للقرى والهجر الصغيرة.
+      // نفضّل نتائج السعودية، لكن نُبقي البحث العالمي متاحاً كما كان الموقع.
+      const norm=s=>String(s||'').normalize('NFKD').replace(/[\u064B-\u065F\u0670]/g,'').replace(/[إأآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').trim();
+      const key=x=>`${(+x.latitude).toFixed(5)},${(+x.longitude).toFixed(5)}`;
+      let rows=[];
+      try{
+        const u=`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=30&language=ar&format=json`;
+        const r=await fetch(u,{cache:'no-store'});
+        if(r.ok){
+          const d=await r.json();
+          rows=(d.results||[]).map(x=>({...x,_src:'openmeteo'}));
+        }
+      }catch(_e){}
+
+      // Nominatim يلتقط كثيراً من القرى والهجر المسجلة في OpenStreetMap.
+      // نجرب الاسم كما كتبه المستخدم ثم نسخة بدون "ال" لتوسيع المطابقة العربية.
+      const variants=[q];
+      if(norm(q).startsWith('ال') && q.length>4) variants.push(q.replace(/^ال/,''));
+      for(const term of [...new Set(variants)]){
+        try{
+          const nu=`https://nominatim.openstreetmap.org/search?format=jsonv2&q=${encodeURIComponent(term)}&limit=20&addressdetails=1&namedetails=1&accept-language=ar&countrycodes=sa`;
+          const nr=await fetch(nu,{cache:'no-store',headers:{'Accept':'application/json'}});
+          if(!nr.ok) continue;
+          const nd=await nr.json();
+          rows.push(...(nd||[]).map(x=>({
+            name:(x.namedetails&&(x.namedetails['name:ar']||x.namedetails.name))||x.name||(x.display_name||'').split(',')[0],
+            latitude:+x.lat, longitude:+x.lon,
+            admin1:x.address&&(x.address.state||x.address.region||x.address.province||x.address.county),
+            admin2:x.address&&(x.address.county||x.address.municipality),
+            country:x.address&&x.address.country,
+            country_code:(x.address&&x.address.country_code||'').toUpperCase(),
+            _display:x.display_name,_src:'osm'
+          })));
+        }catch(_e){}
+      }
+
+      // إزالة التكرار وترتيب السعودية أولاً ثم الأقرب اسماً لما كتبه المستخدم.
+      const seen=new Set();
+      rows=rows.filter(x=>Number.isFinite(+x.latitude)&&Number.isFinite(+x.longitude)&&!seen.has(key(x))&&seen.add(key(x)));
+      const nq=norm(q);
+      rows.sort((a,b)=>{
+        const asa=String(a.country_code||'').toUpperCase()==='SA'?0:1, bsa=String(b.country_code||'').toUpperCase()==='SA'?0:1;
+        if(asa!==bsa) return asa-bsa;
+        const an=norm(a.name), bn=norm(b.name);
+        const ae=an===nq?0:an.startsWith(nq)?1:an.includes(nq)?2:3;
+        const be=bn===nq?0:bn.startsWith(nq)?1:bn.includes(nq)?2:3;
+        return ae-be;
+      });
+      rows=rows.slice(0,20);
+      if(!rows.length){ searchResults.innerHTML='<div style="padding:7px">لم أجد نتيجة مطابقة. جرّب كتابة الاسم بدون «الـ» أو أضف اسم المنطقة.</div>'; return; }
       searchResults.innerHTML=rows.map((x,i)=>{
-        const desc=[x.admin1,x.country].filter(Boolean).join(' • ');
+        const desc=[x.admin2,x.admin1,x.country].filter(Boolean).filter((v,j,a)=>a.indexOf(v)===j).join(' • ');
         return `<button data-v11-result="${i}" style="
           width:100%;text-align:right;border:1px solid #315f7d;background:#0b2940;color:#fff;
           border-radius:8px;padding:7px;margin:3px 0;font-size:10px">
@@ -3626,6 +3670,14 @@ function tick(){$('clock').textContent=new Date().toLocaleTimeString('ar-SA',{ho
 }
 </style>
 <!-- KHABM_DEPLOY_MARKER: V24_V23_TRIM_BOTTOM_SLIGHT_ZOOM -->
+
+<style id="khabm-v51-no-white-side-lines">
+/* V51 — remove iPhone/Safari side white strips only; preserve approved V24 geometry/zoom. */
+@media (max-width:699px){
+  html,body{background:#031522!important;background-color:#031522!important;}
+}
+</style>
+<!-- KHABM_DEPLOY_MARKER: V51_V50_SAUDI_SEARCH_NO_WHITE_SIDES -->
 </body></html>
 <!-- KHABM V30: humidity and dew point route to Windy overlays (rh/dewpoint); lightning 1/2 retained; legacy internal humidity/dewpoint rendering bypassed from all UI entry points. -->
 <!-- KHABM V21: visible cloud-cover and cloud-now buttons removed. Cloud values remain only in forecast data/table. -->
