@@ -3689,6 +3689,7 @@ function tick(){$('clock').textContent=new Date().toLocaleTimeString('ar-SA',{ho
 }
 </style>
 <!-- KHABM_DEPLOY_MARKER: V96_RAINVIEWER_BASE_LIGHTNING -->
+<!-- KHABM_VERSION: 102 — added Meteoblue, AccuWeather, and Ventusky radar links -->
 
 <div id="yanbuRadarsV74" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,15,28,.88);padding:7vh 4vw;overflow:auto;direction:rtl">
  <div style="max-width:760px;margin:auto;background:#0d2639;border:2px solid #4d86aa;border-radius:22px;padding:18px;color:white">
@@ -3698,10 +3699,8 @@ function tick(){$('clock').textContent=new Date().toLocaleTimeString('ar-SA',{ho
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
    <button onclick="v74open('https://www.yanbuweather.com/pages/RainRadar/')">🌧️ رادار المطر</button>
-   <button onclick="v74open('https://www.yanbuweather.com/pages/radar/')">🇸🇦 رادار المملكة</button>
    <button onclick="v74open('https://www.yanbuweather.com/pages/radar_one_minute/')">⏱️ رادار الدقيقة الواحدة</button>
    <button onclick="v74open('https://www.yanbuweather.com/pages/cloudswithradar/')">☁️ السحب والرادار</button>
-   <button onclick="v74open('https://www.yanbuweather.com/pages/RainMap/')">🗺️ خريطة المطر</button>
    <button onclick="v74open('https://www.yanbuweather.com/pages/lightning/')">⚡ خريطة البروق</button>
   </div>
  </div>
@@ -3795,7 +3794,9 @@ document.addEventListener('click',function(e){
   ['🌧️ Weather & Radar — السعودية مباشر','https://www.weatherandradar.com/weather-map?center=24.0000%2C45.0000&layer=wr&loop=true&placemark=24.0000%2C45.0000'],
   ['🇸🇦 SaudiWeather — رادارات المملكة','https://www.saudiweather.net/radar/'],
   ['🇸🇦 رادارات السعودية المباشرة — بيانات NCM','https://www.radar-flask.xyz/'],
-  ['🌧️ Meteoblue — رادار السعودية + Nowcast','https://www.meteoblue.com/en/country/weather/radar/saudi-arabia_saudi-arabia_102358'],
+  ['🌧️ Meteoblue — رادار السعودية + Nowcast','https://www.meteoblue.com/ar/country/weather/radar/%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9-%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9-%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_102358'],
+  ['🌧️ AccuWeather — رادار السعودية','https://www.accuweather.com/en/sa/national/weather-radar'],
+  ['🌧️ Ventusky — رادار الطقس','https://www.ventusky.com/ar/forecast/saudi-arabia?l=radar'],
   ['⚡ Blitzortung — برق مباشر','https://maps.blitzortung.org/'],
   ['🌧️ رادار المطر — ينبع ويذر','https://www.yanbuweather.com/pages/RainRadar/'],
   ['☁️ السحب مع الرادار — ينبع ويذر','https://www.yanbuweather.com/pages/cloudswithradar/'],
