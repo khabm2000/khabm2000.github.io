@@ -3688,7 +3688,7 @@ function tick(){$('clock').textContent=new Date().toLocaleTimeString('ar-SA',{ho
   html,body{background:#031522!important;background-color:#031522!important;}
 }
 </style>
-<!-- KHABM_DEPLOY_MARKER: V51_V50_SAUDI_SEARCH_NO_WHITE_SIDES -->
+<!-- KHABM_DEPLOY_MARKER: V96_RAINVIEWER_BASE_LIGHTNING -->
 
 <div id="yanbuRadarsV74" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,15,28,.88);padding:7vh 4vw;overflow:auto;direction:rtl">
  <div style="max-width:760px;margin:auto;background:#0d2639;border:2px solid #4d86aa;border-radius:22px;padding:18px;color:white">
@@ -3791,36 +3791,35 @@ document.addEventListener('click',function(e){
 <script id="KHABM_V76_RIGHT_BUTTONS_JS">
 (function(){
  const RADARS=[
+  ['📡 Zoom Earth — رادار مباشر','https://zoom.earth/maps/radar/'],
+  ['🌧️ Weather & Radar — السعودية مباشر','https://www.weatherandradar.com/weather-map?center=24.0000%2C45.0000&layer=wr&loop=true&placemark=24.0000%2C45.0000'],
+  ['🇸🇦 SaudiWeather — رادارات المملكة','https://www.saudiweather.net/radar/'],
+  ['🇸🇦 رادارات السعودية المباشرة — بيانات NCM','https://www.radar-flask.xyz/'],
+  ['🌧️ Meteoblue — رادار السعودية + Nowcast','https://www.meteoblue.com/en/country/weather/radar/saudi-arabia_saudi-arabia_102358'],
+  ['⚡ Blitzortung — برق مباشر','https://maps.blitzortung.org/'],
   ['🌧️ رادار المطر — ينبع ويذر','https://www.yanbuweather.com/pages/RainRadar/'],
-  ['🇸🇦 رادار المملكة الشامل — ينبع ويذر','https://www.yanbuweather.com/pages/radar/all/'],
   ['☁️ السحب مع الرادار — ينبع ويذر','https://www.yanbuweather.com/pages/cloudswithradar/'],
-  ['🗺️ خريطة المطر المتحركة — ينبع ويذر','https://www.yanbuweather.com/pages/RainMap/'],
   ['📡 رادار ينبع','https://www.yanbuweather.com/pages/radar/yanbu/'],
   ['📡 رادار جدة','https://www.yanbuweather.com/pages/radar/jeddah/'],
   ['⚡ خريطة البروق — ينبع ويذر','https://www.yanbuweather.com/pages/lightning/'],
   ['⚡ رادار البروق iMap — ينبع ويذر','https://links.yanbuweather.com/pages/imap/'],
-  ['🌧️ Zoom Earth — رادار المطر','https://zoom.earth/maps/radar/'],
-  ['⚡ Blitzortung — البروق المباشر','https://map.blitzortung.org/'],
-  ['⚡ LightningMaps — البروق المباشر','https://www.lightningmaps.org/']
- ];
+  ['⚡ LightningMaps — البرق المباشر','https://www.lightningmaps.org/']
+];
  const FORECAST=[
-  ['🌦️ صفحة الطقس','https://www.yanbuweather.com/weather/'],
-  ['🌧️ توقعات الأمطار','https://www.yanbuweather.com/pages/RainForecast/'],
+  ['🇺🇸 GFS — Meteologix','https://meteologix.com/sa/model-charts/standard/accumulated-precipitation.html'],
+  ['🇪🇺 ECMWF — Meteologix','https://meteologix.com/sa/model-charts/euro/saudi-arabia/accumulated-precipitation.html'],
+  ['🇺🇸 GFS — Weather.us','https://weather.us/model-charts/standard/saudi-arabia/accumulated-precipitation.html'],
+  ['🌧️ Zoom Earth — توقع الهطول','https://zoom.earth/maps/precipitation/'],
   ['🌍 ECMWF','https://www.yanbuweather.com/pages/ecmwf_original/'],
   ['🌤️ theweather','https://links.yanbuweather.com/pages/theweather/'],
-  ['☁️ foreca','https://links.yanbuweather.com/pages/foreca/?2='],
-  ['🇬🇧 البريطاني','https://www.yanbuweather.com/pages/ukmomodel2/'],
   ['🗺️ COLA','https://www.yanbuweather.com/pages/cola/'],
   ['🇨🇦 النموذج الكندي','https://www.yanbuweather.com/pages/gemmodel/'],
   ['🌦️ نماذج الطقس','https://www.yanbuweather.com/pages/ModelsRainForecast/'],
   ['📈 K-Index / NOAA-GFS','https://links.yanbuweather.com/pages/noaa-gfs/'],
   ['🌐 meteo365','https://links.yanbuweather.com/pages/meteo365/'],
   ['🇦🇺 النموذج الأسترالي','https://www.yanbuweather.com/pages/weathermaps-accessg/'],
-  ['📺 BBC','https://links.yanbuweather.com/pages/bbc2/'],
-  ['🗺️ ECMWF خرائط','https://www.yanbuweather.com/pages/weathermaps-ecmwf/'],
-  ['🇪🇺 النموذج الأوروبي','https://www.yanbuweather.com/pages/ecmwf/'],
+  ['📺 BBC','https://www.bbc.com/weather/108410'],
   ['🇫🇷 WRF الفرنسي','https://links.yanbuweather.com/pages/wrfmodel/'],
-  ['🇺🇸 نموذج GFS','https://www.yanbuweather.com/pages/gfsmodel/?2='],
   ['🇺🇸 النموذج الأمريكي','https://www.yanbuweather.com/pages/gfsmodel2/'],
   ['📊 500hPa Anomaly','https://www.yanbuweather.com/pages/ecmwfmodel/'],
   ['🇩🇪 النموذج الألماني ICON','https://www.yanbuweather.com/pages/iconmodel/'],
@@ -3830,52 +3829,24 @@ document.addEventListener('click',function(e){
   ['🌧️ Tropical Tidbits — GFS أمطار','https://www.tropicaltidbits.com/analysis/models/?model=gfs&pkg=mslp_pcpn&region=me'],
   ['🌧️ Tropical Tidbits — ECMWF','https://www.tropicaltidbits.com/analysis/models/?model=ecmwf&pkg=mslp_pcpn&region=me'],
   ['🌧️ Tropical Tidbits — ICON أمطار','https://www.tropicaltidbits.com/analysis/models/?model=icon&pkg=mslp_pcpn&region=me'],
-  ['🌐 Windy — توقعات المطر','https://www.windy.com/-Rain-thunder-rain'],
   ['🌐 Ventusky — هطول الأمطار','https://www.ventusky.com/'],
   ['🌐 Meteoblue — خرائط الطقس','https://www.meteoblue.com/en/weather/maps/'],
   ['🌐 Weather.us — نماذج الطقس','https://weather.us/model-charts'],
   ['🌐 WXCharts — نماذج الطقس','https://www.wxcharts.com/'],
   ['🌐 Pivotal Weather — النماذج','https://www.pivotalweather.com/model.php'],
   ['🌐 Weathernerds — النماذج','https://www.weathernerds.org/models/'],
-  ['🌐 NOAA NOMADS','https://nomads.ncep.noaa.gov/'],
   ['🌐 ECMWF Charts','https://charts.ecmwf.int/'],
-  ['🌐 DWD ICON','https://www.dwd.de/EN/ourservices/nwp_forecast_data/nwp_forecast_data.html'],
-  ['🌐 JMA Numerical Prediction','https://www.jma.go.jp/jma/jma-eng/jma-center/nwp/nwp-top.htm'],
-  ['🌐 UK Met Office Charts','https://www.metoffice.gov.uk/weather/maps-and-charts/surface-pressure'],
-  ['🌐 Environment Canada Models','https://weather.gc.ca/model_forecast/index_e.html'],
-  ['🌐 BOM Australia Maps','https://www.bom.gov.au/australia/charts/'],
-  ['🌐 NOAA CPC Precipitation','https://www.cpc.ncep.noaa.gov/products/forecasts/'],
-  ['🌧️ Zoom Earth — توقع الهطول','https://zoom.earth/maps/precipitation/'],
-  ['🌧️ ECMWF OpenCharts — الهطول','https://charts.ecmwf.int/'],
-  ['🌧️ Met Office — الخريطة العالمية','https://weather.metoffice.gov.uk/maps-and-charts'],
-  ['🌧️ RainViewer — خريطة الطقس','https://www.rainviewer.com/weather-radar-map-live.html'],
-  ['🌧️ Weather & Radar — المطر','https://www.weatherandradar.com/'],
-  ['🌧️ AccuWeather — خرائط الطقس','https://www.accuweather.com/en/weather-radar'],
-  ['🌧️ Weather.com — خرائط الطقس','https://weather.com/weather/radar/interactive/l/'],
-  ['🌧️ Meteored — خرائط الطقس','https://www.weather2travel.com/weather-maps/'],
-  ['🌧️ NOAA WPC — توقعات الهطول','https://www.wpc.ncep.noaa.gov/qpf/qpf2.shtml'],
-  ['🌧️ NOAA GFS — NOMADS','https://nomads.ncep.noaa.gov/'],
-  ['🌧️ ECMWF — خرائط التوقعات','https://charts.ecmwf.int/'],
-  ['🌧️ ICON — DWD','https://www.dwd.de/EN/ourservices/nwp_forecast_data/nwp_forecast_data.html'],
-  ['🌧️ GEM — كندا','https://weather.gc.ca/model_forecast/index_e.html'],
-  ['🌧️ ACCESS — أستراليا','https://www.bom.gov.au/australia/charts/'],
-  ['🌧️ JMA — اليابان','https://www.jma.go.jp/jma/jma-eng/jma-center/nwp/nwp-top.htm'],
-  ['🌧️ Met Office — بريطانيا','https://www.metoffice.gov.uk/weather/maps-and-charts'],
-  ['🌧️ Weather.us — أمطار الشرق الأوسط GFS','https://weather.us/model-charts/standard/middle-east/precipitation-total.html'],
-  ['🌧️ Weather.us — أمطار ECMWF','https://weather.us/model-charts/euro/middle-east/precipitation-total.html'],
-  ['🌧️ Weather.us — تراكم ECMWF','https://weather.us/model-charts/euro/middle-east/acc-total-precipitation.html'],
   ['🌧️ Weather.us — أمطار ICON','https://weather.us/model-charts/german/middle-east/precipitation-total.html'],
   ['🌧️ Weather.us — أمطار GEM الكندي','https://weather.us/model-charts/can/middle-east/precipitation-total.html'],
   ['🇬🇧 Weather.us — UKMO الشرق الأوسط','https://weather.us/model-charts/gbr/middle-east'],
   ['🇯🇵 Weather.us — JMA الشرق الأوسط','https://weather.us/model-charts/jpn/middle-east'],
   ['🇰🇷 Weather.us — GDAPS/UM الكوري','https://weather.us/model-charts/korea/middle-east'],
   ['⚡ ECMWF — توقع كثافة البرق','https://charts.ecmwf.int/products/medium-lightning'],
-  ['⚡ ECMWF ENS — احتمال البرق','https://charts.ecmwf.int/products/medium-ens-lightning'],
   ['🌦️ المركز العربي للمناخ — نماذج الطقس','https://www.arab4climate.com/نماذج-الطقس/'],
   ['🗓️ المركز العربي للمناخ — نماذج بعيدة وموسمية','https://www.arab4climate.com/نماذج-الطقس-بعيدة-المدى-والمناخية/'],
-  ['🛰️ EUMETSAT — الأقمار الصناعية','https://view.eumetsat.int/productviewer'],
-  ['🛰️ NASA Worldview — الأقمار الصناعية','https://worldview.earthdata.nasa.gov/']
- ];
+  ['⚡ ECMWF ENS — احتمال البرق (الشرق الأوسط)','https://charts.ecmwf.int/products/medium-ens-lightning?player_dimension=projection&projection=opencharts_middle_east_and_india&threshold=1'],
+  ['⚡ ECMWF — كثافة البرق للسعودية','https://meteologix.com/sa/model-charts/euro/lightning-density.html']
+];
  function show(title,items){
    const p=document.getElementById('khabmV76Picker');
    document.getElementById('khabmV76PickerTitle').textContent=title;
@@ -3915,6 +3886,7 @@ document.addEventListener('click',function(e){
  },true);
 })();
 </script>
+<!-- KHABM_DEPLOY_MARKER: V97_RAINVIEWER_LIVE_SAUDI_RADAR -->
 </body></html>
 <!-- KHABM V30: humidity and dew point route to Windy overlays (rh/dewpoint); lightning 1/2 retained; legacy internal humidity/dewpoint rendering bypassed from all UI entry points. -->
 <!-- KHABM V21: visible cloud-cover and cloud-now buttons removed. Cloud values remain only in forecast data/table. -->
