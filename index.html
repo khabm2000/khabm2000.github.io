@@ -4611,3 +4611,31 @@ html,body{background:#031522!important}
 })();
 </script>
 <!-- KHABM_DEPLOY_MARKER: VERSION_119_SHORT_SLIDER_TRUE_24H -->
+
+
+<!-- KHABM VERSION 121 — from V120 only: add Windy app/web launcher inside تشغيل عناصر الطقس; no visual/layout changes elsewhere -->
+<script id="khabm-v121-windy-launcher">
+(function(){
+  function install(){
+    var grid=document.getElementById('allLayersGridV12');
+    if(!grid || document.getElementById('khabmWindyAppV121')) return;
+    var b=document.createElement('button');
+    b.id='khabmWindyAppV121';
+    b.type='button';
+    b.innerHTML='🌬️<br>Windy';
+    b.setAttribute('aria-label','فتح Windy');
+    b.onclick=function(ev){
+      ev.preventDefault();
+      try{document.getElementById('allLayersV12').style.display='none';}catch(e){}
+      // Windy universal HTTPS link: on supported phones it can hand off to the installed Windy app;
+      // otherwise it opens Windy on the web.
+      window.location.href='https://www.windy.com/';
+    };
+    grid.appendChild(b);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install,{once:true});
+  else install();
+  setTimeout(install,700);
+})();
+</script>
+<!-- KHABM_DEPLOY_MARKER: VERSION_121_WINDY_APP_IN_WEATHER_ELEMENTS -->
