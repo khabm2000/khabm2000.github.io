@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
+<!-- KHABM V126: Apple Smart App Banner for Anwaa -->
+<meta name="apple-itunes-app" content="app-id=1612841473">
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#071827">
@@ -4237,6 +4240,63 @@ html,body{background:#031522!important}
 </script>
 <!-- KHABM_DEPLOY_MARKER: VERSION_120_REAL_LOCATION_NAME_ONLY -->
 
+
+<!-- KHABM VERSION 125 — Anwaa first + highlighted; all other buttons untouched -->
+
+
+<!-- KHABM_DEPLOY_MARKER: VERSION_125_ANWAA_FIRST_HIGHLIGHTED_BUTTON -->
+
+
+<!-- KHABM_DEPLOY_MARKER: VERSION_126_ANWAA_FIRST_PLUS_IOS_BANNER -->
+
+<!-- KHABM VERSION 127 — subtle Anwaa emphasis only; no other UI changes -->
+
+<!-- KHABM_DEPLOY_MARKER: VERSION_127_ANWAA_SUBTLE_EMPHASIS -->
+
+
+<!-- KHABM_DEPLOY_MARKER: VERSION_128_ANWAA_IN_RADAR_AND_LIGHTNING -->
+
+<!-- KHABM_DEPLOY_MARKER: VERSION_133_ANWAA_OFFICIAL_BANNER_ONLY_CLEAN -->
+
+<style id="khabm-v134-hide-internal-anwaa-only">
+/* V134: only the dynamically-created internal Anwaa tile */
+#allLayersGridV12 #khabmAnwaaV122,
+#khabmAnwaaV122 {
+  display:none !important;
+  visibility:hidden !important;
+  width:0 !important;
+  min-width:0 !important;
+  max-width:0 !important;
+  height:0 !important;
+  min-height:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  overflow:hidden !important;
+  pointer-events:none !important;
+}
+</style>
+<script id="khabm-v134-remove-internal-anwaa-only">
+(function(){
+  function removeInternalAnwaa(){
+    var b=document.getElementById('khabmAnwaaV122');
+    if(b) b.remove();
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', removeInternalAnwaa, {once:true});
+  } else {
+    removeInternalAnwaa();
+  }
+  setTimeout(removeInternalAnwaa,100);
+  setTimeout(removeInternalAnwaa,500);
+  setTimeout(removeInternalAnwaa,1200);
+  new MutationObserver(removeInternalAnwaa).observe(document.documentElement,{
+    childList:true,subtree:true
+  });
+})();
+</script>
+
+<!-- KHABM_DEPLOY_MARKER: VERSION_134_REMOVE_INTERNAL_ANWAA_ONLY -->
 </body></html>
 <!-- KHABM V30: humidity and dew point route to Windy overlays (rh/dewpoint); lightning 1/2 retained; legacy internal humidity/dewpoint rendering bypassed from all UI entry points. -->
 <!-- KHABM V21: visible cloud-cover and cloud-now buttons removed. Cloud values remain only in forecast data/table. -->
@@ -4639,3 +4699,28 @@ html,body{background:#031522!important}
 })();
 </script>
 <!-- KHABM_DEPLOY_MARKER: VERSION_121_WINDY_APP_IN_WEATHER_ELEMENTS -->
+
+<!-- KHABM VERSION 122 — from V121 only: add official Anwaa/NCM launcher button inside تشغيل عناصر الطقس; no other changes -->
+<script id="khabm-v122-anwaa-launcher">
+(function(){
+  function install(){
+    var grid=document.getElementById('allLayersGridV12');
+    if(!grid || document.getElementById('khabmAnwaaV122')) return;
+    var b=document.createElement('button');
+    b.id='khabmAnwaaV122';
+    b.type='button';
+    b.innerHTML='🇸🇦<br>أنواء';
+    b.setAttribute('aria-label','فتح أنواء — المركز الوطني للأرصاد');
+    b.onclick=function(ev){
+      ev.preventDefault();
+      try{document.getElementById('allLayersV12').style.display='none';}catch(e){}
+      window.location.href='https://apps.apple.com/sa/app/anwaa/id1612841473';
+    };
+    grid.appendChild(b);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install,{once:true});
+  else install();
+  setTimeout(install,700);
+})();
+</script>
+<!-- KHABM_DEPLOY_MARKER: VERSION_122_ANWAA_APPSTORE_BUTTON -->
