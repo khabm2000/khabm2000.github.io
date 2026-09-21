@@ -4724,3 +4724,84 @@ html,body{background:#031522!important}
 })();
 </script>
 <!-- KHABM_DEPLOY_MARKER: VERSION_122_ANWAA_APPSTORE_BUTTON -->
+
+
+<!-- KHABM CURRENT — Anwaa compact bar + V141 Chrome visible viewport fix -->
+<style id="khabm-current-anwaa-and-chrome-fix">
+#khabmAnwaaCurrent{
+  width:calc(100% - 28px)!important;max-width:760px!important;
+  margin:5px auto 6px!important;padding:5px 9px!important;min-height:32px!important;
+  box-sizing:border-box!important;display:flex!important;align-items:center!important;
+  justify-content:space-between!important;gap:8px!important;direction:rtl!important;
+  border:1px solid rgba(70,175,255,.55)!important;border-radius:10px!important;
+  background:#082b43!important;color:#fff!important;flex:0 0 auto!important;
+}
+#khabmAnwaaCurrent .kac-title{font:800 11px/1.2 inherit!important;white-space:nowrap!important}
+#khabmAnwaaCurrent .kac-open{
+  flex:0 0 auto!important;border:0!important;border-radius:999px!important;
+  padding:6px 13px!important;min-width:48px!important;background:#0a84ff!important;color:#fff!important;
+  font:800 11px/1 inherit!important;
+}
+@media (max-width:699px){
+  html.khabm-crios,html.khabm-crios body{
+    height:var(--khabm-crios-visible-h,100dvh)!important;
+    min-height:var(--khabm-crios-visible-h,100dvh)!important;
+    max-height:var(--khabm-crios-visible-h,100dvh)!important;
+    overflow:hidden!important;
+  }
+  html.khabm-crios body{position:fixed!important;inset:0!important}
+  html.khabm-crios .app{
+    height:var(--khabm-crios-visible-h,100dvh)!important;
+    min-height:var(--khabm-crios-visible-h,100dvh)!important;
+    max-height:var(--khabm-crios-visible-h,100dvh)!important;
+    overflow:hidden!important;
+  }
+  html.khabm-crios #khabmAnwaaCurrent{margin:4px auto 5px!important;padding:4px 8px!important;min-height:30px!important}
+  html.khabm-crios #khabmAnwaaCurrent .kac-open{padding:5px 12px!important}
+  html.khabm-crios footer{flex:0 0 auto!important;padding-bottom:max(5px,env(safe-area-inset-bottom,0px))!important}
+}
+</style>
+<script id="khabm-current-anwaa-and-chrome-fix-js">
+(function(){
+  var ua=navigator.userAgent||'';
+  var isChromeIOS=/CriOS\//i.test(ua);
+  if(isChromeIOS) document.documentElement.classList.add('khabm-crios');
+
+  function addAnwaa(){
+    if(document.getElementById('khabmAnwaaCurrent')) return;
+    var top=document.getElementById('approvedTopControlsV112');
+    var mapwrap=document.querySelector('section.mapwrap');
+    if(!top || !top.parentNode) return;
+    var bar=document.createElement('div');
+    bar.id='khabmAnwaaCurrent';
+    bar.setAttribute('aria-label','أنواء — المركز الوطني للأرصاد');
+    bar.innerHTML='<div class="kac-title">🇸🇦 أنواء</div><button class="kac-open" type="button">فتح</button>';
+    bar.querySelector('.kac-open').addEventListener('click',function(){
+      window.location.href='https://apps.apple.com/sa/app/anwaa/id1612841473';
+    });
+    if(mapwrap && mapwrap.parentNode===top.parentNode) top.parentNode.insertBefore(bar,mapwrap);
+    else top.insertAdjacentElement('afterend',bar);
+  }
+
+  function fitChrome(){
+    if(!isChromeIOS) return;
+    var vv=window.visualViewport;
+    var h=Math.round(vv&&vv.height?vv.height:window.innerHeight);
+    if(h>0) document.documentElement.style.setProperty('--khabm-crios-visible-h',h+'px');
+    try{window.scrollTo(0,0)}catch(e){}
+    try{if(window.map&&typeof window.map.invalidateSize==='function')setTimeout(function(){window.map.invalidateSize(true)},80)}catch(e){}
+  }
+  function boot(){addAnwaa();fitChrome()}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
+  window.addEventListener('load',boot,{once:true});
+  if(isChromeIOS){
+    window.addEventListener('resize',fitChrome,{passive:true});
+    window.addEventListener('orientationchange',function(){setTimeout(fitChrome,250)});
+    if(window.visualViewport){
+      window.visualViewport.addEventListener('resize',fitChrome,{passive:true});
+      window.visualViewport.addEventListener('scroll',fitChrome,{passive:true});
+    }
+  }
+})();
+</script>
+<!-- KHABM_DEPLOY_MARKER: CURRENT_INDEX_ANWAA_COMPACT_PLUS_V141_CHROME_FIX -->
