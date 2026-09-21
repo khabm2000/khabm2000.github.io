@@ -4714,7 +4714,18 @@ html,body{background:#031522!important}
     b.onclick=function(ev){
       ev.preventDefault();
       try{document.getElementById('allLayersV12').style.display='none';}catch(e){}
-      window.location.href='https://apps.apple.com/sa/app/anwaa/id1612841473';
+      var ua=(navigator.userAgent||'').toLowerCase();
+      var platform=(navigator.platform||'').toLowerCase();
+      var isAndroid=/android/.test(ua);
+      var isIPad=/ipad/.test(ua) || (platform==='macintel' && navigator.maxTouchPoints>1);
+      var isIPhoneIPod=/iphone|ipod/.test(ua);
+      if(isAndroid){
+        window.location.href='https://play.google.com/store/apps/details?id=com.sejeltech.ncm';
+      }else if(isIPad || isIPhoneIPod){
+        window.location.href='https://apps.apple.com/sa/app/anwaa/id1612841473';
+      }else{
+        window.location.href='https://www.ncm.gov.sa/ar/services/anwaa-application';
+      }
     };
     grid.appendChild(b);
   }
@@ -4726,7 +4737,7 @@ html,body{background:#031522!important}
 <!-- KHABM_DEPLOY_MARKER: VERSION_122_ANWAA_APPSTORE_BUTTON -->
 
 
-<!-- KHABM CURRENT — Anwaa compact bar + V141 Chrome visible viewport fix -->
+<!-- KHABM V150 — Anwaa all-device routing + V141 Chrome visible viewport fix -->
 <style id="khabm-current-anwaa-and-chrome-fix">
 #khabmAnwaaCurrent{
   width:calc(100% - 28px)!important;max-width:760px!important;
@@ -4777,7 +4788,18 @@ html,body{background:#031522!important}
     bar.setAttribute('aria-label','أنواء — المركز الوطني للأرصاد');
     bar.innerHTML='<div class="kac-title">🇸🇦 أنواء</div><button class="kac-open" type="button">فتح</button>';
     bar.querySelector('.kac-open').addEventListener('click',function(){
-      window.location.href='https://apps.apple.com/sa/app/anwaa/id1612841473';
+      var ua=(navigator.userAgent||'').toLowerCase();
+      var platform=(navigator.platform||'').toLowerCase();
+      var isAndroid=/android/.test(ua);
+      var isIPad=/ipad/.test(ua) || (platform==='macintel' && navigator.maxTouchPoints>1);
+      var isIPhoneIPod=/iphone|ipod/.test(ua);
+      if(isAndroid){
+        window.location.href='https://play.google.com/store/apps/details?id=com.sejeltech.ncm';
+      }else if(isIPad || isIPhoneIPod){
+        window.location.href='https://apps.apple.com/sa/app/anwaa/id1612841473';
+      }else{
+        window.location.href='https://www.ncm.gov.sa/ar/services/anwaa-application';
+      }
     });
     if(mapwrap && mapwrap.parentNode===top.parentNode) top.parentNode.insertBefore(bar,mapwrap);
     else top.insertAdjacentElement('afterend',bar);
