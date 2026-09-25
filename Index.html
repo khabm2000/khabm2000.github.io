@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
+<!-- KHABM V126: Apple Smart App Banner for Anwaa -->
+<meta name="apple-itunes-app" content="app-id=1612841473">
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#071827">
@@ -847,6 +850,95 @@ footer{background:#031522!important;padding:12px 14px calc(12px + env(safe-area-
   #allLayersBtnV12 .layersCtaArrow{font-size:12px!important;line-height:1!important}
 }
 </style>
+
+<style id="khabm-v112-approved-layout">
+/* VERSION 112 — rebuild the visible map controls to match the approved reference drawing. */
+.pro-cities,.pro-forecast-actions,.pro-layers-wrap{display:none!important}
+#khabmV76RightButtons,.mapmsg,.topcontrols,.rail,#khabmBottomInfoV9{display:none!important}
+
+#approvedTopControlsV112{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
+  padding:8px 10px;background:#031522;border-top:1px solid rgba(71,136,171,.18);
+  border-bottom:1px solid rgba(71,136,171,.30);direction:rtl
+}
+#approvedTopControlsV112 button{
+  height:48px;border:1.4px solid #2f6b8a;border-radius:14px;background:#08283d;
+  color:#fff;font-family:inherit;font-weight:900;font-size:12px;display:flex;
+  align-items:center;justify-content:center;gap:7px;white-space:nowrap
+}
+#approvedTopControlsV112 .layers{background:linear-gradient(180deg,#169ff4,#087fce);border-color:#63c8ff}
+
+.mapwrap{position:relative!important;margin:0 10px!important;height:680px!important;border-radius:16px!important;overflow:hidden!important}
+#approvedMapToolsV112{
+  position:absolute;z-index:4800;top:10px;left:10px;display:flex;gap:7px;direction:ltr
+}
+#approvedMapToolsV112 button{
+  height:44px;border:1.5px solid #3a7898;border-radius:13px;background:rgba(4,28,44,.95);
+  color:#fff;font-family:inherit;font-size:12px;font-weight:900;padding:0 14px;
+  box-shadow:0 4px 12px rgba(0,0,0,.25)
+}
+#approvedMapToolsV112 .refresh{width:48px;padding:0;font-size:22px}
+
+/* The play bar is the only weather control at the bottom inside the map. */
+.radar-player{
+  display:block!important;position:absolute!important;z-index:4700!important;
+  left:50%!important;right:auto!important;transform:translateX(-50%)!important;
+  bottom:12px!important;width:min(420px,62%)!important;padding:5px 8px!important;
+  border-radius:13px!important;background:rgba(3,29,44,.92)!important
+}
+.radar-player:before,.timeline-types,.radar-label,.radar-time,#radarSource{display:none!important}
+.radar-row{grid-template-columns:38px minmax(0,1fr)!important;gap:7px!important}
+.radar-play{height:32px!important}
+
+#approvedBottomToolsV112{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
+  margin:8px 10px 0;padding:0;direction:rtl
+}
+#approvedBottomToolsV112 button{
+  min-height:66px;border:1.4px solid #2f6b8a;border-radius:14px;background:#08283d;
+  color:#fff;font-family:inherit;font-weight:900;font-size:11px;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:3px
+}
+#approvedBottomToolsV112 .ico{font-size:24px;line-height:1}
+
+/* Keep the map itself visually clean. Extra overlays only appear when a user explicitly opens a layer. */
+.zoom,.legend,#liveLayerBadge{display:none!important}
+footer{margin-top:8px!important}
+
+@media(max-width:480px){
+  #approvedTopControlsV112{gap:5px;padding:6px 8px}
+  #approvedTopControlsV112 button{height:42px;font-size:10px;border-radius:12px;gap:4px}
+  .mapwrap{height:650px!important;margin:0 8px!important}
+  #approvedMapToolsV112{top:8px;left:8px;gap:5px}
+  #approvedMapToolsV112 button{height:38px;font-size:10px;padding:0 10px}
+  #approvedMapToolsV112 .refresh{width:40px;font-size:19px}
+  .radar-player{bottom:10px!important;width:min(380px,68%)!important}
+  #approvedBottomToolsV112{gap:5px;margin:6px 8px 0}
+  #approvedBottomToolsV112 button{min-height:58px;font-size:9px;border-radius:12px}
+  #approvedBottomToolsV112 .ico{font-size:21px}
+}
+</style>
+
+
+<style id="khabm-owner-name-visible">
+.pro-footer-brand .owner-name{display:block;font-size:8px;line-height:1.25;font-weight:800;color:#d9efff;text-align:center;margin-top:1px;white-space:nowrap}
+@media(max-width:699px){.pro-footer-brand .owner-name{font-size:5.6px!important;line-height:1.15!important;white-space:normal!important;max-width:120px!important}.pro-footer-brand{gap:1px!important}}
+</style>
+<style id="khabm-owner-footer-final">
+.pro-footer-nav:has(.owner-footer-only){grid-template-columns:1fr!important;}
+.owner-footer-only{grid-column:1/-1!important;width:100%!important;min-height:46px!important;}
+.owner-footer-only .owner-name{display:block!important;font-size:12px!important;font-weight:900!important;line-height:1.4!important;color:#fff!important;text-align:center!important;}
+@media(max-width:699px){.owner-footer-only .owner-name{font-size:9px!important}.owner-footer-only{min-height:34px!important}}
+</style>
+
+<style id="khabm-owner-footer-one-line-final">
+.owner-footer-line{width:100%;direction:rtl;text-align:right;white-space:nowrap;overflow:visible;color:#fff;font-weight:900;font-size:11px;line-height:1.4;padding:5px 4px 3px;box-sizing:border-box;}
+@media(max-width:699px){
+  footer{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;}
+  .owner-footer-line{display:block!important;width:100%!important;text-align:right!important;direction:rtl!important;white-space:nowrap!important;font-size:9px!important;line-height:1.35!important;padding:4px 2px 3px!important;}
+  .credits{height:auto!important;min-height:0!important;}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -882,7 +974,7 @@ footer{background:#031522!important;padding:12px 14px calc(12px + env(safe-area-
     <button class="pro-action models" data-open="models">🌍 <strong>توقعات النماذج</strong></button>
   </div>
 
-  <div class="layersCtaWrap pro-layers-wrap">
+  <div class="layersCtaWrap pro-layers-wrap" style="display:none!important" aria-hidden="true">
     <button id="allLayersBtnV12" class="layersCta pro-layers" type="button">
       <span class="layersCtaIcon">▱</span>
       <span class="layersCtaText"><strong>كل الطبقات</strong><small>عرض جميع طبقات الطقس</small></span>
@@ -890,8 +982,19 @@ footer{background:#031522!important;padding:12px 14px calc(12px + env(safe-area-
     </button>
   </div>
 </header>
+<div id="approvedTopControlsV112" aria-label="أدوات الخريطة الرئيسية">
+  <button class="layers" type="button" onclick="document.getElementById('allLayersBtnV12')?.click()">▶ <span>تشغيل عناصر الطقس</span></button>
+  <button type="button" onclick="document.getElementById('khabmV76RadarsBtn')?.click()">📡 <span>الرادارات</span></button>
+  <button type="button" onclick="document.querySelector('.pro-action.models')?.click()">🌍 <span>توقعات النماذج</span></button>
+</div>
+
 
 <section class="mapwrap">
+<div id="approvedMapToolsV112" aria-label="أدوات الخريطة">
+  <button class="refresh" type="button" onclick="location.reload()" aria-label="تحديث">↻</button>
+  <button type="button" onclick="document.getElementById('loc')?.click()">📍 موقعي</button>
+</div>
+
 
 <div id="khabmV76RightButtons" aria-label="روابط الرادارات">
   <button id="khabmV76ForecastBtn" type="button"><i>🌧️</i><span>توقع الأمطار</span></button>
@@ -1311,6 +1414,13 @@ footer{background:#031522!important;padding:12px 14px calc(12px + env(safe-area-
       <div class="radar-time" id="radarTime">—</div><div class="radar-time" id="radarSource">—</div>
     </div>
 </section>
+<div id="approvedBottomToolsV112" aria-label="اختصارات الطبقات">
+  <button type="button" id="quickLightning1V114"><span class="ico">⚡</span><span>برق 1</span></button>
+  <button type="button" id="quickLightning2V114"><span class="ico">⚡</span><span>برق 2</span></button>
+  <button type="button" id="quickDustV114"><span class="ico">⠿</span><span>الغبار</span></button>
+  <button type="button" id="quickTempV114"><span class="ico">🌡️</span><span>الحرارة</span></button>
+</div>
+
 
 <footer><div class="notice">
   <div class="info">i</div>
@@ -1321,11 +1431,7 @@ footer{background:#031522!important;padding:12px 14px calc(12px + env(safe-area-
     <span class="ncm">المركز الوطني للأرصاد</span>.
   </div>
 </div>
-<div class="pro-footer-nav">
-  <button data-open="menu"><span>🛡️</span><b>المصادر الرسمية<br>والتحذيرات</b></button>
-  <div class="pro-footer-brand"><span>△</span><b>KHABM 2000</b></div>
-  <button data-open="menu"><span>ⓘ</span><b>معلومات عن<br>الموقع</b></button>
-</div>
+<div class="owner-footer-line" dir="rtl">إعداد وإشراف خالد بن عبدالله بن جبار الرحيمي</div>
 <div class="credits"><span><span class="dot"></span>آخر تحديث: <b id="clock">—</b></span><span>Open‑Meteo • CAMS • RainViewer • EUMETSAT</span><span>KHABM 2000 ABOASRAR</span></div></footer>
 </div>
 
@@ -1336,7 +1442,7 @@ const cities={'الرياض':[24.7136,46.6753],'مكة':[21.3891,39.8579],'جد�
 const $=x=>document.getElementById(x),S=$('sheet'),ST=$('st'),SB=$('sb');
 function desc(c){return ({0:'صحو',1:'غالبًا صحو',2:'غائم جزئيًا',3:'غائم',45:'ضباب',51:'رذاذ',61:'مطر خفيف',63:'مطر',65:'مطر غزير',80:'زخات',81:'زخات',82:'زخات قوية',95:'عواصف رعدية'})[c]||'حالة جوية'}
 function icon(c){if(c===0)return'☀️';if([1,2].includes(c))return'🌤️';if(c===3)return'☁️';if([61,63,65,80,81].includes(c))return'🌧️';if([82,95,96,99].includes(c))return'⛈️';return'🌡️'}
-async function weather(lat,lon,name,card=true){try{let u=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`;let d=await fetch(u,{cache:'no-store'}).then(r=>r.json()),c=d.current;if(card){$('weatherCard').classList.remove('hidden');$('pname').textContent=name;$('ptemp').textContent=`${icon(c.weather_code)} ${Math.round(c.temperature_2m)}°`;$('pdesc').textContent=desc(c.weather_code);$('pmeta').innerHTML=`المحسوسة ${Math.round(c.apparent_temperature)}°<br>الرطوبة ${Math.round(c.relative_humidity_2m)}%<br>الرياح ${Math.round(c.wind_speed_10m)} كم/س`}return c}catch(e){return null}}
+async function weather(lat,lon,name,card=true){try{let u=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`;let d=await fetch(u,{cache:'no-store'}).then(r=>r.json()),c=d.current;if(card){$('weatherCard').classList.remove('hidden');$('pname').textContent='📍 '+name;$('ptemp').textContent=`${icon(c.weather_code)} ${Math.round(c.temperature_2m)}°`;$('pdesc').textContent=desc(c.weather_code);$('pmeta').innerHTML=`المحسوسة ${Math.round(c.apparent_temperature)}°<br>الرطوبة ${Math.round(c.relative_humidity_2m)}%<br>الرياح ${Math.round(c.wind_speed_10m)} كم/س`}return c}catch(e){return null}}
 async function loadCities(){for(const el of document.querySelectorAll('[data-city]')){let n=el.dataset.city,[a,o]=cities[n],c=await weather(a,o,n,false);el.querySelector('span').textContent=c?`${icon(c.weather_code)} ${Math.round(c.temperature_2m)}°`:'—'}}
 let map,marker;
 if(window.L){
@@ -3249,7 +3355,7 @@ function tick(){$('clock').textContent=new Date().toLocaleTimeString('ar-SA',{ho
     const now=new Date();
     const t=document.getElementById('proTime');
     const d=document.getElementById('proDate');
-    if(t)t.textContent=new Intl.DateTimeFormat('ar-SA',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Riyadh'}).format(now);
+    if(t)t.textContent=new Intl.DateTimeFormat('ar-SA',{hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:'Asia/Riyadh'}).format(now);
     if(d)d.textContent=new Intl.DateTimeFormat('ar-SA',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Riyadh'}).format(now);
   }
   tick();setInterval(tick,30000);
@@ -3689,6 +3795,7 @@ function tick(){$('clock').textContent=new Date().toLocaleTimeString('ar-SA',{ho
 }
 </style>
 <!-- KHABM_DEPLOY_MARKER: V96_RAINVIEWER_BASE_LIGHTNING -->
+<!-- KHABM_VERSION: 106 — completed six UI notes precisely; based on V105 -->
 
 <div id="yanbuRadarsV74" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,15,28,.88);padding:7vh 4vw;overflow:auto;direction:rtl">
  <div style="max-width:760px;margin:auto;background:#0d2639;border:2px solid #4d86aa;border-radius:22px;padding:18px;color:white">
@@ -3698,10 +3805,8 @@ function tick(){$('clock').textContent=new Date().toLocaleTimeString('ar-SA',{ho
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
    <button onclick="v74open('https://www.yanbuweather.com/pages/RainRadar/')">🌧️ رادار المطر</button>
-   <button onclick="v74open('https://www.yanbuweather.com/pages/radar/')">🇸🇦 رادار المملكة</button>
    <button onclick="v74open('https://www.yanbuweather.com/pages/radar_one_minute/')">⏱️ رادار الدقيقة الواحدة</button>
    <button onclick="v74open('https://www.yanbuweather.com/pages/cloudswithradar/')">☁️ السحب والرادار</button>
-   <button onclick="v74open('https://www.yanbuweather.com/pages/RainMap/')">🗺️ خريطة المطر</button>
    <button onclick="v74open('https://www.yanbuweather.com/pages/lightning/')">⚡ خريطة البروق</button>
   </div>
  </div>
@@ -3795,7 +3900,9 @@ document.addEventListener('click',function(e){
   ['🌧️ Weather & Radar — السعودية مباشر','https://www.weatherandradar.com/weather-map?center=24.0000%2C45.0000&layer=wr&loop=true&placemark=24.0000%2C45.0000'],
   ['🇸🇦 SaudiWeather — رادارات المملكة','https://www.saudiweather.net/radar/'],
   ['🇸🇦 رادارات السعودية المباشرة — بيانات NCM','https://www.radar-flask.xyz/'],
-  ['🌧️ Meteoblue — رادار السعودية + Nowcast','https://www.meteoblue.com/en/country/weather/radar/saudi-arabia_saudi-arabia_102358'],
+  ['🌧️ Meteoblue — رادار السعودية + Nowcast','https://www.meteoblue.com/ar/country/weather/radar/%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9-%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9-%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_102358'],
+  ['🌧️ AccuWeather — رادار السعودية','https://www.accuweather.com/en/sa/national/weather-radar'],
+  ['🌧️ Ventusky — رادار الطقس','https://www.ventusky.com/ar/forecast/saudi-arabia?l=radar'],
   ['⚡ Blitzortung — برق مباشر','https://maps.blitzortung.org/'],
   ['🌧️ رادار المطر — ينبع ويذر','https://www.yanbuweather.com/pages/RainRadar/'],
   ['☁️ السحب مع الرادار — ينبع ويذر','https://www.yanbuweather.com/pages/cloudswithradar/'],
@@ -3829,6 +3936,7 @@ document.addEventListener('click',function(e){
   ['🌧️ Tropical Tidbits — GFS أمطار','https://www.tropicaltidbits.com/analysis/models/?model=gfs&pkg=mslp_pcpn&region=me'],
   ['🌧️ Tropical Tidbits — ECMWF','https://www.tropicaltidbits.com/analysis/models/?model=ecmwf&pkg=mslp_pcpn&region=me'],
   ['🌧️ Tropical Tidbits — ICON أمطار','https://www.tropicaltidbits.com/analysis/models/?model=icon&pkg=mslp_pcpn&region=me'],
+  ['🌧️ Windy — توقعات الأمطار','https://www.windy.com/-Rain-thunder-rain'],
   ['🌐 Ventusky — هطول الأمطار','https://www.ventusky.com/'],
   ['🌐 Meteoblue — خرائط الطقس','https://www.meteoblue.com/en/weather/maps/'],
   ['🌐 Weather.us — نماذج الطقس','https://weather.us/model-charts'],
@@ -3887,6 +3995,324 @@ document.addEventListener('click',function(e){
 })();
 </script>
 <!-- KHABM_DEPLOY_MARKER: V97_RAINVIEWER_LIVE_SAUDI_RADAR -->
+
+<!-- KHABM VERSION 104: cleaner UI + visible current location + top refresh -->
+<style id="khabm-v104-ui-clean">
+/* Keep the map clear: only two compact controls at its top edge. */
+.topcontrols{display:flex!important;gap:7px!important;right:8px!important;left:auto!important;top:8px!important;width:auto!important;direction:rtl!important}
+.topcontrols .loc{width:auto!important;min-width:82px!important;height:36px!important;padding:0 9px!important;font-size:10px!important;border-radius:10px!important;background:rgba(4,25,40,.92)!important;border:1px solid #3c7796!important}
+#refreshTopV104{width:36px;height:36px;border-radius:10px;border:1px solid #3c7796;background:rgba(4,25,40,.92);color:#fff;font-size:17px;font-weight:900;box-shadow:0 4px 12px #0005}
+/* Give the lower weather tools breathing room while keeping the same compact footprint. */
+.rail{gap:8px!important;padding-left:7px!important;padding-right:7px!important;background:rgba(3,25,39,.94)!important;border-color:#2c607a!important}
+.rbtn{margin:0!important}
+/* Weather information now uses the app palette and clearly identifies its place. */
+#weatherCard{background:rgba(4,25,40,.96)!important;color:#fff!important;border:1px solid #356a84!important;border-radius:13px!important;box-shadow:0 7px 22px #0007!important}
+#weatherCard .cardclose{color:#b9d9ea!important}
+#weatherCard #pname{display:block!important;color:#8bd2ff!important;font-size:12px!important;padding-left:20px!important;margin-bottom:2px!important}
+#weatherCard .desc,#weatherCard .meta{color:#e6f5ff!important}
+@media(max-width:600px){
+ .topcontrols .loc{min-width:74px!important;height:32px!important;font-size:9px!important;padding:0 7px!important}
+ #refreshTopV104{width:32px!important;height:32px!important;font-size:15px!important}
+ .rail{gap:7px!important}
+}
+</style>
+<script id="khabm-v104-ui-clean-js">
+(function(){
+ function init(){
+   const tc=document.querySelector('.topcontrols');
+   const loc=document.getElementById('loc');
+   if(loc){ loc.textContent='📍 موقعي'; loc.title='تحديد موقعي الحالي'; loc.setAttribute('aria-label','تحديد موقعي الحالي'); }
+   if(tc && !document.getElementById('refreshTopV104')){
+     const r=document.createElement('button');
+     r.id='refreshTopV104'; r.type='button'; r.textContent='↻'; r.title='تحديث البيانات'; r.setAttribute('aria-label','تحديث البيانات');
+     r.onclick=()=>location.reload(); tc.appendChild(r);
+   }
+   /* Refresh moved to the top; remove its duplicate from the crowded menu. */
+   document.querySelector('#khabmMenuV10 [data-menu-action="refresh"]')?.remove();
+   /* The main “كل الطبقات” control already exposes all layers; remove duplicate “طبقات الجو” from hamburger menu only. */
+   document.querySelector('#khabmMenuV10 [data-menu-action="layers"]')?.remove();
+ }
+ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
+})();
+</script>
+<!-- KHABM_DEPLOY_MARKER: VERSION_104_UI_CLEAN_LOCATION -->
+
+
+<!-- KHABM VERSION 105: precise UI fixes based on V104; map/radar logic untouched -->
+<style id="khabm-v105-precise-ui">
+/* Dedicated visible map controls; independent of legacy .topcontrols CSS. */
+#khabmMapTopV105{position:absolute;top:8px;left:8px;z-index:3600;display:flex;gap:6px;direction:rtl;pointer-events:auto}
+#khabmMapTopV105 button{height:34px;border:1px solid #3c7796;border-radius:10px;background:rgba(4,25,40,.94);color:#fff;font-weight:900;box-shadow:0 4px 12px #0006;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+#khabmLocV105{min-width:76px;padding:0 9px;font-size:10px}
+#khabmRefreshV105{width:34px;padding:0;font-size:16px}
+/* Hide the legacy location holder only; its click logic is reused by the new control. */
+.topcontrols .loc{position:absolute!important;opacity:0!important;pointer-events:none!important;width:1px!important;min-width:1px!important;height:1px!important;padding:0!important;border:0!important}
+/* Keep lower quick tools separated and readable without enlarging the rail. */
+.rail{column-gap:9px!important;gap:9px!important;padding-left:9px!important;padding-right:9px!important}
+.rail .rbtn{margin:0!important;flex-shrink:0!important}
+/* Location name is always visually distinct in the weather card. */
+#weatherCard #pname{display:block!important;color:#8bd2ff!important;font-size:12px!important;font-weight:900!important;margin-bottom:3px!important}
+@media(max-width:600px){
+ #khabmMapTopV105{top:7px;left:7px;gap:5px}
+ #khabmMapTopV105 button{height:31px;border-radius:9px}
+ #khabmLocV105{min-width:70px;padding:0 7px;font-size:9px}
+ #khabmRefreshV105{width:31px;font-size:15px}
+ .rail{gap:7px!important;padding-left:7px!important;padding-right:7px!important}
+}
+</style>
+<script id="khabm-v105-precise-ui-js">
+(function(){
+ function build(){
+   const wrap=document.querySelector('.mapwrap');
+   const oldLoc=document.getElementById('loc');
+   if(!wrap || document.getElementById('khabmMapTopV105')) return;
+   const box=document.createElement('div');
+   box.id='khabmMapTopV105';
+   const loc=document.createElement('button');
+   loc.id='khabmLocV105'; loc.type='button'; loc.textContent='📍 موقعي';
+   loc.title='تحديد موقعي الحالي'; loc.setAttribute('aria-label','تحديد موقعي الحالي');
+   loc.addEventListener('click',function(e){
+     e.preventDefault(); e.stopPropagation();
+     if(oldLoc){ oldLoc.click(); return; }
+     if(navigator.geolocation){ navigator.geolocation.getCurrentPosition(function(p){
+       const q=[p.coords.latitude,p.coords.longitude];
+       try{if(window.map){window.map.flyTo(q,8); if(window.marker)window.marker.setLatLng(q)}}catch(_){}
+       try{if(typeof window.weather==='function')window.weather(q[0],q[1],'موقعي')}catch(_){}
+     });}
+   });
+   const ref=document.createElement('button');
+   ref.id='khabmRefreshV105'; ref.type='button'; ref.textContent='↻';
+   ref.title='تحديث البيانات'; ref.setAttribute('aria-label','تحديث البيانات');
+   ref.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();location.reload();});
+   box.append(loc,ref); wrap.appendChild(box);
+
+   /* Keep hamburger menu uncluttered: refresh and duplicate pressure-layer entry stay removed. */
+   document.querySelector('#khabmMenuV10 [data-menu-action="refresh"]')?.remove();
+   document.querySelector('#khabmMenuV10 [data-menu-action="layers"]')?.remove();
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build,{once:true});else build();
+ window.addEventListener('pageshow',function(){setTimeout(build,120)});
+})();
+</script>
+<!-- KHABM_DEPLOY_MARKER: VERSION_105_PRECISE_UI -->
+
+<!-- KHABM VERSION 112: complete six requested UI notes; map/radar/data sources untouched -->
+<style id="khabm-v106-six-notes">
+/* 1) Keep current-location + refresh compact, visible, and clear of map content. */
+#khabmMapTopV105{top:7px!important;left:7px!important;right:auto!important;z-index:5000!important;gap:6px!important}
+#khabmMapTopV105 button{background:rgba(4,25,40,.96)!important;border:1px solid #4b86a6!important;color:#fff!important}
+#khabmLocV105{min-width:74px!important}
+
+/* 2) Simplify the hamburger toolbox visually by grouping, not deleting working tools. */
+#khabmMenuV10{width:min(90vw,320px)!important;padding:9px!important}
+#khabmMenuV10 .khabmMenuGroupV106{border:1px solid #224f68;border-radius:11px;padding:7px;margin-top:7px;background:rgba(7,35,52,.72)}
+#khabmMenuV10 .khabmMenuGroupV106>div:first-child{font-size:9px;font-weight:900;color:#8bd2ff;margin:0 2px 6px;text-align:right}
+#khabmMenuV10 .khabmMenuGroupGridV106{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#khabmMenuV10 [data-menu-action]{min-height:37px!important;font-size:9px!important}
+
+/* 3) One layers entry only: main “كل الطبقات” remains the single gateway. */
+#khabmMenuV10 [data-menu-action="layers"],.rail .rbtn[data-open="layers"]{display:none!important}
+
+/* 4) Refresh stays at map top; no duplicate refresh in menu. */
+#khabmMenuV10 [data-menu-action="refresh"]{display:none!important}
+
+/* 5) Give bottom quick buttons consistent breathing room without growing the rail. */
+.rail{gap:8px!important;column-gap:8px!important;padding-left:7px!important;padding-right:7px!important;scroll-padding-inline:7px!important}
+.rail .rbtn{margin:0!important;flex-shrink:0!important}
+
+/* 6) Remove white UI strips/cards and use the app dark-blue palette consistently. */
+html,body{background:#031522!important}
+.notice,.credits,.pro-header,.pro-shell{background-color:#031522!important}
+#weatherCard{background:rgba(4,25,40,.97)!important;color:#fff!important;border:1px solid #3d7898!important}
+#weatherCard #pname{display:block!important;color:#91d8ff!important;font-size:12px!important;font-weight:900!important;padding:0 0 4px!important;margin:0 0 4px!important;border-bottom:1px solid rgba(120,196,235,.2)!important}
+#weatherCard .temp{color:#fff!important}
+#weatherCard .desc,#weatherCard .meta{color:#e7f6ff!important}
+#weatherCard .cardclose{color:#d8effb!important}
+
+/* Weather card is readable and does not cover the main map center. */
+#weatherCard{left:10px!important;right:auto!important;top:52px!important;transform:none!important;width:152px!important;text-align:right!important;z-index:4900!important}
+
+@media(max-width:600px){
+ #khabmMapTopV105{top:6px!important;left:6px!important;gap:5px!important}
+ #khabmLocV105{min-width:68px!important;font-size:9px!important}
+ #khabmRefreshV105{width:31px!important}
+ .rail{gap:7px!important;column-gap:7px!important;padding-left:6px!important;padding-right:6px!important}
+ #weatherCard{left:6px!important;top:45px!important;width:142px!important;padding:9px!important}
+ #khabmMenuV10{right:6px!important;top:68px!important;width:min(92vw,306px)!important}
+}
+</style>
+<script id="khabm-v106-six-notes-js">
+(function(){
+ function q(sel,root){return (root||document).querySelector(sel)}
+ function qa(sel,root){return Array.from((root||document).querySelectorAll(sel))}
+ function buildMenuGroups(){
+   const menu=q('#khabmMenuV10'); if(!menu || menu.dataset.v106Grouped==='1') return;
+   const oldGrid=qa(':scope > div',menu).find(d=>q('[data-menu-action]',d));
+   if(!oldGrid) return;
+   const actions={}; qa('[data-menu-action]',oldGrid).forEach(b=>actions[b.dataset.menuAction]=b);
+   const groups=[
+     ['الرصد السريع',['radar','lightning','dust','temp']],
+     ['عناصر الجو',['dewpoint','pressure','humidity','wind']],
+     ['التوقعات والمصادر',['72','models','sources']]
+   ];
+   const frag=document.createDocumentFragment();
+   groups.forEach(([title,keys])=>{
+     const box=document.createElement('div'); box.className='khabmMenuGroupV106';
+     const h=document.createElement('div'); h.textContent=title; box.appendChild(h);
+     const g=document.createElement('div'); g.className='khabmMenuGroupGridV106';
+     keys.forEach(k=>{if(actions[k]) g.appendChild(actions[k]);});
+     box.appendChild(g); frag.appendChild(box);
+   });
+   oldGrid.replaceWith(frag); menu.dataset.v106Grouped='1';
+ }
+ function finalize(){
+   /* Keep the single layers gateway and single refresh control. */
+   q('#khabmMenuV10 [data-menu-action="refresh"]')?.remove();
+   q('#khabmMenuV10 [data-menu-action="layers"]')?.remove();
+   qa('.rail .rbtn[data-open="layers"]').forEach(x=>x.remove());
+   buildMenuGroups();
+   /* Make the location label explicit and preserve its existing click/geolocation logic. */
+   const loc=q('#khabmLocV105'); if(loc){loc.textContent='📍 موقعي';loc.title='تحديد موقعي الحالي';}
+   const ref=q('#khabmRefreshV105'); if(ref){ref.title='تحديث البيانات';}
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',finalize,{once:true});else finalize();
+ window.addEventListener('pageshow',()=>setTimeout(finalize,120));
+})();
+</script>
+<!-- KHABM_DEPLOY_MARKER: VERSION_106_ALL_SIX_NOTES -->
+
+<style id="khabm-v112-final-lock">
+/* FINAL LOCK — placed last so older responsive rules cannot undo the approved layout. */
+.pro-cities,.pro-forecast-actions,.pro-layers-wrap,#khabmV76RightButtons,.mapmsg,.topcontrols,.rail,#khabmBottomInfoV9{display:none!important}
+#approvedTopControlsV112{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;padding:7px 8px!important;background:#031522!important;direction:rtl!important}
+#approvedTopControlsV112 button{display:flex!important;height:42px!important;min-width:0!important;border:1.4px solid #2f6b8a!important;border-radius:12px!important;background:#08283d!important;color:#fff!important;font-family:inherit!important;font-weight:900!important;font-size:10px!important;align-items:center!important;justify-content:center!important;gap:4px!important;padding:0 6px!important;white-space:nowrap!important}
+#approvedTopControlsV112 .layers{background:linear-gradient(180deg,#169ff4,#087fce)!important;border-color:#63c8ff!important}
+.mapwrap{position:relative!important;height:650px!important;margin:0 8px!important;border-radius:16px!important;overflow:hidden!important}
+#approvedMapToolsV112{display:flex!important;position:absolute!important;z-index:9998!important;top:8px!important;left:8px!important;right:auto!important;gap:5px!important;direction:ltr!important}
+#approvedMapToolsV112 button{display:block!important;height:38px!important;border:1.5px solid #3a7898!important;border-radius:12px!important;background:rgba(4,28,44,.96)!important;color:#fff!important;font-family:inherit!important;font-size:10px!important;font-weight:900!important;padding:0 10px!important}
+#approvedMapToolsV112 .refresh{width:40px!important;padding:0!important;font-size:19px!important}
+.radar-player{display:block!important;position:absolute!important;z-index:9997!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;bottom:10px!important;width:68%!important;max-width:380px!important;min-height:0!important;padding:5px 8px!important;border-radius:12px!important;background:rgba(3,29,44,.92)!important}
+.radar-player:before,.timeline-types,.radar-label,.radar-time,#radarSource{display:none!important}.radar-row{display:grid!important;grid-template-columns:34px minmax(0,1fr)!important;gap:6px!important}.radar-play{height:30px!important;min-height:30px!important}
+#approvedBottomToolsV112{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:5px!important;margin:6px 8px 0!important;padding:0!important;direction:rtl!important}
+#approvedBottomToolsV112 button{display:flex!important;min-width:0!important;min-height:58px!important;border:1.4px solid #2f6b8a!important;border-radius:12px!important;background:#08283d!important;color:#fff!important;font-family:inherit!important;font-weight:900!important;font-size:9px!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:3px!important;padding:4px!important}
+#approvedBottomToolsV112 .ico{font-size:21px!important;line-height:1!important}
+.zoom,.legend,#liveLayerBadge{display:none!important}footer{margin-top:8px!important}
+@media(min-width:700px){.mapwrap{height:820px!important;margin:0 24px!important}#approvedTopControlsV112{padding:9px 24px!important}#approvedBottomToolsV112{margin:8px 24px 0!important}.radar-player{width:52%!important}}
+</style>
+
+
+<style id="khabm-v113-final-tune">
+/* V113: approved naming + remove visible duplicate + clearer compact Play bar. */
+.layersCtaWrap.pro-layers-wrap{display:none!important}
+#approvedTopControlsV112 .layers{font-size:9.5px!important;padding-inline:4px!important}
+.radar-player{width:62%!important;max-width:340px!important;bottom:12px!important;padding:6px 8px!important;border:1.4px solid #376f8d!important;box-shadow:0 4px 14px #0007!important}
+.radar-row{grid-template-columns:36px minmax(0,1fr)!important;gap:7px!important}
+.radar-play{height:32px!important;min-height:32px!important;font-size:14px!important}
+@media(max-width:430px){.radar-player{width:64%!important;max-width:300px!important}}
+</style>
+<!-- KHABM_DEPLOY_MARKER: VERSION_113_PLAY_WEATHER_ELEMENTS -->
+
+<!-- KHABM VERSION 118 — from V117 only: 24-hour clock + 22% shorter Play bar -->
+<style id="khabm-v118-only-two-changes">
+#radarPlayer.radar-player,.radar-player{
+  width:150px!important;min-width:150px!important;max-width:150px!important;
+}
+</style>
+<!-- KHABM_DEPLOY_MARKER: VERSION_118_SHORTER_PLAY_24H_TIME -->
+
+<!-- KHABM VERSION 120 — from V119 only: reverse-geocode GPS name; no visual/layout changes -->
+<script id="khabm-v120-real-location-name">
+(function(){
+  function pickName(a){
+    if(!a) return '';
+    return a.village || a.hamlet || a.town || a.city || a.municipality || a.suburb || a.county || a.state_district || '';
+  }
+  async function reverseName(lat,lon){
+    try{
+      var u='https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lon)+'&zoom=18&addressdetails=1&accept-language=ar';
+      var r=await fetch(u,{cache:'no-store',headers:{'Accept':'application/json'}});
+      if(!r.ok) throw new Error('reverse');
+      var d=await r.json();
+      return pickName(d.address) || (d.name||'').trim() || 'موقعي';
+    }catch(e){ return 'موقعي'; }
+  }
+  function install(){
+    var oldLoc=document.getElementById('loc');
+    if(!oldLoc || oldLoc.dataset.khabmV120==='1') return;
+    oldLoc.dataset.khabmV120='1';
+    oldLoc.onclick=function(){
+      if(!navigator.geolocation) return;
+      navigator.geolocation.getCurrentPosition(async function(p){
+        var lat=p.coords.latitude, lon=p.coords.longitude, q=[lat,lon];
+        try{if(window.map){window.map.flyTo(q,8);if(window.marker)window.marker.setLatLng(q)}}catch(_e){}
+        var name=await reverseName(lat,lon);
+        try{if(typeof window.weather==='function')window.weather(lat,lon,name,true)}catch(_e){}
+      },function(){}, {enableHighAccuracy:true,timeout:12000,maximumAge:30000});
+    };
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install); else install();
+  setTimeout(install,800);
+})();
+</script>
+<!-- KHABM_DEPLOY_MARKER: VERSION_120_REAL_LOCATION_NAME_ONLY -->
+
+
+<!-- KHABM VERSION 125 — Anwaa first + highlighted; all other buttons untouched -->
+
+
+<!-- KHABM_DEPLOY_MARKER: VERSION_125_ANWAA_FIRST_HIGHLIGHTED_BUTTON -->
+
+
+<!-- KHABM_DEPLOY_MARKER: VERSION_126_ANWAA_FIRST_PLUS_IOS_BANNER -->
+
+<!-- KHABM VERSION 127 — subtle Anwaa emphasis only; no other UI changes -->
+
+<!-- KHABM_DEPLOY_MARKER: VERSION_127_ANWAA_SUBTLE_EMPHASIS -->
+
+
+<!-- KHABM_DEPLOY_MARKER: VERSION_128_ANWAA_IN_RADAR_AND_LIGHTNING -->
+
+<!-- KHABM_DEPLOY_MARKER: VERSION_133_ANWAA_OFFICIAL_BANNER_ONLY_CLEAN -->
+
+<style id="khabm-v134-hide-internal-anwaa-only">
+/* V134: only the dynamically-created internal Anwaa tile */
+#allLayersGridV12 #khabmAnwaaV122,
+#khabmAnwaaV122 {
+  display:none !important;
+  visibility:hidden !important;
+  width:0 !important;
+  min-width:0 !important;
+  max-width:0 !important;
+  height:0 !important;
+  min-height:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  overflow:hidden !important;
+  pointer-events:none !important;
+}
+</style>
+<script id="khabm-v134-remove-internal-anwaa-only">
+(function(){
+  function removeInternalAnwaa(){
+    var b=document.getElementById('khabmAnwaaV122');
+    if(b) b.remove();
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', removeInternalAnwaa, {once:true});
+  } else {
+    removeInternalAnwaa();
+  }
+  setTimeout(removeInternalAnwaa,100);
+  setTimeout(removeInternalAnwaa,500);
+  setTimeout(removeInternalAnwaa,1200);
+  new MutationObserver(removeInternalAnwaa).observe(document.documentElement,{
+    childList:true,subtree:true
+  });
+})();
+</script>
+
+<!-- KHABM_DEPLOY_MARKER: VERSION_134_REMOVE_INTERNAL_ANWAA_ONLY -->
 </body></html>
 <!-- KHABM V30: humidity and dew point route to Windy overlays (rh/dewpoint); lightning 1/2 retained; legacy internal humidity/dewpoint rendering bypassed from all UI entry points. -->
 <!-- KHABM V21: visible cloud-cover and cloud-now buttons removed. Cloud values remain only in forecast data/table. -->
@@ -3908,3 +4334,512 @@ document.addEventListener('click',function(e){
  setTimeout(clean,500);
 })();
 </script>
+
+
+<!-- KHABM VERSION 114 — FINAL OVERRIDE: preserve approved drawing, restore Play bar, remove duplicate location/update -->
+<style id="khabm-v114-final-override">
+/* Hide every legacy control that can duplicate the approved controls. */
+.topcontrols,
+.rail,
+#khabmV76RightButtons,
+.mapmsg,
+.pro-cities,
+.pro-forecast-actions,
+.pro-layers-wrap,
+.layersCtaWrap.pro-layers-wrap,
+#khabmBottomInfoV9,
+.zoom,
+.legend,
+#liveLayerBadge{display:none!important;visibility:hidden!important}
+
+/* The approved three controls above the map remain visible. */
+#approvedTopControlsV112{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:5px!important;
+  padding:6px 8px!important;
+  direction:rtl!important;
+}
+#approvedTopControlsV112 button{display:flex!important}
+
+/* Exactly one row for Update + My Location inside the map. */
+#approvedMapToolsV112{
+  display:flex!important;
+  visibility:visible!important;
+  position:absolute!important;
+  z-index:10020!important;
+  top:8px!important;
+  left:8px!important;
+  right:auto!important;
+  width:auto!important;
+  height:auto!important;
+  gap:6px!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  direction:ltr!important;
+}
+#approvedMapToolsV112 button{
+  display:flex!important;
+  position:static!important;
+  visibility:visible!important;
+  opacity:1!important;
+  float:none!important;
+  margin:0!important;
+  height:38px!important;
+  min-height:38px!important;
+  max-height:38px!important;
+  width:auto!important;
+  min-width:0!important;
+  padding:0 10px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  white-space:nowrap!important;
+}
+#approvedMapToolsV112 .refresh{
+  width:40px!important;
+  min-width:40px!important;
+  padding:0!important;
+}
+
+/* Keep the RainViewer Play/timeline visible at all times, as in the approved drawing. */
+#radarPlayer.radar-player,
+.radar-player{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  position:absolute!important;
+  z-index:10010!important;
+  left:50%!important;
+  right:auto!important;
+  transform:translateX(-50%)!important;
+  bottom:10px!important;
+  width:64%!important;
+  max-width:300px!important;
+  min-width:190px!important;
+  height:auto!important;
+  min-height:44px!important;
+  padding:6px 8px!important;
+  margin:0!important;
+  border:1.4px solid #376f8d!important;
+  border-radius:12px!important;
+  background:rgba(3,29,44,.94)!important;
+  box-shadow:0 4px 14px rgba(0,0,0,.45)!important;
+  overflow:visible!important;
+}
+#radarPlayer .radar-row,
+.radar-player .radar-row{
+  display:grid!important;
+  visibility:visible!important;
+  grid-template-columns:36px minmax(0,1fr)!important;
+  gap:7px!important;
+  align-items:center!important;
+}
+#radarPlayer .radar-play,
+#radarPlayer .radar-range,
+.radar-player .radar-play,
+.radar-player .radar-range{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#radarPlayer .radar-play,.radar-player .radar-play{
+  width:36px!important;
+  min-width:36px!important;
+  height:32px!important;
+  min-height:32px!important;
+}
+#radarPlayer .radar-range,.radar-player .radar-range{
+  width:100%!important;
+  min-width:0!important;
+}
+.radar-player:before,.timeline-types,.radar-label,.radar-time,#radarSource{display:none!important}
+
+/* Exactly four quick controls below the map. */
+#approvedBottomToolsV112{
+  display:grid!important;
+  visibility:visible!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:5px!important;
+  margin:6px 8px 0!important;
+  direction:rtl!important;
+}
+#approvedBottomToolsV112 button{display:flex!important;visibility:visible!important}
+
+@media(min-width:700px){
+  #radarPlayer.radar-player,.radar-player{width:52%!important;max-width:360px!important}
+}
+</style>
+<script id="khabm-v114-control-fix">
+(function(){
+  function q(sel){return document.querySelector(sel)}
+  function clickLegacy(open){
+    var b=q('.rail [data-open="'+open+'"]');
+    if(b) b.click();
+  }
+  function bind(id,open){
+    var el=document.getElementById(id);
+    if(el && !el.dataset.v114Bound){
+      el.dataset.v114Bound='1';
+      el.addEventListener('click',function(){clickLegacy(open)});
+    }
+  }
+  function enforce(){
+    var rp=document.getElementById('radarPlayer');
+    if(rp){
+      rp.style.setProperty('display','block','important');
+      rp.style.setProperty('visibility','visible','important');
+      rp.style.setProperty('opacity','1','important');
+    }
+    var old=document.querySelector('.topcontrols');
+    if(old){
+      old.style.setProperty('display','none','important');
+      old.style.setProperty('visibility','hidden','important');
+    }
+    bind('quickLightning1V114','lightning');
+    bind('quickLightning2V114','lightning2');
+    bind('quickDustV114','dust');
+    bind('quickTempV114','temp');
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',enforce);
+  else enforce();
+  setTimeout(enforce,250);
+  setTimeout(enforce,1000);
+})();
+</script>
+<!-- KHABM_DEPLOY_MARKER: VERSION_114_FIXED_PLAY_LOCATION -->
+
+
+<!-- KHABM VERSION 115 — clean map tools, compact Play, dual date without header growth -->
+<style id="khabm-v115-final-lock">
+/* Map tools: two clean independent buttons, no overlap/double layer. */
+#approvedMapToolsV112{
+  display:grid!important;
+  grid-template-columns:34px 82px!important;
+  column-gap:7px!important;
+  align-items:center!important;
+  position:absolute!important;
+  top:8px!important;
+  left:8px!important;
+  right:auto!important;
+  width:123px!important;
+  height:34px!important;
+  padding:0!important;
+  margin:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+  z-index:10030!important;
+  direction:ltr!important;
+}
+#approvedMapToolsV112 button{
+  box-sizing:border-box!important;
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  margin:0!important;
+  height:34px!important;
+  min-height:34px!important;
+  max-height:34px!important;
+  padding:0 8px!important;
+  border:1.3px solid #3a7898!important;
+  border-radius:10px!important;
+  background:#06283d!important;
+  box-shadow:0 2px 6px rgba(0,0,0,.25)!important;
+  color:#fff!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  white-space:nowrap!important;
+  font-size:10px!important;
+  line-height:1!important;
+}
+#approvedMapToolsV112 .refresh{
+  width:34px!important;min-width:34px!important;max-width:34px!important;
+  padding:0!important;font-size:18px!important;
+}
+#approvedMapToolsV112 button:not(.refresh){width:82px!important;min-width:82px!important;max-width:82px!important}
+
+/* Compact RainViewer timeline: much less map coverage. */
+#radarPlayer.radar-player,.radar-player{
+  display:block!important;visibility:visible!important;opacity:1!important;
+  left:50%!important;right:auto!important;transform:translateX(-50%)!important;
+  bottom:8px!important;width:54%!important;max-width:250px!important;min-width:165px!important;
+  min-height:34px!important;height:auto!important;
+  padding:3px 5px!important;margin:0!important;
+  border-radius:9px!important;border:1.1px solid #376f8d!important;
+  background:rgba(3,29,44,.92)!important;box-shadow:0 3px 9px rgba(0,0,0,.38)!important;
+  z-index:10010!important;
+}
+#radarPlayer .radar-row,.radar-player .radar-row{
+  display:grid!important;grid-template-columns:29px minmax(0,1fr)!important;gap:5px!important;align-items:center!important;
+}
+#radarPlayer .radar-play,.radar-player .radar-play{
+  width:29px!important;min-width:29px!important;height:27px!important;min-height:27px!important;
+  padding:0!important;border-radius:7px!important;font-size:12px!important;
+}
+#radarPlayer .radar-range,.radar-player .radar-range{width:100%!important;min-width:0!important;height:18px!important;margin:0!important}
+
+/* Two dates inside the existing date box; no change to header/search-row dimensions. */
+.pro-datetime{overflow:hidden!important;padding:2px 4px!important}
+#proDate{font-size:5.7px!important;line-height:1.08!important;white-space:normal!important;text-align:center!important;max-height:13px!important;overflow:hidden!important}
+#proTime{margin-top:1px!important}
+@media(max-width:430px){
+  #radarPlayer.radar-player,.radar-player{width:52%!important;max-width:220px!important;min-width:160px!important}
+}
+</style>
+<script id="khabm-v115-date-lock">
+(function(){
+ function updateV115(){
+  var now=new Date(), t=document.getElementById('proTime'), d=document.getElementById('proDate');
+  try{
+   if(t)t.textContent=new Intl.DateTimeFormat('ar-SA',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Riyadh'}).format(now);
+   if(d){
+    var g=new Intl.DateTimeFormat('ar-SA-u-ca-gregory',{day:'numeric',month:'short',year:'numeric',timeZone:'Asia/Riyadh'}).format(now);
+    var h=new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',{day:'numeric',month:'short',year:'numeric',timeZone:'Asia/Riyadh'}).format(now);
+    d.innerHTML='<span style="display:block">'+g+'</span><span style="display:block">'+h+'</span>';
+   }
+  }catch(e){}
+ }
+ updateV115();setInterval(updateV115,30000);
+})();
+</script>
+<!-- KHABM_DEPLOY_MARKER: VERSION_115_CLEAN_TOOLS_COMPACT_PLAY_DUAL_DATE -->
+
+<!-- KHABM VERSION 117 — surgical fix from V115 only: hide V105 duplicate tools + true compact Play -->
+<style id="khabm-v117-surgical-fix">
+/* Root cause of the double layer: V105 created a second map-tools container. Hide ONLY that duplicate. */
+#khabmMapTopV105{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+
+/* Keep the approved V112 controls as the one and only visible Update + My Location row. */
+#approvedMapToolsV112{
+  display:flex!important;visibility:visible!important;opacity:1!important;
+  position:absolute!important;top:8px!important;left:8px!important;right:auto!important;
+  width:auto!important;height:34px!important;gap:7px!important;padding:0!important;margin:0!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important;
+  z-index:10030!important;direction:ltr!important;
+}
+#approvedMapToolsV112 button{
+  display:flex!important;position:static!important;transform:none!important;margin:0!important;
+  height:34px!important;min-height:34px!important;max-height:34px!important;
+  padding:0 8px!important;border:1.3px solid #3a7898!important;border-radius:10px!important;
+  background:#06283d!important;box-shadow:0 2px 6px rgba(0,0,0,.25)!important;
+  color:#fff!important;align-items:center!important;justify-content:center!important;
+  white-space:nowrap!important;font-size:10px!important;line-height:1!important;
+}
+#approvedMapToolsV112 .refresh{width:34px!important;min-width:34px!important;max-width:34px!important;padding:0!important;font-size:18px!important}
+#approvedMapToolsV112 button:not(.refresh){width:82px!important;min-width:82px!important;max-width:82px!important}
+
+/* True small Play bar, using the successful compact size only; radar/map logic untouched. */
+#radarPlayer.radar-player,.radar-player{
+  display:block!important;visibility:visible!important;opacity:1!important;
+  left:50%!important;right:auto!important;transform:translateX(-50%)!important;
+  bottom:8px!important;width:190px!important;min-width:190px!important;max-width:190px!important;
+  min-height:32px!important;height:auto!important;padding:3px 5px!important;margin:0!important;
+  border-radius:9px!important;border:1.1px solid #376f8d!important;
+  background:rgba(3,29,44,.92)!important;box-shadow:0 3px 9px rgba(0,0,0,.38)!important;
+  z-index:10010!important;
+}
+#radarPlayer .radar-row,.radar-player .radar-row{
+  display:grid!important;grid-template-columns:29px minmax(0,1fr)!important;gap:5px!important;align-items:center!important;
+}
+#radarPlayer .radar-play,.radar-player .radar-play{
+  width:29px!important;min-width:29px!important;height:27px!important;min-height:27px!important;
+  padding:0!important;border-radius:7px!important;font-size:12px!important;
+}
+#radarPlayer .radar-range,.radar-player .radar-range{width:100%!important;min-width:0!important;height:18px!important;margin:0!important}
+</style>
+<!-- KHABM_DEPLOY_MARKER: VERSION_117_FROM_115_NO_DUPLICATE_TOOLS_SMALL_PLAY -->
+
+<!-- KHABM VERSION 119 — from V118 only: shorten actual slider + guaranteed 00-23 clock; preserve clean map tools -->
+<style id="khabm-v119-slider-and-clock">
+/* Preserve the single clean map-tools row from V117/V118; never show the legacy duplicate. */
+#khabmMapTopV105{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+#approvedMapToolsV112{display:flex!important;visibility:visible!important;opacity:1!important}
+
+/* Shorten the ACTUAL slider and Play control, not only the outer box. */
+#radarPlayer.radar-player,.radar-player{
+  width:126px!important;min-width:126px!important;max-width:126px!important;
+  padding:3px 4px!important;
+}
+#radarPlayer .radar-row,.radar-player .radar-row{
+  display:grid!important;grid-template-columns:27px 86px!important;gap:4px!important;align-items:center!important;justify-content:center!important;
+}
+#radarPlayer .radar-play,.radar-player .radar-play{
+  width:27px!important;min-width:27px!important;max-width:27px!important;height:27px!important;min-height:27px!important;padding:0!important;
+}
+#radarPlayer .radar-range,.radar-player .radar-range{
+  display:block!important;width:86px!important;min-width:86px!important;max-width:86px!important;height:18px!important;margin:0!important;padding:0!important;
+}
+</style>
+<script id="khabm-v119-guaranteed-24h">
+(function(){
+  var ar=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  function ar2(n){return String(n).padStart(2,'0').replace(/[0-9]/g,function(x){return ar[+x]})}
+  function tick(){
+    var t=document.getElementById('proTime'); if(!t)return;
+    var parts=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:'Asia/Riyadh'}).formatToParts(new Date());
+    var h=parts.find(function(p){return p.type==='hour'}),m=parts.find(function(p){return p.type==='minute'});
+    if(h&&m)t.textContent=ar2(parseInt(h.value,10))+':'+ar2(parseInt(m.value,10));
+  }
+  tick();setInterval(tick,15000);
+})();
+</script>
+<!-- KHABM_DEPLOY_MARKER: VERSION_119_SHORT_SLIDER_TRUE_24H -->
+
+
+<!-- KHABM VERSION 121 — from V120 only: add Windy app/web launcher inside تشغيل عناصر الطقس; no visual/layout changes elsewhere -->
+<script id="khabm-v121-windy-launcher">
+(function(){
+  function install(){
+    var grid=document.getElementById('allLayersGridV12');
+    if(!grid || document.getElementById('khabmWindyAppV121')) return;
+    var b=document.createElement('button');
+    b.id='khabmWindyAppV121';
+    b.type='button';
+    b.innerHTML='🌬️<br>Windy';
+    b.setAttribute('aria-label','فتح Windy');
+    b.onclick=function(ev){
+      ev.preventDefault();
+      try{document.getElementById('allLayersV12').style.display='none';}catch(e){}
+      // Windy universal HTTPS link: on supported phones it can hand off to the installed Windy app;
+      // otherwise it opens Windy on the web.
+      window.location.href='https://www.windy.com/';
+    };
+    grid.appendChild(b);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install,{once:true});
+  else install();
+  setTimeout(install,700);
+})();
+</script>
+<!-- KHABM_DEPLOY_MARKER: VERSION_121_WINDY_APP_IN_WEATHER_ELEMENTS -->
+
+<!-- KHABM VERSION 122 — from V121 only: add official Anwaa/NCM launcher button inside تشغيل عناصر الطقس; no other changes -->
+<script id="khabm-v122-anwaa-launcher">
+(function(){
+  function install(){
+    var grid=document.getElementById('allLayersGridV12');
+    if(!grid || document.getElementById('khabmAnwaaV122')) return;
+    var b=document.createElement('button');
+    b.id='khabmAnwaaV122';
+    b.type='button';
+    b.innerHTML='🇸🇦<br>أنواء';
+    b.setAttribute('aria-label','فتح أنواء — المركز الوطني للأرصاد');
+    b.onclick=function(ev){
+      ev.preventDefault();
+      try{document.getElementById('allLayersV12').style.display='none';}catch(e){}
+      var ua=(navigator.userAgent||'').toLowerCase();
+      var platform=(navigator.platform||'').toLowerCase();
+      var isAndroid=/android/.test(ua);
+      var isIPad=/ipad/.test(ua) || (platform==='macintel' && navigator.maxTouchPoints>1);
+      var isIPhoneIPod=/iphone|ipod/.test(ua);
+      if(isAndroid){
+        window.location.href='https://play.google.com/store/apps/details?id=com.sejeltech.ncm';
+      }else if(isIPad || isIPhoneIPod){
+        window.location.href='https://apps.apple.com/sa/app/anwaa/id1612841473';
+      }else{
+        window.location.href='https://www.ncm.gov.sa/ar/services/anwaa-application';
+      }
+    };
+    grid.appendChild(b);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install,{once:true});
+  else install();
+  setTimeout(install,700);
+})();
+</script>
+<!-- KHABM_DEPLOY_MARKER: VERSION_122_ANWAA_APPSTORE_BUTTON -->
+
+
+<!-- KHABM V150 — Anwaa all-device routing + V141 Chrome visible viewport fix -->
+<style id="khabm-current-anwaa-and-chrome-fix">
+#khabmAnwaaCurrent{
+  width:calc(100% - 28px)!important;max-width:760px!important;
+  margin:5px auto 6px!important;padding:5px 9px!important;min-height:32px!important;
+  box-sizing:border-box!important;display:flex!important;align-items:center!important;
+  justify-content:space-between!important;gap:8px!important;direction:rtl!important;
+  border:1px solid rgba(70,175,255,.55)!important;border-radius:10px!important;
+  background:#082b43!important;color:#fff!important;flex:0 0 auto!important;
+}
+#khabmAnwaaCurrent .kac-title{font:800 11px/1.2 inherit!important;white-space:nowrap!important}
+#khabmAnwaaCurrent .kac-open{
+  flex:0 0 auto!important;border:0!important;border-radius:999px!important;
+  padding:6px 13px!important;min-width:48px!important;background:#0a84ff!important;color:#fff!important;
+  font:800 11px/1 inherit!important;
+}
+@media (max-width:699px){
+  html.khabm-crios,html.khabm-crios body{
+    height:var(--khabm-crios-visible-h,100dvh)!important;
+    min-height:var(--khabm-crios-visible-h,100dvh)!important;
+    max-height:var(--khabm-crios-visible-h,100dvh)!important;
+    overflow:hidden!important;
+  }
+  html.khabm-crios body{position:fixed!important;inset:0!important}
+  html.khabm-crios .app{
+    height:var(--khabm-crios-visible-h,100dvh)!important;
+    min-height:var(--khabm-crios-visible-h,100dvh)!important;
+    max-height:var(--khabm-crios-visible-h,100dvh)!important;
+    overflow:hidden!important;
+  }
+  html.khabm-crios #khabmAnwaaCurrent{margin:4px auto 5px!important;padding:4px 8px!important;min-height:30px!important}
+  html.khabm-crios #khabmAnwaaCurrent .kac-open{padding:5px 12px!important}
+  html.khabm-crios footer{flex:0 0 auto!important;padding-bottom:max(5px,env(safe-area-inset-bottom,0px))!important}
+}
+</style>
+<script id="khabm-current-anwaa-and-chrome-fix-js">
+(function(){
+  var ua=navigator.userAgent||'';
+  var isChromeIOS=/CriOS\//i.test(ua);
+  if(isChromeIOS) document.documentElement.classList.add('khabm-crios');
+
+  function addAnwaa(){
+    if(document.getElementById('khabmAnwaaCurrent')) return;
+    var top=document.getElementById('approvedTopControlsV112');
+    var mapwrap=document.querySelector('section.mapwrap');
+    if(!top || !top.parentNode) return;
+    var bar=document.createElement('div');
+    bar.id='khabmAnwaaCurrent';
+    bar.setAttribute('aria-label','أنواء — المركز الوطني للأرصاد');
+    bar.innerHTML='<div class="kac-title">🇸🇦 أنواء</div><button class="kac-open" type="button">فتح</button>';
+    bar.querySelector('.kac-open').addEventListener('click',function(){
+      var ua=(navigator.userAgent||'').toLowerCase();
+      var platform=(navigator.platform||'').toLowerCase();
+      var isAndroid=/android/.test(ua);
+      var isIPad=/ipad/.test(ua) || (platform==='macintel' && navigator.maxTouchPoints>1);
+      var isIPhoneIPod=/iphone|ipod/.test(ua);
+      if(isAndroid){
+        window.location.href='https://play.google.com/store/apps/details?id=com.sejeltech.ncm';
+      }else if(isIPad || isIPhoneIPod){
+        window.location.href='https://apps.apple.com/sa/app/anwaa/id1612841473';
+      }else{
+        window.location.href='https://www.ncm.gov.sa/ar/services/anwaa-application';
+      }
+    });
+    if(mapwrap && mapwrap.parentNode===top.parentNode) top.parentNode.insertBefore(bar,mapwrap);
+    else top.insertAdjacentElement('afterend',bar);
+  }
+
+  function fitChrome(){
+    if(!isChromeIOS) return;
+    var vv=window.visualViewport;
+    var h=Math.round(vv&&vv.height?vv.height:window.innerHeight);
+    if(h>0) document.documentElement.style.setProperty('--khabm-crios-visible-h',h+'px');
+    try{window.scrollTo(0,0)}catch(e){}
+    try{if(window.map&&typeof window.map.invalidateSize==='function')setTimeout(function(){window.map.invalidateSize(true)},80)}catch(e){}
+  }
+  function boot(){addAnwaa();fitChrome()}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
+  window.addEventListener('load',boot,{once:true});
+  if(isChromeIOS){
+    window.addEventListener('resize',fitChrome,{passive:true});
+    window.addEventListener('orientationchange',function(){setTimeout(fitChrome,250)});
+    if(window.visualViewport){
+      window.visualViewport.addEventListener('resize',fitChrome,{passive:true});
+      window.visualViewport.addEventListener('scroll',fitChrome,{passive:true});
+    }
+  }
+})();
+</script>
+<!-- KHABM_DEPLOY_MARKER: CURRENT_INDEX_ANWAA_COMPACT_PLUS_V141_CHROME_FIX -->
