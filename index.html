@@ -919,6 +919,26 @@ footer{margin-top:8px!important}
 }
 </style>
 
+
+<style id="khabm-owner-name-visible">
+.pro-footer-brand .owner-name{display:block;font-size:8px;line-height:1.25;font-weight:800;color:#d9efff;text-align:center;margin-top:1px;white-space:nowrap}
+@media(max-width:699px){.pro-footer-brand .owner-name{font-size:5.6px!important;line-height:1.15!important;white-space:normal!important;max-width:120px!important}.pro-footer-brand{gap:1px!important}}
+</style>
+<style id="khabm-owner-footer-final">
+.pro-footer-nav:has(.owner-footer-only){grid-template-columns:1fr!important;}
+.owner-footer-only{grid-column:1/-1!important;width:100%!important;min-height:46px!important;}
+.owner-footer-only .owner-name{display:block!important;font-size:12px!important;font-weight:900!important;line-height:1.4!important;color:#fff!important;text-align:center!important;}
+@media(max-width:699px){.owner-footer-only .owner-name{font-size:9px!important}.owner-footer-only{min-height:34px!important}}
+</style>
+
+<style id="khabm-owner-footer-one-line-final">
+.owner-footer-line{width:100%;direction:rtl;text-align:right;white-space:nowrap;overflow:visible;color:#fff;font-weight:900;font-size:11px;line-height:1.4;padding:5px 4px 3px;box-sizing:border-box;}
+@media(max-width:699px){
+  footer{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;}
+  .owner-footer-line{display:block!important;width:100%!important;text-align:right!important;direction:rtl!important;white-space:nowrap!important;font-size:9px!important;line-height:1.35!important;padding:4px 2px 3px!important;}
+  .credits{height:auto!important;min-height:0!important;}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -1411,11 +1431,7 @@ footer{margin-top:8px!important}
     <span class="ncm">المركز الوطني للأرصاد</span>.
   </div>
 </div>
-<div class="pro-footer-nav">
-  <button data-open="menu"><span>🛡️</span><b>المصادر الرسمية<br>والتحذيرات</b></button>
-  <div class="pro-footer-brand"><span>△</span><b>KHABM 2000</b></div>
-  <button data-open="menu"><span>ⓘ</span><b>معلومات عن<br>الموقع</b></button>
-</div>
+<div class="owner-footer-line" dir="rtl">إعداد وإشراف خالد بن عبدالله بن جبار الرحيمي</div>
 <div class="credits"><span><span class="dot"></span>آخر تحديث: <b id="clock">—</b></span><span>Open‑Meteo • CAMS • RainViewer • EUMETSAT</span><span>KHABM 2000 ABOASRAR</span></div></footer>
 </div>
 
