@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KHABM 2000 | طقس السعودية</title>
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{--bg:#07131f;--panel:#0d2031;--panel2:#102a40;--text:#f5fbff;--muted:#9db5c6;--accent:#35b8ff;--line:#1c3c53}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif}
+header{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--line);background:#091927}
+.brand{font-weight:800;letter-spacing:.5px}.brand small{display:block;color:var(--muted);font-weight:500;font-size:12px;margin-top:3px}
+.badge{padding:8px 11px;border:1px solid #28506b;border-radius:999px;color:#bde7ff;font-size:12px}
+main{display:grid;grid-template-columns:330px 1fr;height:calc(100vh - 68px)}
+aside{padding:16px;overflow:auto;border-left:1px solid var(--line);background:#0a1927}
+h2{font-size:16px;margin:0 0 12px}.layers{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+button{background:var(--panel);color:var(--text);border:1px solid var(--line);padding:11px;border-radius:12px;cursor:pointer;font-size:13px}
+button.active{border-color:var(--accent);background:#103451}.card{background:linear-gradient(145deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
+.city{display:flex;justify-content:space-between;align-items:center}.temp{font-size:27px;font-weight:800}.muted{color:var(--muted);font-size:12px}
+#map{height:100%;width:100%}.notice{font-size:11px;line-height:1.8;color:#a9bfce;padding:10px 2px}
+.loader{opacity:.6}
+@media(max-width:760px){main{grid-template-columns:1fr;grid-template-rows:56vh auto;height:auto}aside{grid-row:2;border-left:0;border-top:1px solid var(--line)}#map{grid-row:1}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">KHABM 2000 ABOASRAR<small>طقس السعودية • نسخة تجريبية</small></div>
+  <div class="badge" id="updated">جاري تحديث البيانات…</div>
+</header>
+<main>
+<aside>
+  <h2>طبقات الخريطة</h2>
+  <div class="layers">
+    <button class="active" data-layer="base">الخريطة</button>
+    <button data-layer="radar">رادار الأمطار</button>
+    <button disabled title="قريباً">البرق — قريباً</button>
+    <button disabled title="قريباً">الغبار — قريباً</button>
+    <button disabled title="قريباً">الرياح — قريباً</button>
+    <button disabled title="قريباً">الضغط — قريباً</button>
+  </div>
+  <h2>الطقس الآن</h2>
+  <div id="cities" class="loader">جاري تحميل المدن…</div>
+  <div class="notice">
+    هذا الموقع تجريبي وغير رسمي. البيانات والتوقعات للاسترشاد وليست تحذيرات رسمية.
+    عند الحالات الجوية الخطرة يرجى الرجوع إلى الجهات الرسمية المختصة.<br><br>
+    بيانات التوقعات: Open-Meteo (CC BY 4.0). رادار الأمطار: RainViewer، للاستخدام الشخصي/التعليمي وفق شروط المصدر.
+  </div>
+</aside>
+<div id="map"></div>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const map=L.map('map',{zoomControl:true}).setView([24.1,45.1],5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+ maxZoom:18,attribution:'&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+let radarLayer=null;
+async function toggleRadar(btn){
+ if(radarLayer){map.removeLayer(radarLayer);radarLayer=null;btn.classList.remove('active');return}
+ btn.textContent='تحميل الرادار…';
+ try{
+   const meta=await fetch('https://api.rainviewer.com/public/weather-maps.json').then(r=>r.json());
+   const frames=(meta.radar && meta.radar.past)||[];
+   if(!frames.length) throw new Error('no radar');
+   const f=frames[frames.length-1];
+   radarLayer=L.tileLayer(meta.host+f.path+'/256/{z}/{x}/{y}/2/1_1.png',{
+      opacity:.62,zIndex:500,attribution:'Radar: RainViewer'
+   }).addTo(map);
+   btn.classList.add('active');
+ }catch(e){alert('تعذر تحميل الرادار الآن. جرّب مرة أخرى لاحقاً.')}
+ btn.textContent='رادار الأمطار';
+}
+document.querySelector('[data-layer="radar"]').onclick=e=>toggleRadar(e.currentTarget);
+
+const cities=[
+ ['الرياض',24.7136,46.6753],['جدة',21.5433,39.1728],['مكة',21.3891,39.8579],
+ ['المدينة',24.5247,39.5692],['الطائف',21.2854,40.4248],['أبها',18.2164,42.5053],
+ ['الدمام',26.4207,50.0888],['تبوك',28.3838,36.5550]
+];
+const codes={0:'صحو',1:'غالباً صحو',2:'غائم جزئياً',3:'غائم',45:'ضباب',48:'ضباب',
+51:'رذاذ',53:'رذاذ',55:'رذاذ',61:'مطر خفيف',63:'مطر',65:'مطر غزير',80:'زخات',81:'زخات',82:'زخات قوية',95:'عواصف رعدية'};
+async function loadWeather(){
+ const lat=cities.map(c=>c[1]).join(','), lon=cities.map(c=>c[2]).join(',');
+ const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&timezone=Asia%2FRiyadh`;
+ try{
+  let data=await fetch(url).then(r=>r.json()); if(!Array.isArray(data)) data=[data];
+  document.getElementById('cities').classList.remove('loader');
+  document.getElementById('cities').innerHTML=data.map((d,i)=>{
+   const c=d.current||{}; return `<div class="card"><div class="city"><div><b>${cities[i][0]}</b><div class="muted">${codes[c.weather_code]||'حالة جوية'}</div></div><div class="temp">${Math.round(c.temperature_2m)}°</div></div><div class="muted" style="margin-top:8px">الرطوبة ${c.relative_humidity_2m}% • الرياح ${Math.round(c.wind_speed_10m)} كم/س</div></div>`
+  }).join('');
+  document.getElementById('updated').textContent='تحديث حي • '+new Date().toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+ }catch(e){document.getElementById('cities').textContent='تعذر تحميل بيانات الطقس حالياً.'}
+}
+loadWeather();
+</script>
+</body></html>
